@@ -6,6 +6,11 @@
          "state":"NY",
          "postalCode":10021
     },
+    "Company List": [
+        "Compnay: eBay",
+        "Compnay: Paypal",
+        "Compnay: Google"
+    ],
      "age":25,
      "phoneNumbers":[
             {

@@ -1,11 +1,12 @@
 package Views;
-import Utilities.Utilities;
+
+import Utilities.UIComponentEventUtilities;
 import java.awt.*;
 
 public class LoginPanel extends javax.swing.JPanel {    
-    Utilities utilities = new Utilities();
+    UIComponentEventUtilities utilities = new UIComponentEventUtilities();
     public LoginPanel() {           
-        initComponents();
+        initComponents();        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -20,7 +21,8 @@ public class LoginPanel extends javax.swing.JPanel {
         UserNamelbl = new javax.swing.JLabel();
         Passwordlbl = new javax.swing.JLabel();
         AdministratorLoginlbl = new javax.swing.JLabel();
-        LoginBtn = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(44, 62, 80));
         setMaximumSize(new java.awt.Dimension(500, 500));
@@ -130,8 +132,37 @@ public class LoginPanel extends javax.swing.JPanel {
         AdministratorLoginlbl.setForeground(new java.awt.Color(254, 254, 254));
         AdministratorLoginlbl.setText("Administrator Login");
 
-        LoginBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        LoginBtn.setText("Login");
+        jPanel1.setBackground(new java.awt.Color(44, 62, 80));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                commonHoverButtons(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                commonHoverButtons(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Login");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -145,15 +176,12 @@ public class LoginPanel extends javax.swing.JPanel {
                         .addComponent(AdministratorLoginlbl))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Passwordlbl)
                             .addComponent(UserNamelbl)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(LoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(UserName, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -170,14 +198,14 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(Passwordlbl)
                 .addGap(0, 0, 0)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(LoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(65, 65, 65)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void MouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MouseHoverminimmizeClose
-        utilities.MouseHoverminimmizeClose(evt);
+        utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_MouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
@@ -185,19 +213,24 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_actionClose
 
     private void FocusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusTextFields
-        utilities.FocusTextFields(evt);
+        utilities.onFocusTextFields(evt);
     }//GEN-LAST:event_FocusTextFields
+
+    private void commonHoverButtons(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commonHoverButtons
+        utilities.hoverGeneralButtons(evt);
+    }//GEN-LAST:event_commonHoverButtons
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AdministratorLoginlbl;
     private javax.swing.JLabel Close_lbl;
-    private javax.swing.JButton LoginBtn;
     private javax.swing.JLabel Minimize_lbl;
     private javax.swing.JPanel PanelHead;
     private javax.swing.JLabel Passwordlbl;
     private javax.swing.JLabel Title;
     private javax.swing.JTextField UserName;
     private javax.swing.JLabel UserNamelbl;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     // End of variables declaration//GEN-END:variables
 }
