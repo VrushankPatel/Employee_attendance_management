@@ -40,10 +40,10 @@ public class LoginPanel extends javax.swing.JPanel {
         Minimize_lbl.setText("-");
         Minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseHoverminimmizeClose(evt);
+                mouseHoverminimmizeClose(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                MouseHoverminimmizeClose(evt);
+                mouseHoverminimmizeClose(evt);
             }
         });
 
@@ -55,10 +55,10 @@ public class LoginPanel extends javax.swing.JPanel {
                 actionClose(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                MouseHoverminimmizeClose(evt);
+                mouseHoverminimmizeClose(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                MouseHoverminimmizeClose(evt);
+                mouseHoverminimmizeClose(evt);
             }
         });
 
@@ -204,9 +204,9 @@ public class LoginPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MouseHoverminimmizeClose
+    private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
-    }//GEN-LAST:event_MouseHoverminimmizeClose
+    }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
         utilities.actionClose(evt);
