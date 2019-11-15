@@ -15,6 +15,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(248, 148, 6));
         setLocation(new java.awt.Point(0, 0));
         setUndecorated(true);
         setResizable(false);
