@@ -3,7 +3,7 @@ package Views;
 import Utilities.UIComponentEventUtilities;
 import java.awt.*;
 import javax.swing.*;
-
+//Signuppanel
 
 public class SignupPanel extends javax.swing.JPanel {    
     UIComponentEventUtilities utilities = new UIComponentEventUtilities();
