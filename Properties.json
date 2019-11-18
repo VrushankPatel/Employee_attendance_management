@@ -4,12 +4,12 @@
 		"G":255,
 		"B":255
 	},
-	"HeadPanelColor"{
+	"HeadPanelColor":{
 		"R":248,
 		"G":148,
 		"B":6
 	},
-	"BodyPanelColor"{
+	"BodyPanelColor":{
 		"R":44,
 		"G":62,
 		"B":80
