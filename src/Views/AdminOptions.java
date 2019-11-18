@@ -16,7 +16,7 @@ public class AdminOptions extends javax.swing.JPanel {
         title = new javax.swing.JLabel();
         minimize_lbl = new javax.swing.JLabel();
         close_lbl = new javax.swing.JLabel();
-        administratorLoginlbl = new javax.swing.JLabel();
+        adminoptionsLoginlbl = new javax.swing.JLabel();
         manipulateemployeemasterpanel = new javax.swing.JPanel();
         iconlabel = new javax.swing.JLabel();
         marklabel1 = new javax.swing.JLabel();
@@ -93,10 +93,10 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        administratorLoginlbl.setBackground(new java.awt.Color(44, 62, 80));
-        administratorLoginlbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        administratorLoginlbl.setForeground(utilities.primarytextcolor);
-        administratorLoginlbl.setText("Admin Options");
+        adminoptionsLoginlbl.setBackground(new java.awt.Color(44, 62, 80));
+        adminoptionsLoginlbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        adminoptionsLoginlbl.setForeground(utilities.primarytextcolor);
+        adminoptionsLoginlbl.setText("Admin Options");
 
         manipulateemployeemasterpanel.setBackground(utilities.bodypanelcolor);
         manipulateemployeemasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -258,7 +258,7 @@ public class AdminOptions extends javax.swing.JPanel {
                         .addComponent(reportmasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(administratorLoginlbl)
+                        .addComponent(adminoptionsLoginlbl)
                         .addGap(177, 177, 177))))
         );
         layout.setVerticalGroup(
@@ -266,7 +266,7 @@ public class AdminOptions extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(administratorLoginlbl)
+                .addComponent(adminoptionsLoginlbl)
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(manipulateemployeemasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -300,7 +300,7 @@ public class AdminOptions extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel administratorLoginlbl;
+    private javax.swing.JLabel adminoptionsLoginlbl;
     private javax.swing.JLabel close_lbl;
     private javax.swing.JLabel generatelabel;
     private javax.swing.JLabel iconlabel;

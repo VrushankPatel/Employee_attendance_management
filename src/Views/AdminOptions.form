@@ -43,7 +43,7 @@
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="administratorLoginlbl" min="-2" max="-2" attributes="0"/>
+                      <Component id="adminoptionsLoginlbl" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -55,7 +55,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="panelHead" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="administratorLoginlbl" min="-2" max="-2" attributes="0"/>
+              <Component id="adminoptionsLoginlbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="manipulateemployeemasterpanel" max="32767" attributes="0"/>
@@ -163,7 +163,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="administratorLoginlbl">
+    <Component class="javax.swing.JLabel" name="adminoptionsLoginlbl">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="50" green="3e" red="2c" type="rgb"/>
