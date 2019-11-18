@@ -1,7 +1,6 @@
 package Views;
 
 import Utilities.UIComponentUtilities;
-import java.awt.*;
 import javax.swing.*;
 
 public class LoginPanel extends javax.swing.JPanel {    

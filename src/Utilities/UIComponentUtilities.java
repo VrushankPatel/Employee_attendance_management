@@ -10,16 +10,24 @@ public class UIComponentUtilities {
     private JsonParsingUtilities json; 
     public UIComponentUtilities() {
         json = new JsonParsingUtilities("Properties.json");                 
-        primarytextcolor = new Color(Integer.parseInt(((JSONObject)(json.getProperty("PrimaryTextColor"))).get("R").toString()),Integer.parseInt(((JSONObject)(json.getProperty("PrimaryTextColor"))).get("G").toString()),Integer.parseInt(((JSONObject)(json.getProperty("PrimaryTextColor"))).get("B").toString()));
-        headpanelcolor = new Color(Integer.parseInt(((JSONObject)(json.getProperty("HeadPanelColor"))).get("R").toString()),Integer.parseInt(((JSONObject)(json.getProperty("HeadPanelColor"))).get("G").toString()),Integer.parseInt(((JSONObject)(json.getProperty("HeadPanelColor"))).get("B").toString()));
-        bodypanelcolor= new Color(Integer.parseInt(((JSONObject)(json.getProperty("BodyPanelColor"))).get("R").toString()),Integer.parseInt(((JSONObject)(json.getProperty("BodyPanelColor"))).get("G").toString()),Integer.parseInt(((JSONObject)(json.getProperty("BodyPanelColor"))).get("B").toString()));
+        primarytextcolor = getColorProperty("PrimaryTextColor");
+        headpanelcolor = getColorProperty("HeadPanelColor");
+        bodypanelcolor = getColorProperty("BodyPanelColor");        
     }
-    
+    private Color getColorProperty(String propertyname){
+        int R = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("R").toString());
+        int G = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("G").toString());
+        int B = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("B").toString());        
+        R = (R>=0 && R<=255) ? R : 255;
+        G = (G>=0 && G<=255) ? G : 255;
+        B = (B>=0 && B<=255) ? B : 255;
+        return new Color(R,G,B);
+    }       
     public void actionClose(java.awt.event.MouseEvent evt){
         System.exit(0);
     }
-    public void onHoverTitleBarButtons(java.awt.event.MouseEvent evt) {                                          
-        ((JLabel)(evt.getSource())).setForeground(((JLabel)(evt.getSource())).getForeground() == Color.WHITE ? Color.BLACK : Color.WHITE);
+    public void onHoverTitleBarButtons(java.awt.event.MouseEvent evt) {  
+        ((JLabel)(evt.getSource())).setForeground(((JLabel)(evt.getSource())).getForeground().toString().equals("java.awt.Color[r=255,g=255,b=255]") ? Color.BLACK : Color.WHITE);
     } 
     public void onFocusTextFields(JTextField textfield) {                                 
         textfield.setText(textfield.isFocusOwner() ? (textfield.getText()).equals(textfield.getToolTipText()) ? "" : textfield.getText() : (textfield.getText()).isEmpty() ? textfield.getToolTipText() : textfield.getText());

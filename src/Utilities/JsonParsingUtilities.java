@@ -13,4 +13,5 @@ public class JsonParsingUtilities {
     public Object getProperty(String propertyname){         
         return this.jsonObject.get(propertyname);            
     }    
+    
 }
