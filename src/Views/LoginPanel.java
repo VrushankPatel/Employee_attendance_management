@@ -1,11 +1,11 @@
 package Views;
 
-import Utilities.UIComponentEventUtilities;
+import Utilities.UIComponentUtilities;
 import java.awt.*;
 import javax.swing.*;
 
 public class LoginPanel extends javax.swing.JPanel {    
-    UIComponentEventUtilities utilities = new UIComponentEventUtilities();
+    UIComponentUtilities utilities = new UIComponentUtilities();
     public LoginPanel() {           
         initComponents();        
     }
@@ -27,19 +27,21 @@ public class LoginPanel extends javax.swing.JPanel {
         SignupButtonPanel = new javax.swing.JPanel();
         SignupButtenLabel = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(44, 62, 80));
+        setBackground(utilities.bodypanelcolor);
+        setForeground(utilities.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
 
-        panelHead.setBackground(new java.awt.Color(248, 148, 6));
+        panelHead.setBackground(utilities.headpanelcolor);
         panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
+        panelHead.setForeground(utilities.primarytextcolor);
 
         title.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setForeground(utilities.primarytextcolor);
         title.setText("Employee Attendance Management System");
 
         minimize_lbl.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        minimize_lbl.setForeground(Color.WHITE);
+        minimize_lbl.setForeground(utilities.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -51,7 +53,7 @@ public class LoginPanel extends javax.swing.JPanel {
         });
 
         close_lbl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        close_lbl.setForeground(Color.WHITE);
+        close_lbl.setForeground(utilities.primarytextcolor);
         close_lbl.setText("X");
         close_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -91,9 +93,9 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        userName.setBackground(new java.awt.Color(44, 62, 80));
+        userName.setBackground(utilities.bodypanelcolor);
         userName.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName.setForeground(new java.awt.Color(162, 160, 162));
+        userName.setForeground(utilities.primarytextcolor);
         userName.setText("UserName");
         userName.setToolTipText("UserName");
         userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
@@ -106,9 +108,9 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(44, 62, 80));
+        jPasswordField1.setBackground(utilities.bodypanelcolor);
         jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(162, 160, 162));
+        jPasswordField1.setForeground(utilities.primarytextcolor);
         jPasswordField1.setText("Password");
         jPasswordField1.setToolTipText("Password");
         jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
@@ -123,33 +125,34 @@ public class LoginPanel extends javax.swing.JPanel {
         });
 
         userNamelbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl.setForeground(new java.awt.Color(255, 255, 255));
+        userNamelbl.setForeground(utilities.primarytextcolor);
         userNamelbl.setText("UserName");
 
         passwordlbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        passwordlbl.setForeground(new java.awt.Color(255, 255, 255));
+        passwordlbl.setForeground(utilities.primarytextcolor);
         passwordlbl.setText("Password");
 
         administratorLoginlbl.setBackground(new java.awt.Color(44, 62, 80));
         administratorLoginlbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        administratorLoginlbl.setForeground(new java.awt.Color(254, 254, 254));
+        administratorLoginlbl.setForeground(utilities.primarytextcolor);
         administratorLoginlbl.setText("Administrator Login");
 
-        LoginButtonPanel.setBackground(new java.awt.Color(44, 62, 80));
+        LoginButtonPanel.setBackground(utilities.bodypanelcolor);
         LoginButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        LoginButtonPanel.setForeground(new java.awt.Color(255, 255, 255));
+        LoginButtonPanel.setForeground(utilities.primarytextcolor);
         LoginButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
         });
 
+        LoginButtenLabel.setBackground(utilities.bodypanelcolor);
         LoginButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        LoginButtenLabel.setForeground(new java.awt.Color(255, 255, 255));
+        LoginButtenLabel.setForeground(utilities.primarytextcolor);
         LoginButtenLabel.setText("Login");
         LoginButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -167,24 +170,25 @@ public class LoginPanel extends javax.swing.JPanel {
             .addComponent(LoginButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
-        SignupButtonPanel.setBackground(new java.awt.Color(44, 62, 80));
+        SignupButtonPanel.setBackground(utilities.bodypanelcolor);
         SignupButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        SignupButtonPanel.setForeground(new java.awt.Color(255, 255, 255));
+        SignupButtonPanel.setForeground(utilities.primarytextcolor);
         SignupButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SignupButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 actionSignUp(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
         });
 
+        SignupButtenLabel.setBackground(utilities.bodypanelcolor);
         SignupButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        SignupButtenLabel.setForeground(new java.awt.Color(255, 255, 255));
+        SignupButtenLabel.setForeground(utilities.primarytextcolor);
         SignupButtenLabel.setText("Signup");
         SignupButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -195,7 +199,7 @@ public class LoginPanel extends javax.swing.JPanel {
             .addGroup(SignupButtonPanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(SignupButtenLabel)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SignupButtonPanelLayout.setVerticalGroup(
             SignupButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

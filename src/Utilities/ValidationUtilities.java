@@ -7,10 +7,15 @@ public class ValidationUtilities {
     Pattern pattern;
     Matcher matcher;
     public ValidationUtilities() {
-        pattern = Pattern.compile("^(?!.* )(?=.*\\d)(?=.*[A-Z]).{8,15}$");
+        pattern = Pattern.compile("^(?!.* )(?=.*[@$!%*#?&])(?=.*\\d)(?=.*[A-Z]).{8,15}$");
     }
-    public boolean validateUserName(String str){
-        matcher = pattern.matcher(str);
-        return matcher.matches();
+    
+    public boolean validateUserNameAndPassword(String str[]){
+        for(String s : str){
+            if(!pattern.matcher(s).matches()){
+                return false;
+            }            
+        }
+        return true;
     }
 }
