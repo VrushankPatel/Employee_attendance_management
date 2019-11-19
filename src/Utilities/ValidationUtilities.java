@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationUtilities {
-    Pattern pattern;
-    Matcher matcher;
+    private final Pattern pattern;
+    private Matcher matcher;
     public ValidationUtilities() {
         pattern = Pattern.compile("^(?!.* )(?=.*[@$!%*#?&])(?=.*\\d)(?=.*[A-Z]).{8,15}$");
     }

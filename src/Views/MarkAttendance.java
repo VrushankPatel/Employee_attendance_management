@@ -1,12 +1,16 @@
 package Views;
 
 import Utilities.UIComponentUtilities;
+import java.awt.Color;
+import java.util.Date;
 import javax.swing.*;
+import java.awt.Component;
 
-public class LoginPanel extends javax.swing.JPanel {    
+public class MarkAttendance extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    public LoginPanel() {           
-        initComponents();        
+    public MarkAttendance() {          
+        initComponents();       
+        dateOfAttendance.getComponent(0).setBackground(utilities.colorutil.bodypanelcolor);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -17,14 +21,14 @@ public class LoginPanel extends javax.swing.JPanel {
         minimize_lbl = new javax.swing.JLabel();
         close_lbl = new javax.swing.JLabel();
         userName = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
         userNamelbl = new javax.swing.JLabel();
         passwordlbl = new javax.swing.JLabel();
         administratorLoginlbl = new javax.swing.JLabel();
-        LoginButtonPanel = new javax.swing.JPanel();
-        LoginButtenLabel = new javax.swing.JLabel();
-        SignupButtonPanel = new javax.swing.JPanel();
-        SignupButtenLabel = new javax.swing.JLabel();
+        absentButtonPanel = new javax.swing.JPanel();
+        absentButtenLabel = new javax.swing.JLabel();
+        presentButtonPanel = new javax.swing.JPanel();
+        presentButtenLabel = new javax.swing.JLabel();
+        dateOfAttendance = new com.toedter.calendar.JDateChooser();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -32,7 +36,7 @@ public class LoginPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(500, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
-        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
+        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
         panelHead.setForeground(utilities.colorutil.primarytextcolor);
 
         title.setBackground(utilities.colorutil.headpanelandhovercolor);
@@ -98,29 +102,11 @@ public class LoginPanel extends javax.swing.JPanel {
         userName.setBackground(utilities.colorutil.bodypanelcolor);
         userName.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         userName.setForeground(utilities.colorutil.primarytextcolor);
-        userName.setText("UserName");
-        userName.setToolTipText("UserName");
-        userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        userName.setText("Employee Id");
+        userName.setToolTipText("Employee Id");
+        userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
         userName.setCaretColor(utilities.colorutil.initialColor);
         userName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                FocusTextFields(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                FocusTextFields(evt);
-            }
-        });
-
-        jPasswordField1.setBackground(utilities.colorutil.bodypanelcolor);
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jPasswordField1.setForeground(utilities.colorutil.primarytextcolor);
-        jPasswordField1.setText("Password");
-        jPasswordField1.setToolTipText("Password");
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        jPasswordField1.setCaretColor(utilities.colorutil.initialColor);
-        jPasswordField1.setPreferredSize(new java.awt.Dimension(55, 19));
-        jPasswordField1.setCaretColor(utilities.colorutil.initialColor);
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 FocusTextFields(evt);
             }
@@ -132,23 +118,23 @@ public class LoginPanel extends javax.swing.JPanel {
         userNamelbl.setBackground(utilities.colorutil.bodypanelcolor);
         userNamelbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         userNamelbl.setForeground(utilities.colorutil.primarytextcolor);
-        userNamelbl.setText("UserName");
+        userNamelbl.setText("Employee ID");
 
         passwordlbl.setBackground(utilities.colorutil.bodypanelcolor);
         passwordlbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         passwordlbl.setForeground(utilities.colorutil.primarytextcolor);
-        passwordlbl.setText("Password");
+        passwordlbl.setText("Date");
 
         administratorLoginlbl.setBackground(utilities.colorutil.bodypanelcolor);
         administratorLoginlbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         administratorLoginlbl.setForeground(utilities.colorutil.primarytextcolor);
-        administratorLoginlbl.setText("Administrator Login");
+        administratorLoginlbl.setText("Attendance Master");
 
-        LoginButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
-        LoginButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
-        LoginButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
-        LoginButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        LoginButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        absentButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
+        absentButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        absentButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
+        absentButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        absentButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -157,61 +143,82 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        LoginButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
-        LoginButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        LoginButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
-        LoginButtenLabel.setText("Login");
-        LoginButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        absentButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        absentButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        absentButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
+        absentButtenLabel.setText("ABSENT");
+        absentButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        javax.swing.GroupLayout LoginButtonPanelLayout = new javax.swing.GroupLayout(LoginButtonPanel);
-        LoginButtonPanel.setLayout(LoginButtonPanelLayout);
-        LoginButtonPanelLayout.setHorizontalGroup(
-            LoginButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginButtonPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout absentButtonPanelLayout = new javax.swing.GroupLayout(absentButtonPanel);
+        absentButtonPanel.setLayout(absentButtonPanelLayout);
+        absentButtonPanelLayout.setHorizontalGroup(
+            absentButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(absentButtonPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(LoginButtenLabel)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        LoginButtonPanelLayout.setVerticalGroup(
-            LoginButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LoginButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-        );
-
-        SignupButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
-        SignupButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
-        SignupButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
-        SignupButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        SignupButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                actionSignUp(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                commonHoverButtons(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                commonHoverButtons(evt);
-            }
-        });
-
-        SignupButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
-        SignupButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        SignupButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
-        SignupButtenLabel.setText("Signup");
-        SignupButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout SignupButtonPanelLayout = new javax.swing.GroupLayout(SignupButtonPanel);
-        SignupButtonPanel.setLayout(SignupButtonPanelLayout);
-        SignupButtonPanelLayout.setHorizontalGroup(
-            SignupButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SignupButtonPanelLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(SignupButtenLabel)
+                .addComponent(absentButtenLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        SignupButtonPanelLayout.setVerticalGroup(
-            SignupButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SignupButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        absentButtonPanelLayout.setVerticalGroup(
+            absentButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(absentButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
+
+        presentButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
+        presentButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        presentButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
+        presentButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        presentButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                commonHoverButtons(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                commonHoverButtons(evt);
+            }
+        });
+
+        presentButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        presentButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        presentButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
+        presentButtenLabel.setText("PRESENT");
+        presentButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout presentButtonPanelLayout = new javax.swing.GroupLayout(presentButtonPanel);
+        presentButtonPanel.setLayout(presentButtonPanelLayout);
+        presentButtonPanelLayout.setHorizontalGroup(
+            presentButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(presentButtonPanelLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(presentButtenLabel)
+                .addGap(8, 8, 8))
+        );
+        presentButtonPanelLayout.setVerticalGroup(
+            presentButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(presentButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        );
+
+        dateOfAttendance.setBackground(utilities.colorutil.bodypanelcolor);
+        dateOfAttendance.setForeground(utilities.colorutil.primarytextcolor);
+        dateOfAttendance.setDate(new Date());
+        dateOfAttendance.setMaxSelectableDate(new Date());
+        dateOfAttendance.setPreferredSize(new java.awt.Dimension(108, 28));
+        for(Component c : dateOfAttendance.getComponents()){
+            ((JComponent)c).setBackground(utilities.colorutil.bodypanelcolor);
+            ((JComponent)c).setForeground(utilities.colorutil.primarytextcolor);
+            ((JComponent)c).setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0,utilities.colorutil.initialBorder));
+            if(((JComponent)c) instanceof JTextField){
+                ((JTextField)c).setEnabled(false);
+                ((JTextField)c).setDisabledTextColor(utilities.colorutil.primarytextcolor);
+                ((JTextField)c).setBackground(utilities.colorutil.bodypanelcolor);
+            }
+            ((JComponent)c).addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    ((JComponent)c).setForeground(utilities.colorutil.primarytextcolor);
+                }
+                public void focusLost(java.awt.event.FocusEvent evt) {
+                    ((JComponent)c).setForeground(utilities.colorutil.primarytextcolor);
+                }
+            });
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -228,12 +235,12 @@ public class LoginPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(passwordlbl)
                             .addComponent(userNamelbl)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(presentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(LoginButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(absentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateOfAttendance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -249,11 +256,11 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(passwordlbl)
                 .addGap(0, 0, 0)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(dateOfAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LoginButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(absentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(presentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -274,21 +281,19 @@ public class LoginPanel extends javax.swing.JPanel {
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
 
-    private void actionSignUp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignUp
-        utilities.switchFromTo(this,new SignupPanel());
-    }//GEN-LAST:event_actionSignUp
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel LoginButtenLabel;
-    private javax.swing.JPanel LoginButtonPanel;
-    private javax.swing.JLabel SignupButtenLabel;
-    private javax.swing.JPanel SignupButtonPanel;
+    private javax.swing.JLabel SignupButtenLabel1;
+    private javax.swing.JPanel SignupButtonPanel1;
+    private javax.swing.JLabel absentButtenLabel;
+    private javax.swing.JPanel absentButtonPanel;
     private javax.swing.JLabel administratorLoginlbl;
     private javax.swing.JLabel close_lbl;
-    private javax.swing.JPasswordField jPasswordField1;
+    private com.toedter.calendar.JDateChooser dateOfAttendance;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
     private javax.swing.JLabel passwordlbl;
+    private javax.swing.JLabel presentButtenLabel;
+    private javax.swing.JPanel presentButtonPanel;
     private javax.swing.JLabel title;
     private javax.swing.JTextField userName;
     private javax.swing.JLabel userNamelbl;

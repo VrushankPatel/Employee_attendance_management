@@ -5,8 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    
-    private UIComponentUtilities utilities;    
-    private ValidationUtilities validation;
+    private final UIComponentUtilities utilities;        
+    private final ValidationUtilities validation;
     public SignupPanel() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();        
@@ -34,21 +34,24 @@ public class SignupPanel extends javax.swing.JPanel {
         confirmPasswordField = new javax.swing.JPasswordField();
         confirmPasswordlbl = new javax.swing.JLabel();
 
-        setBackground(utilities.bodypanelcolor);
+        setBackground(utilities.colorutil.bodypanelcolor);
+        setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
         setPreferredSize(new java.awt.Dimension(527, 509));
 
-        panelHead.setBackground(utilities.headpanelcolor);
-        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
-        panelHead.setForeground(utilities.primarytextcolor);
+        panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
+        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
+        panelHead.setForeground(utilities.colorutil.primarytextcolor);
 
+        title.setBackground(utilities.colorutil.headpanelandhovercolor);
         title.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        title.setForeground(utilities.primarytextcolor);
+        title.setForeground(utilities.colorutil.primarytextcolor);
         title.setText("Employee Attendance Management System");
 
+        minimize_lbl.setBackground(utilities.colorutil.headpanelandhovercolor);
         minimize_lbl.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        minimize_lbl.setForeground(Color.WHITE);
+        minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -59,8 +62,9 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
+        close_lbl.setBackground(utilities.colorutil.headpanelandhovercolor);
         close_lbl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        close_lbl.setForeground(Color.WHITE);
+        close_lbl.setForeground(utilities.colorutil.primarytextcolor);
         close_lbl.setText("X");
         close_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -101,12 +105,13 @@ public class SignupPanel extends javax.swing.JPanel {
         );
 
         CompanyIdTextField.setEditable(false);
-        CompanyIdTextField.setBackground(utilities.bodypanelcolor);
+        CompanyIdTextField.setBackground(utilities.colorutil.bodypanelcolor);
         CompanyIdTextField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        CompanyIdTextField.setForeground(utilities.primarytextcolor);
+        CompanyIdTextField.setForeground(utilities.colorutil.primarytextcolor);
         CompanyIdTextField.setText("Company_Id");
         CompanyIdTextField.setToolTipText("Company_Id");
-        CompanyIdTextField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
+        CompanyIdTextField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        CompanyIdTextField.setCaretColor(utilities.colorutil.initialColor);
         CompanyIdTextField.setDisabledTextColor(new java.awt.Color(162, 160, 162));
         CompanyIdTextField.setFocusable(false);
         CompanyIdTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -118,12 +123,13 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        passwordField.setBackground(utilities.bodypanelcolor);
+        passwordField.setBackground(utilities.colorutil.bodypanelcolor);
         passwordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        passwordField.setForeground(utilities.primarytextcolor);
+        passwordField.setForeground(utilities.colorutil.primarytextcolor);
         passwordField.setText("Password");
         passwordField.setToolTipText("Password");
-        passwordField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
+        passwordField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        passwordField.setCaretColor(utilities.colorutil.initialColor);
         passwordField.setPreferredSize(new java.awt.Dimension(55, 19));
         passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -134,24 +140,24 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        CompanyIdLabel.setBackground(utilities.bodypanelcolor);
+        CompanyIdLabel.setBackground(utilities.colorutil.bodypanelcolor);
         CompanyIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        CompanyIdLabel.setForeground(utilities.primarytextcolor);
+        CompanyIdLabel.setForeground(utilities.colorutil.primarytextcolor);
         CompanyIdLabel.setText("Company_id");
 
-        passwordlbl.setBackground(utilities.bodypanelcolor);
+        passwordlbl.setBackground(utilities.colorutil.bodypanelcolor);
         passwordlbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        passwordlbl.setForeground(utilities.primarytextcolor);
+        passwordlbl.setForeground(utilities.colorutil.primarytextcolor);
         passwordlbl.setText("Password");
 
-        createAnAccountLabel.setBackground(utilities.bodypanelcolor);
+        createAnAccountLabel.setBackground(utilities.colorutil.bodypanelcolor);
         createAnAccountLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        createAnAccountLabel.setForeground(utilities.primarytextcolor);
+        createAnAccountLabel.setForeground(utilities.colorutil.primarytextcolor);
         createAnAccountLabel.setText("Create an account");
 
-        BackButtonPanel.setBackground(utilities.bodypanelcolor);
-        BackButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        BackButtonPanel.setForeground(utilities.primarytextcolor);
+        BackButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
+        BackButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        BackButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         BackButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackButtonPanel.setFocusCycleRoot(true);
         BackButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,9 +172,9 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        BackButtenLabel.setBackground(utilities.bodypanelcolor);
+        BackButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
         BackButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        BackButtenLabel.setForeground(utilities.primarytextcolor);
+        BackButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
         BackButtenLabel.setText("< Back");
         BackButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackButtenLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -200,9 +206,9 @@ public class SignupPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        nextButtonPanel.setBackground(utilities.bodypanelcolor);
-        nextButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        nextButtonPanel.setForeground(utilities.primarytextcolor);
+        nextButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
+        nextButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        nextButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         nextButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -216,9 +222,9 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        nextButtenLabel.setBackground(utilities.bodypanelcolor);
+        nextButtenLabel.setBackground(utilities.colorutil.bodypanelcolor);
         nextButtenLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        nextButtenLabel.setForeground(utilities.primarytextcolor);
+        nextButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
         nextButtenLabel.setText("Next >");
         nextButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextButtenLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -250,12 +256,13 @@ public class SignupPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        userName.setBackground(utilities.bodypanelcolor);
+        userName.setBackground(utilities.colorutil.bodypanelcolor);
         userName.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName.setForeground(utilities.primarytextcolor);
+        userName.setForeground(utilities.colorutil.primarytextcolor);
         userName.setText("UserName");
         userName.setToolTipText("UserName");
-        userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
+        userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        userName.setCaretColor(utilities.colorutil.initialColor);
         userName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 FocusTextFields(evt);
@@ -265,17 +272,18 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        userNamelbl.setBackground(utilities.bodypanelcolor);
+        userNamelbl.setBackground(utilities.colorutil.bodypanelcolor);
         userNamelbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl.setForeground(utilities.primarytextcolor);
+        userNamelbl.setForeground(utilities.colorutil.primarytextcolor);
         userNamelbl.setText("UserName");
 
-        confirmPasswordField.setBackground(utilities.bodypanelcolor);
+        confirmPasswordField.setBackground(utilities.colorutil.bodypanelcolor);
         confirmPasswordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        confirmPasswordField.setForeground(utilities.primarytextcolor);
+        confirmPasswordField.setForeground(utilities.colorutil.primarytextcolor);
         confirmPasswordField.setText("Confirm Password");
         confirmPasswordField.setToolTipText("Confirm Password");
-        confirmPasswordField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
+        confirmPasswordField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        confirmPasswordField.setCaretColor(utilities.colorutil.initialColor);
         confirmPasswordField.setPreferredSize(new java.awt.Dimension(55, 19));
         confirmPasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -286,9 +294,9 @@ public class SignupPanel extends javax.swing.JPanel {
             }
         });
 
-        confirmPasswordlbl.setBackground(utilities.bodypanelcolor);
+        confirmPasswordlbl.setBackground(utilities.colorutil.bodypanelcolor);
         confirmPasswordlbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        confirmPasswordlbl.setForeground(utilities.primarytextcolor);
+        confirmPasswordlbl.setForeground(utilities.colorutil.primarytextcolor);
         confirmPasswordlbl.setText("Confirm Password");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -303,11 +311,7 @@ public class SignupPanel extends javax.swing.JPanel {
                         .addComponent(createAnAccountLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -319,14 +323,19 @@ public class SignupPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(userNamelbl)
                                     .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passwordlbl)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(confirmPasswordlbl)
-                                    .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(passwordlbl)
+                                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(confirmPasswordlbl)
+                                        .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -389,9 +398,9 @@ public class SignupPanel extends javax.swing.JPanel {
         if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
             System.out.println("wow that's great");
         }else{            
-            String errormessage = (String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) ? "> Invalid username or password."
+            String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
                     + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
-                    + "\nEx. : John@1234" : "Password doesn't match";
+                    + "\nEx. : John@1234";
             JOptionPane.showMessageDialog(this.getParent(),errormessage, "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
         }
     }//GEN-LAST:event_actionSignup

@@ -1,10 +1,11 @@
 package Views;
 
+import Utilities.UIColorUtilities;
 import Utilities.UIComponentUtilities;
 import javax.swing.*;
 
 public class AdminOptions extends javax.swing.JPanel {    
-    UIComponentUtilities utilities = new UIComponentUtilities();
+    private final UIComponentUtilities utilities = new UIComponentUtilities();
     public AdminOptions() {           
         initComponents();        
     }
@@ -18,8 +19,8 @@ public class AdminOptions extends javax.swing.JPanel {
         close_lbl = new javax.swing.JLabel();
         adminoptionsLoginlbl = new javax.swing.JLabel();
         manipulateemployeemasterpanel = new javax.swing.JPanel();
-        iconlabel = new javax.swing.JLabel();
         marklabel1 = new javax.swing.JLabel();
+        iconlabel = new javax.swing.JLabel();
         markattendancemasterpanel = new javax.swing.JPanel();
         marklabel = new javax.swing.JLabel();
         iconlabel2 = new javax.swing.JLabel();
@@ -27,21 +28,23 @@ public class AdminOptions extends javax.swing.JPanel {
         generatelabel = new javax.swing.JLabel();
         iconlabel3 = new javax.swing.JLabel();
 
-        setBackground(utilities.bodypanelcolor);
-        setForeground(utilities.primarytextcolor);
+        setBackground(utilities.colorutil.bodypanelcolor);
+        setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
 
-        panelHead.setBackground(utilities.headpanelcolor);
-        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
-        panelHead.setForeground(utilities.primarytextcolor);
+        panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
+        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
+        panelHead.setForeground(utilities.colorutil.primarytextcolor);
 
+        title.setBackground(utilities.colorutil.headpanelandhovercolor);
         title.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        title.setForeground(utilities.primarytextcolor);
+        title.setForeground(utilities.colorutil.primarytextcolor);
         title.setText("Employee Attendance Management System");
 
+        minimize_lbl.setBackground(utilities.colorutil.headpanelandhovercolor);
         minimize_lbl.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        minimize_lbl.setForeground(utilities.primarytextcolor);
+        minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -52,8 +55,9 @@ public class AdminOptions extends javax.swing.JPanel {
             }
         });
 
+        close_lbl.setBackground(utilities.colorutil.headpanelandhovercolor);
         close_lbl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        close_lbl.setForeground(utilities.primarytextcolor);
+        close_lbl.setForeground(utilities.colorutil.primarytextcolor);
         close_lbl.setText("X");
         close_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -93,14 +97,14 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        adminoptionsLoginlbl.setBackground(new java.awt.Color(44, 62, 80));
+        adminoptionsLoginlbl.setBackground(utilities.colorutil.bodypanelcolor);
         adminoptionsLoginlbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        adminoptionsLoginlbl.setForeground(utilities.primarytextcolor);
+        adminoptionsLoginlbl.setForeground(utilities.colorutil.primarytextcolor);
         adminoptionsLoginlbl.setText("Admin Options");
 
-        manipulateemployeemasterpanel.setBackground(utilities.bodypanelcolor);
-        manipulateemployeemasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        manipulateemployeemasterpanel.setForeground(utilities.primarytextcolor);
+        manipulateemployeemasterpanel.setBackground(utilities.colorutil.bodypanelcolor);
+        manipulateemployeemasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        manipulateemployeemasterpanel.setForeground(utilities.colorutil.primarytextcolor);
         manipulateemployeemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manipulateemployeemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -114,17 +118,17 @@ public class AdminOptions extends javax.swing.JPanel {
             }
         });
 
-        iconlabel.setBackground(utilities.bodypanelcolor);
-        iconlabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        iconlabel.setForeground(utilities.primarytextcolor);
-        iconlabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/manipulation.jpg"))); // NOI18N
-        iconlabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        marklabel1.setBackground(utilities.bodypanelcolor);
+        marklabel1.setBackground(utilities.colorutil.bodypanelcolor);
         marklabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        marklabel1.setForeground(utilities.primarytextcolor);
+        marklabel1.setForeground(utilities.colorutil.primarytextcolor);
         marklabel1.setText("<html><body><center>Manipulate</center><center>Employee Data</center></body></html>");
         marklabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        iconlabel.setBackground(utilities.colorutil.bodypanelcolor);
+        iconlabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        iconlabel.setForeground(utilities.colorutil.primarytextcolor);
+        iconlabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/manipulation.jpg"))); // NOI18N
+        iconlabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout manipulateemployeemasterpanelLayout = new javax.swing.GroupLayout(manipulateemployeemasterpanel);
         manipulateemployeemasterpanel.setLayout(manipulateemployeemasterpanelLayout);
@@ -147,9 +151,9 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addGap(4, 4, 4))
         );
 
-        markattendancemasterpanel.setBackground(utilities.bodypanelcolor);
-        markattendancemasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        markattendancemasterpanel.setForeground(utilities.primarytextcolor);
+        markattendancemasterpanel.setBackground(utilities.colorutil.bodypanelcolor);
+        markattendancemasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        markattendancemasterpanel.setForeground(utilities.colorutil.primarytextcolor);
         markattendancemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         markattendancemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -160,15 +164,15 @@ public class AdminOptions extends javax.swing.JPanel {
             }
         });
 
-        marklabel.setBackground(utilities.bodypanelcolor);
+        marklabel.setBackground(utilities.colorutil.bodypanelcolor);
         marklabel.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        marklabel.setForeground(utilities.primarytextcolor);
+        marklabel.setForeground(utilities.colorutil.primarytextcolor);
         marklabel.setText("<html><body><center>Mark</center><center>Attendance</center></body></html>");
         marklabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        iconlabel2.setBackground(utilities.bodypanelcolor);
+        iconlabel2.setBackground(utilities.colorutil.bodypanelcolor);
         iconlabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        iconlabel2.setForeground(utilities.primarytextcolor);
+        iconlabel2.setForeground(utilities.colorutil.primarytextcolor);
         iconlabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/CUSTOM_ICON_96e189ba-8c77-496c-b3fd-c37d23f55978.png"))); // NOI18N
         iconlabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -193,9 +197,9 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addGap(5, 5, 5))
         );
 
-        reportmasterpanel.setBackground(utilities.bodypanelcolor);
-        reportmasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        reportmasterpanel.setForeground(utilities.primarytextcolor);
+        reportmasterpanel.setBackground(utilities.colorutil.bodypanelcolor);
+        reportmasterpanel.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
+        reportmasterpanel.setForeground(utilities.colorutil.primarytextcolor);
         reportmasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reportmasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -209,15 +213,15 @@ public class AdminOptions extends javax.swing.JPanel {
             }
         });
 
-        generatelabel.setBackground(utilities.bodypanelcolor);
+        generatelabel.setBackground(utilities.colorutil.bodypanelcolor);
         generatelabel.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        generatelabel.setForeground(utilities.primarytextcolor);
+        generatelabel.setForeground(utilities.colorutil.primarytextcolor);
         generatelabel.setText("<html><body><center>Generate</center><center>Report</center></body></html>");
         generatelabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        iconlabel3.setBackground(utilities.bodypanelcolor);
+        iconlabel3.setBackground(utilities.colorutil.bodypanelcolor);
         iconlabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        iconlabel3.setForeground(utilities.primarytextcolor);
+        iconlabel3.setForeground(utilities.colorutil.primarytextcolor);
         iconlabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/CUSTOM_ICON_69e24ca2-7388-4e3c-8649-50e0aaa6aaa8.png"))); // NOI18N
         iconlabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -270,9 +274,8 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(manipulateemployeemasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(reportmasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(markattendancemasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(reportmasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(markattendancemasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -306,8 +309,6 @@ public class AdminOptions extends javax.swing.JPanel {
     private javax.swing.JLabel iconlabel;
     private javax.swing.JLabel iconlabel2;
     private javax.swing.JLabel iconlabel3;
-    private javax.swing.JLabel loginButtenLabel;
-    private javax.swing.JPanel loginButtonPanel;
     private javax.swing.JPanel manipulateemployeemasterpanel;
     private javax.swing.JPanel markattendancemasterpanel;
     private javax.swing.JLabel marklabel;

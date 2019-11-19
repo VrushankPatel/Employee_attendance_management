@@ -1,7 +1,5 @@
 package employee.attendance.management;
 
-//this is the main file
-
 import Views.MainFrame;
 
 public class EmployeeAttendanceManagement {
