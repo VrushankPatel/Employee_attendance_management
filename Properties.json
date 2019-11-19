@@ -3,18 +3,5 @@
 	"HeadPanelandhovercolor":{"R":248,"G":148,"B":6},
 	"BodyPanelColor":{"R":44,"G":62,"B":80},
 	"InititalColor":{"R":255,"G":255,"B":255},
-	"InititalBorder":{"R":192,"G":192,"B":192},
-	"firstName":"Vrushank",
-	"lastName":"Smith",
-	"address":{
-		"streetAddress":"21 2nd Street",
-		"city":"New York",
-		"postalCode":10021,
-		"state":"NY"
-	},
-	"age":25,
-	"phoneNumbers":[
-		{"number":"212 555-1234","type":"home"},
-		{"number":"212 555-1234","type":"fax"}
-	]
+	"InititalBorder":{"R":192,"G":192,"B":192},	
 }
