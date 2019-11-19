@@ -4,10 +4,10 @@ import Utilities.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class AddNewEmploee extends javax.swing.JPanel {    
+public class AddNewEmployee extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;
-    public AddNewEmploee() { 
+    public AddNewEmployee() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();        
         initComponents();
