@@ -1,15 +1,21 @@
 package Views;
 
+import DBOperations.InsertOperations;
+import DBOperations.QueryOperations;
 import Utilities.*;
-import java.awt.*;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;
+    private final QueryOperations query;
+    private final InsertOperations insert;
     public SignupPanel() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();        
+        query = new QueryOperations();
+        insert = new InsertOperations();
         initComponents();
     }
     @SuppressWarnings("unchecked")
@@ -20,7 +26,7 @@ public class SignupPanel extends javax.swing.JPanel {
         title = new javax.swing.JLabel();
         minimize_lbl = new javax.swing.JLabel();
         close_lbl = new javax.swing.JLabel();
-        CompanyIdTextField = new javax.swing.JTextField();
+        CompanyIdTextField = new javax.swing.JTextField("Unable to fetch data");
         passwordField = new javax.swing.JPasswordField();
         CompanyIdLabel = new javax.swing.JLabel();
         passwordlbl = new javax.swing.JLabel();
@@ -108,7 +114,11 @@ public class SignupPanel extends javax.swing.JPanel {
         CompanyIdTextField.setBackground(utilities.colorutil.bodypanelcolor);
         CompanyIdTextField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         CompanyIdTextField.setForeground(utilities.colorutil.primarytextcolor);
-        CompanyIdTextField.setText("Company_Id");
+        try{
+            CompanyIdTextField.setText(query.getLatestId("Administrator"));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this.getParent(),"Unable to fetch data. please try again", "Connection error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+        }
         CompanyIdTextField.setToolTipText("Company_Id");
         CompanyIdTextField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
         CompanyIdTextField.setCaretColor(utilities.colorutil.initialColor);
@@ -396,7 +406,15 @@ public class SignupPanel extends javax.swing.JPanel {
 
     private void actionSignup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignup
         if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
-            System.out.println("wow that's great");
+            try{
+                insert.insertadmin.setString(1,userName.getText());
+                insert.insertadmin.setString(2,String.valueOf(passwordField.getPassword()));
+                insert.insertadmin.execute();
+                JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+                utilities.switchFromTo(this, new LoginPanel());
+            }catch(SQLException | NullPointerException e){
+                JOptionPane.showMessageDialog(this.getParent(),"Unable to insert data. please try again later.", "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            }
         }else{            
             String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
                     + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."

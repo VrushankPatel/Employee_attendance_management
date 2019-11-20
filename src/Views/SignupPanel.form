@@ -235,10 +235,12 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="20" style="0"/>
         </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="try{">
           <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Company_Id"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="}catch(Exception e){&#xa;JOptionPane.showMessageDialog(this.getParent(),&quot;Unable to fetch data. please try again&quot;, &quot;Connection error&quot;,JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource(&quot;/Icons/icons8-s.h.i.e.l.d.png&quot;)));&#xa;}">
+          <Connection code="query.getLatestId(&quot;Administrator&quot;)" type="code"/>
+        </Property>
         <Property name="toolTipText" type="java.lang.String" value="Company_Id"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -259,6 +261,9 @@
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FocusTextFields"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FocusTextFields"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(&quot;Unable to fetch data&quot;)"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JPasswordField" name="passwordField">
       <Properties>
