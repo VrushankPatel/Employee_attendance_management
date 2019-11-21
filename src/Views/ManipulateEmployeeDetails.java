@@ -27,6 +27,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         moddifyemployeedetailsmasterpanel = new javax.swing.JPanel();
         modifyemployeelabel = new javax.swing.JLabel();
         iconlabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.initialBorder));
@@ -109,7 +110,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         addemployeemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addemployeemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                actionSignUp(evt);
+                addEmployee(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
@@ -157,6 +158,9 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         removeemployeemasterpanel.setForeground(utilities.colorutil.primarytextcolor);
         removeemployeemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeemployeemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeEmployee(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -204,7 +208,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         moddifyemployeedetailsmasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         moddifyemployeedetailsmasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                moddifyemployeedetailsmasterpanelactionSignUp(evt);
+                modifyEmployee(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
@@ -230,9 +234,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         moddifyemployeedetailsmasterpanel.setLayout(moddifyemployeedetailsmasterpanelLayout);
         moddifyemployeedetailsmasterpanelLayout.setHorizontalGroup(
             moddifyemployeedetailsmasterpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(moddifyemployeedetailsmasterpanelLayout.createSequentialGroup()
-                .addComponent(iconlabel3)
-                .addGap(0, 0, 0))
+            .addComponent(iconlabel3)
             .addGroup(moddifyemployeedetailsmasterpanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(modifyemployeelabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,23 +249,43 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
                 .addGap(6, 6, 6))
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(utilities.colorutil.primarytextcolor);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4_1.png"))); // NOI18N
+        jLabel1.setText("Back");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                getBack(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backHover(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backHover(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelHead, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(addemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(removeemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(moddifyemployeedetailsmasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(adminoptionsLoginlbl)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(removeemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(54, 54, 54)
+                .addComponent(moddifyemployeedetailsmasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +298,9 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
                     .addComponent(addemployeemasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(moddifyemployeedetailsmasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(removeemployeemasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -292,14 +316,25 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
 
-    private void actionSignUp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignUp
-        System.out.println("Views.LoginPanel.FocusTextFields() 2222");
-        utilities.switchFromTo(this,new SignupPanel());
-    }//GEN-LAST:event_actionSignUp
+    private void backHover(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backHover
+        utilities.backHover(evt);
+    }//GEN-LAST:event_backHover
 
-    private void moddifyemployeedetailsmasterpanelactionSignUp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moddifyemployeedetailsmasterpanelactionSignUp
-        // TODO add your handling code here:
-    }//GEN-LAST:event_moddifyemployeedetailsmasterpanelactionSignUp
+    private void getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getBack
+        utilities.switchFromTo(this, new AdminOptions());
+    }//GEN-LAST:event_getBack
+
+    private void addEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployee
+        utilities.switchFromTo(this, new AddNewEmployee());
+    }//GEN-LAST:event_addEmployee
+
+    private void removeEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeEmployee
+        utilities.switchFromTo(this, new DeleteEmployee());
+    }//GEN-LAST:event_removeEmployee
+
+    private void modifyEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyEmployee
+       
+    }//GEN-LAST:event_modifyEmployee
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -310,6 +345,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
     private javax.swing.JLabel iconlabel;
     private javax.swing.JLabel iconlabel2;
     private javax.swing.JLabel iconlabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel moddifyemployeedetailsmasterpanel;
     private javax.swing.JLabel modifyemployeelabel;

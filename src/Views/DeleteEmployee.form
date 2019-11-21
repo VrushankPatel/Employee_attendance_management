@@ -64,7 +64,7 @@
               <Component id="EmployeeIdLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="EmployeeId" min="-2" pref="63" max="-2" attributes="0"/>
-              <EmptySpace pref="124" max="32767" attributes="0"/>
+              <EmptySpace pref="115" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="DeleteButtonPanel" min="-2" max="-2" attributes="0"/>
                   <Component id="BackButtonPanel" min="-2" max="-2" attributes="0"/>
@@ -314,6 +314,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="getBack"/>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
       </Events>

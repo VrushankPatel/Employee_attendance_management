@@ -27,6 +27,7 @@ public class AdminOptions extends javax.swing.JPanel {
         reportmasterpanel = new javax.swing.JPanel();
         generatelabel = new javax.swing.JLabel();
         iconlabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -108,7 +109,7 @@ public class AdminOptions extends javax.swing.JPanel {
         manipulateemployeemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manipulateemployeemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                actionSignUp(evt);
+                actionManipulate(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
@@ -156,6 +157,9 @@ public class AdminOptions extends javax.swing.JPanel {
         markattendancemasterpanel.setForeground(utilities.colorutil.primarytextcolor);
         markattendancemasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         markattendancemasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                markAttendance(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -203,7 +207,7 @@ public class AdminOptions extends javax.swing.JPanel {
         reportmasterpanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reportmasterpanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reportmasterpanelactionSignUp(evt);
+                generateReport(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
@@ -246,6 +250,23 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addGap(6, 6, 6))
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(utilities.colorutil.primarytextcolor);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4_1.png"))); // NOI18N
+        jLabel1.setText("Logout");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logout(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backHover(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backHover(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,15 +276,20 @@ public class AdminOptions extends javax.swing.JPanel {
                 .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(manipulateemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(markattendancemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(reportmasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(adminoptionsLoginlbl)
-                        .addGap(177, 177, 177))))
+                        .addGap(177, 177, 177))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(manipulateemployeemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(markattendancemasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(46, 46, 46)))
+                        .addComponent(reportmasterpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +302,9 @@ public class AdminOptions extends javax.swing.JPanel {
                     .addComponent(manipulateemployeemasterpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(reportmasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(markattendancemasterpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -292,14 +320,25 @@ public class AdminOptions extends javax.swing.JPanel {
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
 
-    private void actionSignUp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignUp
-        System.out.println("Views.LoginPanel.FocusTextFields() 2222");
-        utilities.switchFromTo(this,new SignupPanel());
-    }//GEN-LAST:event_actionSignUp
+    private void actionManipulate(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionManipulate
+        utilities.switchFromTo(this,new ManipulateEmployeeDetails());
+    }//GEN-LAST:event_actionManipulate
 
-    private void reportmasterpanelactionSignUp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportmasterpanelactionSignUp
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reportmasterpanelactionSignUp
+    private void markAttendance(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_markAttendance
+        utilities.switchFromTo(this,new MarkAttendance());
+    }//GEN-LAST:event_markAttendance
+
+    private void generateReport(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateReport
+        utilities.switchFromTo(this,new GenerateReport());
+    }//GEN-LAST:event_generateReport
+
+    private void backHover(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backHover
+        utilities.backHover(evt);
+    }//GEN-LAST:event_backHover
+
+    private void logout(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logout
+        utilities.switchFromTo(this, new LoginPanel());
+    }//GEN-LAST:event_logout
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -309,6 +348,7 @@ public class AdminOptions extends javax.swing.JPanel {
     private javax.swing.JLabel iconlabel;
     private javax.swing.JLabel iconlabel2;
     private javax.swing.JLabel iconlabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel manipulateemployeemasterpanel;
     private javax.swing.JPanel markattendancemasterpanel;
     private javax.swing.JLabel marklabel;

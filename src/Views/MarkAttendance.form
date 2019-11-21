@@ -70,7 +70,7 @@
               <Component id="passwordlbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="dateOfAttendance" min="-2" pref="64" max="-2" attributes="0"/>
-              <EmptySpace pref="59" max="32767" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="absentButtonPanel" min="-2" max="-2" attributes="0"/>
                   <Component id="presentButtonPanel" min="-2" max="-2" attributes="0"/>

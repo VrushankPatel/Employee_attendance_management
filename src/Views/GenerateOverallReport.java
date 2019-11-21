@@ -31,6 +31,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
         setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
+        setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
         panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
@@ -160,6 +161,9 @@ public class GenerateOverallReport extends javax.swing.JPanel {
         BackButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         BackButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                getBack(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -242,6 +246,10 @@ public class GenerateOverallReport extends javax.swing.JPanel {
     private void commonHoverButtons(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commonHoverButtons
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
+
+    private void getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getBack
+        utilities.switchFromTo(this, new GenerateReport());
+    }//GEN-LAST:event_getBack
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

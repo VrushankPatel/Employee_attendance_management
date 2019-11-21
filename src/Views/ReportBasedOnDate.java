@@ -36,6 +36,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
+        setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
         panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
@@ -136,6 +137,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         FromDate.setForeground(utilities.colorutil.primarytextcolor);
         FromDate.setDate(new Date());
         FromDate.setMaxSelectableDate(new Date());
+        FromDate.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         FromDate.setPreferredSize(new java.awt.Dimension(108, 28));
         for(Component c : FromDate.getComponents()){
             ((JComponent)c).setBackground(utilities.colorutil.bodypanelcolor);
@@ -164,6 +166,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         ToDate.setBackground(utilities.colorutil.bodypanelcolor);
         ToDate.setForeground(utilities.colorutil.primarytextcolor);
         ToDate.setDate(new Date());
+        ToDate.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         ToDate.setPreferredSize(new java.awt.Dimension(108, 28));
         for(Component c : ToDate.getComponents()){
             ((JComponent)c).setBackground(utilities.colorutil.bodypanelcolor);
@@ -222,6 +225,9 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         BackButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         BackButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackButtonPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BackButtonPanelcommonHoverButtons(evt);
             }
@@ -334,6 +340,10 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
     private void BackButtonPanelcommonHoverButtons1(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButtonPanelcommonHoverButtons1
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_BackButtonPanelcommonHoverButtons1
+
+    private void BackButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButtonPanelMouseClicked
+        utilities.switchFromTo(this, new GenerateReport());
+    }//GEN-LAST:event_BackButtonPanelMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

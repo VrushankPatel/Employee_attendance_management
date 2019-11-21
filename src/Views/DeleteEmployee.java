@@ -160,6 +160,9 @@ public class DeleteEmployee extends javax.swing.JPanel {
         BackButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         BackButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                getBack(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -219,7 +222,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 .addComponent(EmployeeIdLabel)
                 .addGap(0, 0, 0)
                 .addComponent(EmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DeleteButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,6 +245,10 @@ public class DeleteEmployee extends javax.swing.JPanel {
     private void commonHoverButtons(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commonHoverButtons
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
+
+    private void getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getBack
+        utilities.switchFromTo(this, new ManipulateEmployeeDetails());
+    }//GEN-LAST:event_getBack
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

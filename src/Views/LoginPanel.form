@@ -42,7 +42,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="passwordlbl" min="-2" max="-2" attributes="0"/>
                           <Component id="userNamelbl" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPasswordField1" max="32767" attributes="0"/>
+                          <Component id="passwordField" max="32767" attributes="0"/>
                           <Component id="userName" pref="335" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="SignupButtonPanel" min="-2" max="-2" attributes="0"/>
@@ -69,8 +69,8 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="passwordlbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jPasswordField1" min="-2" pref="63" max="-2" attributes="0"/>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
+              <Component id="passwordField" min="-2" pref="63" max="-2" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="LoginButtonPanel" min="-2" max="-2" attributes="0"/>
                   <Component id="SignupButtonPanel" min="-2" max="-2" attributes="0"/>
@@ -212,7 +212,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FocusTextFields"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+    <Component class="javax.swing.JPasswordField" name="passwordField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -244,7 +244,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FocusTextFields"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jPasswordField1.setCaretColor(utilities.colorutil.initialColor);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="passwordField.setCaretColor(utilities.colorutil.initialColor);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="userNamelbl">
@@ -309,6 +309,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LoginButtonPanelMouseClicked"/>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
       </Events>

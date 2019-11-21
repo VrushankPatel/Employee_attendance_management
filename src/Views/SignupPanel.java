@@ -1,22 +1,22 @@
 package Views;
 
-import DBOperations.InsertOperations;
-import DBOperations.QueryOperations;
 import Utilities.*;
 import java.sql.SQLException;
 import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
-    private final ValidationUtilities validation;
-    private final QueryOperations query;
-    private final InsertOperations insert;
+    private final ValidationUtilities validation;    
+    DBOperationUtilities dboperation;
     public SignupPanel() { 
         utilities = new UIComponentUtilities();
-        validation = new ValidationUtilities();        
-        query = new QueryOperations();
-        insert = new InsertOperations();
-        initComponents();
+        validation = new ValidationUtilities();         
+        new Thread(){
+                public void run(){
+                    dboperation = new DBOperationUtilities(new DBAccessUtilities());
+                }
+            }.start();
+        initComponents();        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,9 +26,7 @@ public class SignupPanel extends javax.swing.JPanel {
         title = new javax.swing.JLabel();
         minimize_lbl = new javax.swing.JLabel();
         close_lbl = new javax.swing.JLabel();
-        CompanyIdTextField = new javax.swing.JTextField("Unable to fetch data");
         passwordField = new javax.swing.JPasswordField();
-        CompanyIdLabel = new javax.swing.JLabel();
         passwordlbl = new javax.swing.JLabel();
         createAnAccountLabel = new javax.swing.JLabel();
         BackButtonPanel = new javax.swing.JPanel();
@@ -44,7 +42,7 @@ public class SignupPanel extends javax.swing.JPanel {
         setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
-        setPreferredSize(new java.awt.Dimension(527, 509));
+        setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
         panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
@@ -110,29 +108,6 @@ public class SignupPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        CompanyIdTextField.setEditable(false);
-        CompanyIdTextField.setBackground(utilities.colorutil.bodypanelcolor);
-        CompanyIdTextField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        CompanyIdTextField.setForeground(utilities.colorutil.primarytextcolor);
-        try{
-            CompanyIdTextField.setText(query.getLatestId("Administrator"));
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this.getParent(),"Unable to fetch data. please try again", "Connection error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
-        }
-        CompanyIdTextField.setToolTipText("Company_Id");
-        CompanyIdTextField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        CompanyIdTextField.setCaretColor(utilities.colorutil.initialColor);
-        CompanyIdTextField.setDisabledTextColor(new java.awt.Color(162, 160, 162));
-        CompanyIdTextField.setFocusable(false);
-        CompanyIdTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                FocusTextFields(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                FocusTextFields(evt);
-            }
-        });
-
         passwordField.setBackground(utilities.colorutil.bodypanelcolor);
         passwordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         passwordField.setForeground(utilities.colorutil.primarytextcolor);
@@ -149,11 +124,6 @@ public class SignupPanel extends javax.swing.JPanel {
                 FocusTextFields(evt);
             }
         });
-
-        CompanyIdLabel.setBackground(utilities.colorutil.bodypanelcolor);
-        CompanyIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        CompanyIdLabel.setForeground(utilities.colorutil.primarytextcolor);
-        CompanyIdLabel.setText("Company_id");
 
         passwordlbl.setBackground(utilities.colorutil.bodypanelcolor);
         passwordlbl.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
@@ -321,32 +291,22 @@ public class SignupPanel extends javax.swing.JPanel {
                         .addComponent(createAnAccountLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(CompanyIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CompanyIdLabel)
-                                        .addGap(106, 106, 106)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNamelbl)
-                                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(passwordlbl)
-                                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(confirmPasswordlbl)
-                                        .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(passwordlbl)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(confirmPasswordlbl)
+                                    .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(userNamelbl, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userName, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,13 +315,9 @@ public class SignupPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createAnAccountLabel)
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CompanyIdLabel)
-                    .addComponent(userNamelbl))
+                .addComponent(userNamelbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CompanyIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -379,7 +335,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 .addGap(47, 47, 47))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -406,15 +362,13 @@ public class SignupPanel extends javax.swing.JPanel {
 
     private void actionSignup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignup
         if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
-            try{
-                insert.insertadmin.setString(1,userName.getText());
-                insert.insertadmin.setString(2,String.valueOf(passwordField.getPassword()));
-                insert.insertadmin.execute();
+            String result = dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));
+            if("success".equals(result)){
                 JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
                 utilities.switchFromTo(this, new LoginPanel());
-            }catch(SQLException | NullPointerException e){
-                JOptionPane.showMessageDialog(this.getParent(),"Unable to insert data. please try again later.", "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
-            }
+            }else{
+                JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            }            
         }else{            
             String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
                     + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
@@ -426,8 +380,6 @@ public class SignupPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;
     private javax.swing.JPanel BackButtonPanel;
-    private javax.swing.JLabel CompanyIdLabel;
-    private javax.swing.JTextField CompanyIdTextField;
     private javax.swing.JLabel close_lbl;
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JLabel confirmPasswordlbl;

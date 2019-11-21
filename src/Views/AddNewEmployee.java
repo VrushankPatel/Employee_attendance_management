@@ -38,7 +38,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         setForeground(utilities.colorutil.primarytextcolor);
         setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
-        setPreferredSize(new java.awt.Dimension(527, 509));
+        setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
         panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
@@ -352,11 +352,11 @@ public class AddNewEmployee extends javax.swing.JPanel {
                         .addComponent(userNamelbl4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userName4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -373,7 +373,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
     }//GEN-LAST:event_commonHoverButtons
 
     private void getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getBack
-        utilities.switchFromTo(this, new LoginPanel());
+        utilities.switchFromTo(this, new ManipulateEmployeeDetails());
     }//GEN-LAST:event_getBack
 
     private void hoverButtonicLabels(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hoverButtonicLabels

@@ -1,12 +1,21 @@
 package Views;
 
+import Utilities.DBAccessUtilities;
+import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
 import javax.swing.*;
 
 public class LoginPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    public LoginPanel() {           
+    private DBOperationUtilities dboperation;
+    public LoginPanel() {                   
         initComponents();        
+        new Thread(){
+                public void run(){
+                    dboperation = new DBOperationUtilities(new DBAccessUtilities());
+                }
+            }.start();
+        initComponents();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -17,7 +26,7 @@ public class LoginPanel extends javax.swing.JPanel {
         minimize_lbl = new javax.swing.JLabel();
         close_lbl = new javax.swing.JLabel();
         userName = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordField = new javax.swing.JPasswordField();
         userNamelbl = new javax.swing.JLabel();
         passwordlbl = new javax.swing.JLabel();
         administratorLoginlbl = new javax.swing.JLabel();
@@ -111,16 +120,16 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        jPasswordField1.setBackground(utilities.colorutil.bodypanelcolor);
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jPasswordField1.setForeground(utilities.colorutil.primarytextcolor);
-        jPasswordField1.setText("Password");
-        jPasswordField1.setToolTipText("Password");
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        jPasswordField1.setCaretColor(utilities.colorutil.initialColor);
-        jPasswordField1.setPreferredSize(new java.awt.Dimension(55, 19));
-        jPasswordField1.setCaretColor(utilities.colorutil.initialColor);
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        passwordField.setBackground(utilities.colorutil.bodypanelcolor);
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        passwordField.setForeground(utilities.colorutil.primarytextcolor);
+        passwordField.setText("Password");
+        passwordField.setToolTipText("Password");
+        passwordField.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        passwordField.setCaretColor(utilities.colorutil.initialColor);
+        passwordField.setPreferredSize(new java.awt.Dimension(55, 19));
+        passwordField.setCaretColor(utilities.colorutil.initialColor);
+        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 FocusTextFields(evt);
             }
@@ -149,6 +158,9 @@ public class LoginPanel extends javax.swing.JPanel {
         LoginButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         LoginButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginButtonPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -228,7 +240,7 @@ public class LoginPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(passwordlbl)
                             .addComponent(userNamelbl)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,8 +261,8 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(passwordlbl)
                 .addGap(0, 0, 0)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LoginButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -278,6 +290,16 @@ public class LoginPanel extends javax.swing.JPanel {
         utilities.switchFromTo(this,new SignupPanel());
     }//GEN-LAST:event_actionSignUp
 
+    private void LoginButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonPanelMouseClicked
+        String result = dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
+        if("success".equals(result)){
+            JOptionPane.showMessageDialog(this.getParent(),"Login successful.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+            utilities.switchFromTo(this, new AdminOptions());
+        }else{
+            JOptionPane.showMessageDialog(this.getParent(),result, "Data not found",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+        }
+    }//GEN-LAST:event_LoginButtonPanelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LoginButtenLabel;
     private javax.swing.JPanel LoginButtonPanel;
@@ -285,9 +307,9 @@ public class LoginPanel extends javax.swing.JPanel {
     private javax.swing.JPanel SignupButtonPanel;
     private javax.swing.JLabel administratorLoginlbl;
     private javax.swing.JLabel close_lbl;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordlbl;
     private javax.swing.JLabel title;
     private javax.swing.JTextField userName;

@@ -1,6 +1,7 @@
 package Utilities;
 
 import java.awt.Component;
+import javafx.scene.paint.Color;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -26,6 +27,10 @@ public class UIComponentUtilities {
                 ((JLabel)j).setForeground((((JLabel)j).getForeground()).toString().equals(colorutil.initialColor.toString()) ? colorutil.headpanelandhovercolor : colorutil.initialColor);
             }            
         }
+    }
+    public void backHover(java.awt.event.MouseEvent evt){        
+        ((JLabel)(evt.getSource())).setIcon((((JLabel)(evt.getSource())).getIcon().toString()).equals(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4.png")).toString()) ? new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4_1.png")) : new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4.png"))); // NOI18N                
+        ((JLabel)(evt.getSource())).setForeground(((JLabel)(evt.getSource())).getForeground().toString().equals(colorutil.primarytextcolor.toString()) ? colorutil.headpanelandhovercolor : colorutil.primarytextcolor);        
     }
     public void switchFromTo(JPanel sourcePanel,JPanel destinationPanel){
         sourcePanel.setVisible(false);

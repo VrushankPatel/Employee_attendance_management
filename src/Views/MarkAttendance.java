@@ -257,7 +257,7 @@ public class MarkAttendance extends javax.swing.JPanel {
                 .addComponent(passwordlbl)
                 .addGap(0, 0, 0)
                 .addComponent(dateOfAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(absentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(presentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -285,8 +285,6 @@ public class MarkAttendance extends javax.swing.JPanel {
     private javax.swing.JLabel AteendanceMasterlbl;
     private javax.swing.JTextField EmployeeId;
     private javax.swing.JLabel EmployeeIdlbl;
-    private javax.swing.JLabel SignupButtenLabel1;
-    private javax.swing.JPanel SignupButtonPanel1;
     private javax.swing.JLabel absentButtenLabel;
     private javax.swing.JPanel absentButtonPanel;
     private javax.swing.JLabel close_lbl;
