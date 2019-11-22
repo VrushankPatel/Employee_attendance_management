@@ -2,21 +2,18 @@ package Views;
 
 import Utilities.DBAccessUtilities;
 import Utilities.DBOperationUtilities;
+import Utilities.SessionUtilities;
 import Utilities.UIComponentUtilities;
 import javax.swing.*;
 
 public class LoginPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
     private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;
     public LoginPanel() {                   
         initComponents();        
-        new Thread(){
-                public void run(){
-                    dboperation = new DBOperationUtilities(new DBAccessUtilities());
-                }
-            }.start();
-        initComponents();
-    }
+        initConnection();                
+    }    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -34,6 +31,7 @@ public class LoginPanel extends javax.swing.JPanel {
         LoginButtenLabel = new javax.swing.JLabel();
         SignupButtonPanel = new javax.swing.JPanel();
         SignupButtenLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -225,6 +223,10 @@ public class LoginPanel extends javax.swing.JPanel {
             .addComponent(SignupButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,7 +248,10 @@ public class LoginPanel extends javax.swing.JPanel {
                                 .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(LoginButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,14 +267,27 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(passwordlbl)
                 .addGap(0, 0, 0)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LoginButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SignupButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void initConnection(){
+        new Thread(){
+            public void run(){
+                try{
+                    dbaccesstocken = new DBAccessUtilities();
+                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                }catch(Exception e){                 
+                    status.setText("Status : Not Connected");                        
+                }
+            }
+        }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -291,12 +309,23 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_actionSignUp
 
     private void LoginButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonPanelMouseClicked
-        String result = dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
-        if("success".equals(result)){
-            JOptionPane.showMessageDialog(this.getParent(),"Login successful.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
-            utilities.switchFromTo(this, new AdminOptions());
-        }else{
-            JOptionPane.showMessageDialog(this.getParent(),result, "Data not found",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+        String result;
+        try{
+            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
+            if("success".equals(result)){
+                JOptionPane.showMessageDialog(this.getParent(),"Login successful.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
+                utilities.switchFromTo(this, new AdminOptions());
+            }else{
+                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                JOptionPane.showMessageDialog(this.getParent(),result, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            }
+            if(dbaccesstocken.con.isClosed()){                
+                initConnection();
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            initConnection();
+        }catch(Exception e){
         }
     }//GEN-LAST:event_LoginButtonPanelMouseClicked
 
@@ -311,6 +340,7 @@ public class LoginPanel extends javax.swing.JPanel {
     private javax.swing.JPanel panelHead;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordlbl;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     private javax.swing.JTextField userName;
     private javax.swing.JLabel userNamelbl;

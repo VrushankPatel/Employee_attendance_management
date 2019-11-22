@@ -6,17 +6,14 @@ import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
-    private final ValidationUtilities validation;    
-    DBOperationUtilities dboperation;
+    private final ValidationUtilities validation;   
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;    
     public SignupPanel() { 
         utilities = new UIComponentUtilities();
-        validation = new ValidationUtilities();         
-        new Thread(){
-                public void run(){
-                    dboperation = new DBOperationUtilities(new DBAccessUtilities());
-                }
-            }.start();
+        validation = new ValidationUtilities();                 
         initComponents();        
+        initConnection();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -37,6 +34,7 @@ public class SignupPanel extends javax.swing.JPanel {
         userNamelbl = new javax.swing.JLabel();
         confirmPasswordField = new javax.swing.JPasswordField();
         confirmPasswordlbl = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -279,6 +277,10 @@ public class SignupPanel extends javax.swing.JPanel {
         confirmPasswordlbl.setForeground(utilities.colorutil.primarytextcolor);
         confirmPasswordlbl.setText("Confirm Password");
 
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -307,6 +309,9 @@ public class SignupPanel extends javax.swing.JPanel {
                             .addComponent(userNamelbl, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(userName, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(91, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,14 +333,28 @@ public class SignupPanel extends javax.swing.JPanel {
                         .addComponent(confirmPasswordlbl)
                         .addGap(0, 0, 0)
                         .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                    .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+    private void initConnection(){
+        new Thread(){
+                public void run(){
+                    try{
+                        dbaccesstocken = new DBAccessUtilities();
+                        dboperation = new DBOperationUtilities(dbaccesstocken);
+                        status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    }catch(Exception e){                 
+                        status.setText("Status : Not Connected");                        
+                    }
+                }
+            }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -361,19 +380,32 @@ public class SignupPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_hoverButtonicLabels
 
     private void actionSignup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignup
-        if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
-            String result = dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));
-            if("success".equals(result)){
-                JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
-                utilities.switchFromTo(this, new LoginPanel());
-            }else{
-                JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
-            }            
-        }else{            
-            String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
-                    + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
-                    + "\nEx. : John@1234";
-            JOptionPane.showMessageDialog(this.getParent(),errormessage, "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+        String result;
+        try{
+            if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
+                result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));           
+                if("success".equals(result)){
+                    JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+                    utilities.switchFromTo(this, new LoginPanel());
+                }else{
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                }  
+                if(dbaccesstocken.con.isClosed()){                
+                    initConnection();
+                }
+            }else{            
+                String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
+                        + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
+                        + "\nEx. : John@1234";
+                JOptionPane.showMessageDialog(this.getParent(),errormessage, "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            initConnection();
+        }catch(Exception e){
+            System.out.println("unknown exception : ");
+            System.out.println(e.getClass());
         }
     }//GEN-LAST:event_actionSignup
 
@@ -390,6 +422,7 @@ public class SignupPanel extends javax.swing.JPanel {
     private javax.swing.JPanel panelHead;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordlbl;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     private javax.swing.JTextField userName;
     private javax.swing.JLabel userNamelbl;

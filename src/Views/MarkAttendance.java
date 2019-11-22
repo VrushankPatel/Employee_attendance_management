@@ -1,16 +1,21 @@
 package Views;
 
+import Utilities.DBAccessUtilities;
+import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
-import java.awt.Color;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.Component;
+import java.text.SimpleDateFormat;
 
 public class MarkAttendance extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken; 
+    private SimpleDateFormat sdf;
     public MarkAttendance() {          
         initComponents();       
-        dateOfAttendance.getComponent(0).setBackground(utilities.colorutil.bodypanelcolor);
+        initConnection();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,6 +34,8 @@ public class MarkAttendance extends javax.swing.JPanel {
         presentButtonPanel = new javax.swing.JPanel();
         presentButtenLabel = new javax.swing.JLabel();
         dateOfAttendance = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -135,6 +142,9 @@ public class MarkAttendance extends javax.swing.JPanel {
         absentButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         absentButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         absentButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                markAttendance(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -168,6 +178,9 @@ public class MarkAttendance extends javax.swing.JPanel {
         presentButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         presentButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         presentButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                markAttendance(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -198,6 +211,7 @@ public class MarkAttendance extends javax.swing.JPanel {
 
         dateOfAttendance.setBackground(utilities.colorutil.bodypanelcolor);
         dateOfAttendance.setForeground(utilities.colorutil.primarytextcolor);
+        dateOfAttendance.getComponent(0).setBackground(utilities.colorutil.bodypanelcolor);
         dateOfAttendance.setDate(new Date());
         dateOfAttendance.setMaxSelectableDate(new Date());
         dateOfAttendance.setPreferredSize(new java.awt.Dimension(108, 28));
@@ -220,18 +234,39 @@ public class MarkAttendance extends javax.swing.JPanel {
             });
         }
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(utilities.colorutil.primarytextcolor);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-left_4_1.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1getBack(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel1backHover(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1backHover1(evt);
+            }
+        });
+
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelHead, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelHead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(AteendanceMasterlbl))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(passwordlbl)
                             .addComponent(EmployeeIdlbl)
@@ -240,7 +275,8 @@ public class MarkAttendance extends javax.swing.JPanel {
                                 .addComponent(presentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(absentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(dateOfAttendance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(dateOfAttendance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(status))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -252,19 +288,35 @@ public class MarkAttendance extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(EmployeeIdlbl)
                 .addGap(0, 0, 0)
-                .addComponent(EmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(passwordlbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(EmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(passwordlbl))
+                    .addComponent(jLabel1))
                 .addGap(0, 0, 0)
                 .addComponent(dateOfAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(absentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(presentButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void initConnection(){
+        new Thread(){
+                public void run(){
+                    try{
+                        dbaccesstocken = new DBAccessUtilities();
+                        dboperation = new DBOperationUtilities(dbaccesstocken);
+                        status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    }catch(Exception e){                 
+                        status.setText("Status : Not Connected");                        
+                    }
+                }
+            }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -281,6 +333,39 @@ public class MarkAttendance extends javax.swing.JPanel {
         utilities.hoverGeneralButtonicPanels((JPanel)(evt.getSource()));
     }//GEN-LAST:event_commonHoverButtons
 
+    private void jLabel1getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1getBack
+        utilities.switchFromTo(this, new AdminOptions());
+    }//GEN-LAST:event_jLabel1getBack
+
+    private void jLabel1backHover(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1backHover
+        utilities.backHover(evt);
+    }//GEN-LAST:event_jLabel1backHover
+
+    private void jLabel1backHover1(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1backHover1
+        utilities.backHover(evt);
+    }//GEN-LAST:event_jLabel1backHover1
+
+    private void markAttendance(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_markAttendance
+        String result;
+        sdf = new SimpleDateFormat("YYYY-MM-dd");        
+        try{
+            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
+            if("success".equals(result)){
+                JOptionPane.showMessageDialog(this.getParent(),"Attendance successfully recorded", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
+                EmployeeId.setText("Employee Id");
+            }else{
+                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                JOptionPane.showMessageDialog(this.getParent(),result, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            }
+            if(dbaccesstocken.con.isClosed()){                
+                initConnection();
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            initConnection();
+        }catch(Exception e){}                    
+    }//GEN-LAST:event_markAttendance
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AteendanceMasterlbl;
     private javax.swing.JTextField EmployeeId;
@@ -289,11 +374,13 @@ public class MarkAttendance extends javax.swing.JPanel {
     private javax.swing.JPanel absentButtonPanel;
     private javax.swing.JLabel close_lbl;
     private com.toedter.calendar.JDateChooser dateOfAttendance;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
     private javax.swing.JLabel passwordlbl;
     private javax.swing.JLabel presentButtenLabel;
     private javax.swing.JPanel presentButtonPanel;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

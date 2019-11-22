@@ -1,12 +1,14 @@
 package Views;
 
+import Utilities.SessionUtilities;
 import Utilities.UIColorUtilities;
 import Utilities.UIComponentUtilities;
 import javax.swing.*;
 
 public class AdminOptions extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    public AdminOptions() {           
+    public AdminOptions() {
+        System.out.println(SessionUtilities.companyidloggedin+"\n"+SessionUtilities.useridloggedin);
         initComponents();        
     }
     @SuppressWarnings("unchecked")
