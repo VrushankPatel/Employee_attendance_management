@@ -1,5 +1,6 @@
 package Utilities;
 
+import com.mysql.cj.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,5 +18,9 @@ public class ValidationUtilities {
             }            
         }
         return true;
+    }
+    
+    public boolean validateEmployee(String name,String address,String id,String phone){        
+        return  StringUtils.isStrictlyNumeric(phone) && StringUtils.isStrictlyNumeric(id) && name.length() <= 100 && address.length() <= 250 && id.length() == 10 && phone.length() == 10;        
     }
 }

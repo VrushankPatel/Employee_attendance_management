@@ -9,7 +9,7 @@ ALTER TABLE `Administrator` AUTO_INCREMENT=0;
 
 create table Employee(
 	Employee_Company_id int NOT NULL,
-	Employee_id int NOT NULL,
+	Employee_id bigint NOT NULL,
 	Emp_full_name varchar(255),
 	Emp_address longtext,
 	Emp_phone bigint,
@@ -19,7 +19,7 @@ create table Employee(
 
 CREATE TABLE Attendance(
 	Attendance_Employee_Company_id int NOT NULL,
-	Attendance_Employee_id int NOT NULL,
+	Attendance_Employee_id long NOT NULL,
 	attendance_date Date,
 	attendance_status ENUM('PRESENT', 'ABSENT', 'HOLIDAY') NOT NULL,
     primary key(Attendance_Employee_Company_id,Attendance_Employee_id,attendance_date),

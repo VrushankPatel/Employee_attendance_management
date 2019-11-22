@@ -50,30 +50,34 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="userNamelbl1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="userName1" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="employeeNameLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="employeeName" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="userNamelbl2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="userName2" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="employeeIdLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="employeeId" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="userNamelbl3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="userName3" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="employeeAddressLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="employeeAddress" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="userNamelbl4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="userName4" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="employeePhoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="employeePhone" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="status" min="-2" pref="141" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -86,35 +90,36 @@
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="userNamelbl1" min="-2" max="-2" attributes="0"/>
+                      <Component id="employeeNameLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="userName1" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="employeeName" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="userNamelbl2" min="-2" max="-2" attributes="0"/>
+                      <Component id="employeeIdLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="userName2" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="employeeId" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="userNamelbl3" min="-2" max="-2" attributes="0"/>
+                      <Component id="employeeAddressLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="userName3" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="employeeAddress" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="userNamelbl4" min="-2" max="-2" attributes="0"/>
+                      <Component id="employeePhoneLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="userName4" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="employeePhone" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="45" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="BackButtonPanel" min="-2" max="-2" attributes="0"/>
                   <Component id="nextButtonPanel" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <Component id="status" min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -327,6 +332,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addEmployee"/>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="commonHoverButtons"/>
       </Events>
@@ -369,14 +375,14 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="actionSignu"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addEmployee"/>
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="hoverButtonicLabels"/>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="hoverButtonicLabels"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="userName1">
+    <Component class="javax.swing.JTextField" name="employeeName">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -405,7 +411,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusTextFields"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="userNamelbl1">
+    <Component class="javax.swing.JLabel" name="employeeNameLabel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -419,7 +425,7 @@
         <Property name="text" type="java.lang.String" value="Employee Name"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="userName2">
+    <Component class="javax.swing.JTextField" name="employeeId">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -448,7 +454,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusTextFields"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="userNamelbl2">
+    <Component class="javax.swing.JLabel" name="employeeIdLabel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -462,7 +468,7 @@
         <Property name="text" type="java.lang.String" value="Employee Id"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="userName3">
+    <Component class="javax.swing.JTextField" name="employeeAddress">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -491,7 +497,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusTextFields"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="userNamelbl3">
+    <Component class="javax.swing.JLabel" name="employeeAddressLabel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -505,7 +511,7 @@
         <Property name="text" type="java.lang.String" value="Address"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="userName4">
+    <Component class="javax.swing.JTextField" name="employeePhone">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -534,7 +540,7 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusTextFields"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="userNamelbl4">
+    <Component class="javax.swing.JLabel" name="employeePhoneLabel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
@@ -546,6 +552,17 @@
           <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Phone no."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="status">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Status : Connecting ..."/>
       </Properties>
     </Component>
   </SubComponents>

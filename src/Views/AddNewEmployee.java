@@ -7,10 +7,13 @@ import javax.swing.*;
 public class AddNewEmployee extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;
     public AddNewEmployee() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();        
         initComponents();
+        initConnection();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -25,14 +28,15 @@ public class AddNewEmployee extends javax.swing.JPanel {
         BackButtenLabel = new javax.swing.JLabel();
         nextButtonPanel = new javax.swing.JPanel();
         nextButtenLabel = new javax.swing.JLabel();
-        userName1 = new javax.swing.JTextField();
-        userNamelbl1 = new javax.swing.JLabel();
-        userName2 = new javax.swing.JTextField();
-        userNamelbl2 = new javax.swing.JLabel();
-        userName3 = new javax.swing.JTextField();
-        userNamelbl3 = new javax.swing.JLabel();
-        userName4 = new javax.swing.JTextField();
-        userNamelbl4 = new javax.swing.JLabel();
+        employeeName = new javax.swing.JTextField();
+        employeeNameLabel = new javax.swing.JLabel();
+        employeeId = new javax.swing.JTextField();
+        employeeIdLabel = new javax.swing.JLabel();
+        employeeAddress = new javax.swing.JTextField();
+        employeeAddressLabel = new javax.swing.JLabel();
+        employeePhone = new javax.swing.JTextField();
+        employeePhoneLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -165,6 +169,9 @@ public class AddNewEmployee extends javax.swing.JPanel {
         nextButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         nextButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addEmployee(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -180,7 +187,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         nextButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextButtenLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                actionSignu(evt);
+                addEmployee(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 hoverButtonicLabels(evt);
@@ -207,14 +214,14 @@ public class AddNewEmployee extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        userName1.setBackground(utilities.colorutil.bodypanelcolor);
-        userName1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName1.setForeground(utilities.colorutil.primarytextcolor);
-        userName1.setText("Employee Name");
-        userName1.setToolTipText("Employee Name");
-        userName1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        userName1.setCaretColor(utilities.colorutil.initialColor);
-        userName1.addFocusListener(new java.awt.event.FocusAdapter() {
+        employeeName.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeName.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        employeeName.setForeground(utilities.colorutil.primarytextcolor);
+        employeeName.setText("Employee Name");
+        employeeName.setToolTipText("Employee Name");
+        employeeName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        employeeName.setCaretColor(utilities.colorutil.initialColor);
+        employeeName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
             }
@@ -223,19 +230,19 @@ public class AddNewEmployee extends javax.swing.JPanel {
             }
         });
 
-        userNamelbl1.setBackground(utilities.colorutil.bodypanelcolor);
-        userNamelbl1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl1.setForeground(utilities.colorutil.primarytextcolor);
-        userNamelbl1.setText("Employee Name");
+        employeeNameLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        employeeNameLabel.setForeground(utilities.colorutil.primarytextcolor);
+        employeeNameLabel.setText("Employee Name");
 
-        userName2.setBackground(utilities.colorutil.bodypanelcolor);
-        userName2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName2.setForeground(utilities.colorutil.primarytextcolor);
-        userName2.setText("Employee Id");
-        userName2.setToolTipText("Employee Id");
-        userName2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        userName2.setCaretColor(utilities.colorutil.initialColor);
-        userName2.addFocusListener(new java.awt.event.FocusAdapter() {
+        employeeId.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeId.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        employeeId.setForeground(utilities.colorutil.primarytextcolor);
+        employeeId.setText("Employee Id");
+        employeeId.setToolTipText("Employee Id");
+        employeeId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        employeeId.setCaretColor(utilities.colorutil.initialColor);
+        employeeId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
             }
@@ -244,19 +251,19 @@ public class AddNewEmployee extends javax.swing.JPanel {
             }
         });
 
-        userNamelbl2.setBackground(utilities.colorutil.bodypanelcolor);
-        userNamelbl2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl2.setForeground(utilities.colorutil.primarytextcolor);
-        userNamelbl2.setText("Employee Id");
+        employeeIdLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeIdLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        employeeIdLabel.setForeground(utilities.colorutil.primarytextcolor);
+        employeeIdLabel.setText("Employee Id");
 
-        userName3.setBackground(utilities.colorutil.bodypanelcolor);
-        userName3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName3.setForeground(utilities.colorutil.primarytextcolor);
-        userName3.setText("Address");
-        userName3.setToolTipText("Address");
-        userName3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        userName3.setCaretColor(utilities.colorutil.initialColor);
-        userName3.addFocusListener(new java.awt.event.FocusAdapter() {
+        employeeAddress.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeAddress.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        employeeAddress.setForeground(utilities.colorutil.primarytextcolor);
+        employeeAddress.setText("Address");
+        employeeAddress.setToolTipText("Address");
+        employeeAddress.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        employeeAddress.setCaretColor(utilities.colorutil.initialColor);
+        employeeAddress.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
             }
@@ -265,19 +272,19 @@ public class AddNewEmployee extends javax.swing.JPanel {
             }
         });
 
-        userNamelbl3.setBackground(utilities.colorutil.bodypanelcolor);
-        userNamelbl3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl3.setForeground(utilities.colorutil.primarytextcolor);
-        userNamelbl3.setText("Address");
+        employeeAddressLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        employeeAddressLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        employeeAddressLabel.setForeground(utilities.colorutil.primarytextcolor);
+        employeeAddressLabel.setText("Address");
 
-        userName4.setBackground(utilities.colorutil.bodypanelcolor);
-        userName4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        userName4.setForeground(utilities.colorutil.primarytextcolor);
-        userName4.setText("Phone no.");
-        userName4.setToolTipText("Phone no.");
-        userName4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        userName4.setCaretColor(utilities.colorutil.initialColor);
-        userName4.addFocusListener(new java.awt.event.FocusAdapter() {
+        employeePhone.setBackground(utilities.colorutil.bodypanelcolor);
+        employeePhone.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        employeePhone.setForeground(utilities.colorutil.primarytextcolor);
+        employeePhone.setText("Phone no.");
+        employeePhone.setToolTipText("Phone no.");
+        employeePhone.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
+        employeePhone.setCaretColor(utilities.colorutil.initialColor);
+        employeePhone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
             }
@@ -286,10 +293,14 @@ public class AddNewEmployee extends javax.swing.JPanel {
             }
         });
 
-        userNamelbl4.setBackground(utilities.colorutil.bodypanelcolor);
-        userNamelbl4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        userNamelbl4.setForeground(utilities.colorutil.primarytextcolor);
-        userNamelbl4.setText("Phone no.");
+        employeePhoneLabel.setBackground(utilities.colorutil.bodypanelcolor);
+        employeePhoneLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        employeePhoneLabel.setForeground(utilities.colorutil.primarytextcolor);
+        employeePhoneLabel.setText("Phone no.");
+
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -310,21 +321,24 @@ public class AddNewEmployee extends javax.swing.JPanel {
                                 .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNamelbl1)
-                                    .addComponent(userName1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(employeeNameLabel)
+                                    .addComponent(employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNamelbl2)
-                                    .addComponent(userName2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(employeeIdLabel)
+                                    .addComponent(employeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNamelbl3)
-                                    .addComponent(userName3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(employeeAddressLabel)
+                                    .addComponent(employeeAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNamelbl4)
-                                    .addComponent(userName4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(employeePhoneLabel)
+                                    .addComponent(employeePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,31 +349,44 @@ public class AddNewEmployee extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(userNamelbl1)
+                        .addComponent(employeeNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userName1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(employeeName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(userNamelbl2)
+                        .addComponent(employeeIdLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userName2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(employeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(userNamelbl3)
+                        .addComponent(employeeAddressLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userName3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(employeeAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(userNamelbl4)
+                        .addComponent(employeePhoneLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userName4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(employeePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void initConnection(){
+        new Thread(){
+            public void run(){
+                try{
+                    dbaccesstocken = new DBAccessUtilities();
+                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                }catch(Exception e){                 
+                    status.setText("Status : Not Connected");                        
+                }
+            }
+        }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -380,31 +407,54 @@ public class AddNewEmployee extends javax.swing.JPanel {
         utilities.hoverGeneralButtonicPanels((JPanel)(((JLabel)(evt.getSource())).getParent()));
     }//GEN-LAST:event_hoverButtonicLabels
 
-    private void actionSignu(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignu
-        
-    }//GEN-LAST:event_actionSignu
-
     private void focusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_focusTextFields
         utilities.onFocusTextFields((JTextField)(evt.getSource()));
     }//GEN-LAST:event_focusTextFields
+
+    private void addEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployee
+        String result;
+        try{
+            if(validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
+                result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+                if("success".equals(result)){
+                    JOptionPane.showMessageDialog(this.getParent(),"Successfully Added Employee.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
+                }else{
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                }  
+                if(dbaccesstocken.con.isClosed()){                
+                    initConnection();
+                }
+            }else{            
+                JOptionPane.showMessageDialog(this.getParent(),"Please enter valid credentials.\nId and phone number should be in the form of 10 digits", "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            initConnection();
+        }catch(Exception e){
+            System.out.println("unknown exception : ");
+            System.out.println(e.getClass());
+        }                
+    }//GEN-LAST:event_addEmployee
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;
     private javax.swing.JPanel BackButtonPanel;
     private javax.swing.JLabel close_lbl;
     private javax.swing.JLabel eddNewEmployeeLabel;
+    private javax.swing.JTextField employeeAddress;
+    private javax.swing.JLabel employeeAddressLabel;
+    private javax.swing.JTextField employeeId;
+    private javax.swing.JLabel employeeIdLabel;
+    private javax.swing.JTextField employeeName;
+    private javax.swing.JLabel employeeNameLabel;
+    private javax.swing.JTextField employeePhone;
+    private javax.swing.JLabel employeePhoneLabel;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JLabel nextButtenLabel;
     private javax.swing.JPanel nextButtonPanel;
     private javax.swing.JPanel panelHead;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
-    private javax.swing.JTextField userName1;
-    private javax.swing.JTextField userName2;
-    private javax.swing.JTextField userName3;
-    private javax.swing.JTextField userName4;
-    private javax.swing.JLabel userNamelbl1;
-    private javax.swing.JLabel userNamelbl2;
-    private javax.swing.JLabel userNamelbl3;
-    private javax.swing.JLabel userNamelbl4;
     // End of variables declaration//GEN-END:variables
 }

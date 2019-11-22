@@ -1,5 +1,7 @@
 package Views;
 
+import Utilities.DBAccessUtilities;
+import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
 import java.awt.Color;
 import java.util.Date;
@@ -8,8 +10,24 @@ import java.awt.Component;
 
 public class DeleteEmployee extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;
     public DeleteEmployee() {          
         initComponents();               
+        initConnection();
+    }
+    private void initConnection(){
+        new Thread(){
+            public void run(){
+                try{
+                    dbaccesstocken = new DBAccessUtilities();
+                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                }catch(Exception e){                 
+                    status.setText("Status : Not Connected");                        
+                }
+            }
+        }.start();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,6 +44,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
         DeleteButtenLabel = new javax.swing.JLabel();
         BackButtonPanel = new javax.swing.JPanel();
         BackButtenLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -127,6 +146,9 @@ public class DeleteEmployee extends javax.swing.JPanel {
         DeleteButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         DeleteButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteEmployee(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -140,6 +162,11 @@ public class DeleteEmployee extends javax.swing.JPanel {
         DeleteButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
         DeleteButtenLabel.setText("Delete");
         DeleteButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DeleteButtenLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteEmployee(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeleteButtonPanelLayout = new javax.swing.GroupLayout(DeleteButtonPanel);
         DeleteButtonPanel.setLayout(DeleteButtonPanelLayout);
@@ -191,6 +218,10 @@ public class DeleteEmployee extends javax.swing.JPanel {
             .addComponent(BackButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,6 +242,9 @@ public class DeleteEmployee extends javax.swing.JPanel {
                         .addGap(114, 114, 114)
                         .addComponent(deleteEmployeeLoginlbl)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +260,8 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DeleteButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -250,6 +285,25 @@ public class DeleteEmployee extends javax.swing.JPanel {
         utilities.switchFromTo(this, new ManipulateEmployeeDetails());
     }//GEN-LAST:event_getBack
 
+    private void deleteEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEmployee
+        String result;
+        try{
+            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.deleteEmployee(EmployeeId.getText());
+            if("success".equals(result)){
+                JOptionPane.showMessageDialog(this.getParent(),"Employee successfully deleted.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
+            }else{
+                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            }  
+            if(dbaccesstocken.con.isClosed()){                
+                initConnection();
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            initConnection();
+        }catch(Exception e){} 
+    }//GEN-LAST:event_deleteEmployee
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;
     private javax.swing.JPanel BackButtonPanel;
@@ -261,6 +315,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
     private javax.swing.JLabel deleteEmployeeLoginlbl;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

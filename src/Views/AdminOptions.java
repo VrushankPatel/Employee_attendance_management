@@ -8,7 +8,6 @@ import javax.swing.*;
 public class AdminOptions extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
     public AdminOptions() {
-        System.out.println(SessionUtilities.companyidloggedin+"\n"+SessionUtilities.useridloggedin);
         initComponents();        
     }
     @SuppressWarnings("unchecked")

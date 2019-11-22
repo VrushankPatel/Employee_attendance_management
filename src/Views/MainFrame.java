@@ -5,7 +5,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     private int posX,posY;
     public MainFrame() {
-        this.add(new MarkAttendance());    
+        this.add(new AddNewEmployee());    
         initComponents();
         this.setLocationRelativeTo(null);
     }
