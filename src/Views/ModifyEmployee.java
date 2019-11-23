@@ -1,11 +1,7 @@
 package Views;
 
 import Utilities.*;
-import java.awt.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class ModifyEmployee extends javax.swing.JPanel {    
