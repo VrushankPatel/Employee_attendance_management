@@ -162,11 +162,6 @@ public class DeleteEmployee extends javax.swing.JPanel {
         DeleteButtenLabel.setForeground(utilities.colorutil.primarytextcolor);
         DeleteButtenLabel.setText("Delete");
         DeleteButtenLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        DeleteButtenLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deleteEmployee(evt);
-            }
-        });
 
         javax.swing.GroupLayout DeleteButtonPanelLayout = new javax.swing.GroupLayout(DeleteButtonPanel);
         DeleteButtonPanel.setLayout(DeleteButtonPanelLayout);
@@ -290,6 +285,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
         try{
             result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.deleteEmployee(EmployeeId.getText());
             if("success".equals(result)){
+                System.out.println(result);
                 JOptionPane.showMessageDialog(this.getParent(),"Employee successfully deleted.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
             }else{
                 status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));

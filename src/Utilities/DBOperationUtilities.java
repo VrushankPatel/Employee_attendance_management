@@ -6,10 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Date;
 
 public class DBOperationUtilities {
-    public PreparedStatement insertadmin,getadmin,markattendance,addEmployee,deleteEmployee;
+    public PreparedStatement insertadmin,getadmin,markattendance,addEmployee,deleteEmployee,modifyEmployee,getEmployee;
     DBAccessUtilities dbutil;
     CryptoUtilitiy crypto;
     public DBOperationUtilities(DBAccessUtilities dbtocken){
@@ -20,7 +19,9 @@ public class DBOperationUtilities {
             getadmin = dbutil.con.prepareStatement("select * from Administrator where Admin_username = ? and Admin_Password = ?");
             markattendance = dbutil.con.prepareStatement("replace into Attendance values(?,?,?,?)");
             addEmployee = dbutil.con.prepareStatement("insert into Employee values(?,?,?,?,?)");
-            deleteEmployee = dbutil.con.prepareStatement("delete from Employee where Employee_id = ? and Employee_Company_id = ?");
+            getEmployee = dbutil.con.prepareStatement("select Emp_full_name,Emp_address,Emp_phone from Employee where Employee_Company_id = ? and Employee_id = ?");
+            modifyEmployee = dbutil.con.prepareStatement("update Employee set Emp_full_name = ?, Emp_address = ?, Emp_phone = ? where Employee_id = ? and Employee_Company_id = ?");
+            deleteEmployee = dbutil.con.prepareStatement("delete from Employee where Employee_Company_id = ? and Employee_id = ?");
         }catch(SQLException e){
             System.out.println(e.toString());
         }catch(NullPointerException e){}
@@ -62,9 +63,8 @@ public class DBOperationUtilities {
             markattendance.setInt(1,SessionUtilities.companyidloggedin);
             markattendance.setInt(2,Integer.parseInt(employeeid));
             markattendance.setString(3, date);
-            markattendance.setString(4, attendanceStatus);      
-            markattendance.executeUpdate();
-            return "success";
+            markattendance.setString(4, attendanceStatus);                 
+            return markattendance.executeUpdate()>0 ? "success" : "No Employee found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
            return "Database communication link failure";
         }catch(NumberFormatException e){
@@ -93,12 +93,13 @@ public class DBOperationUtilities {
             System.out.println(e.getClass());
             return "Unable to add employee";
         }
-    }public String deleteEmployee(String employeeId){
+    }
+    public String deleteEmployee(String employeeId){
         try {    
             deleteEmployee.setInt(1,SessionUtilities.companyidloggedin);
-            deleteEmployee.setLong(2,Long.parseLong(employeeId));
-            deleteEmployee.executeUpdate();
-            return "success";
+            deleteEmployee.setLong(2,Long.parseLong(employeeId));           
+            int result = deleteEmployee.executeUpdate();            
+            return result > 0 ? "success" : "No Employee found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
            return "Database communication link failure";
         }catch(NumberFormatException e){
@@ -106,6 +107,32 @@ public class DBOperationUtilities {
         }catch (Exception e) {
             System.out.println(e.getClass());
             return "No employee data found";
+        }
+    }
+    public ResultSet getEmployee(String employeeId){
+        try{
+            getEmployee.setInt(1,SessionUtilities.companyidloggedin);
+            getEmployee.setLong(2,Long.parseLong(employeeId));
+            return getEmployee.executeQuery();
+        }catch(Exception e){
+            return null;
+        }
+    }
+    public String modifyEmployee(String name,String address,String id,String phone){
+        try {                
+            modifyEmployee.setString(1, name);
+            modifyEmployee.setString(2, address); 
+            modifyEmployee.setLong(3, Long.parseLong(phone)); 
+            modifyEmployee.setInt(5,SessionUtilities.companyidloggedin);
+            modifyEmployee.setLong(4,Long.parseLong(id));            
+            int result = modifyEmployee.executeUpdate();
+            System.out.println(result);
+            return result > 0 ? "success" : "Unable to modify employee";
+        }catch(CommunicationsException | NullPointerException e){
+           return "Database communication link failure";
+        }catch (Exception e) {
+            System.out.println(e.getClass());
+            return "Unable to modify employee";
         }
     }
 }
