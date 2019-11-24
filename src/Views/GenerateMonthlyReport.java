@@ -1,15 +1,32 @@
 package Views;
 
+import Utilities.DBAccessUtilities;
+import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
-import java.awt.Color;
+import Utilities.ValidationUtilities;
+import java.io.File;
+import ReportGenerator.GenerateReportMonthly;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import javax.swing.*;
-import java.awt.Component;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GenerateMonthlyReport extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    public GenerateMonthlyReport() {          
-        initComponents();               
+    private GenerateReportMonthly reportGenerator;
+    private final ValidationUtilities valid = new ValidationUtilities();
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;
+    SimpleDateFormat sdf;
+    public GenerateMonthlyReport() {
+        reportGenerator = new GenerateReportMonthly();
+        initComponents();      
+        initConnection();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,6 +43,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         GenerateButtenLabel = new javax.swing.JLabel();
         BackButtonPanel = new javax.swing.JPanel();
         BackButtenLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -128,6 +146,9 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         GenerateButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         GenerateButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         GenerateButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                generateReport(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 commonHoverButtons(evt);
             }
@@ -192,6 +213,10 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
             .addComponent(BackButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,6 +237,9 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                         .addGap(167, 167, 167)
                         .addComponent(MonthlyReportlbl)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,14 +251,27 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                 .addComponent(EmployeeIdLabel)
                 .addGap(0, 0, 0)
                 .addComponent(EmployeeId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GenerateButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void initConnection(){
+        new Thread(){
+            public void run(){
+                try{
+                    dbaccesstocken = new DBAccessUtilities();
+                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                }catch(Exception e){                 
+                    status.setText("Status : Not Connected");                        
+                }
+            }
+        }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -251,6 +292,37 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         utilities.switchFromTo(this, new GenerateReport());
     }//GEN-LAST:event_getBack
 
+    private void generateReport(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateReport
+        try{
+            if(valid.validateEmployeeId(EmployeeId.getText())){
+                String result = dboperation.isEmployeeExists(EmployeeId.getText());
+                if(result == "Success"){
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileFilter(new FileNameExtensionFilter("Pdf Files","*"));
+                    fileChooser.setApproveButtonText("Save");
+                    fileChooser.setDialogTitle("Save As (Do not specify extension)");
+                    if (fileChooser.showSaveDialog(((JPanel)evt.getSource()).getParent()) == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.getSelectedFile();
+                        String filename = file.toString()+".pdf";
+                        sdf = new SimpleDateFormat("YYYY-MM-dd");                    
+                        ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                        
+                        int totaldays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());
+                        int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
+                        reportGenerator.generateMonthReport(filename,EmployeeId.getText(),YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),totaldays,presentDays,rs);
+                    }                
+                }else{
+                    if(result.equals("Database communication link failure")){
+                        initConnection();
+                    }
+                    JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_generateReport
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;
     private javax.swing.JPanel BackButtonPanel;
@@ -262,6 +334,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
     private javax.swing.JLabel close_lbl;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

@@ -338,6 +338,8 @@ public class AdminOptions extends javax.swing.JPanel {
     }//GEN-LAST:event_backHover
 
     private void logout(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logout
+        SessionUtilities.companyidloggedin = 0;
+        SessionUtilities.useridloggedin = "";
         utilities.switchFromTo(this, new LoginPanel());
     }//GEN-LAST:event_logout
     
