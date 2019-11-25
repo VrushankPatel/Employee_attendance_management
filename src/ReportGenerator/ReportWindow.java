@@ -9,27 +9,27 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.YearMonth;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-public class ReportWindow extends javax.swing.JPanel {    
+public final class ReportWindow extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    private GenerateReportMonthly reportGenerator;
-    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-    private String emp_id,fromtodates;
-    private int workingdays,presentdays,totaldays;
+    private final GenerateReportMonthly reportGenerator;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    private final String emp_id,dateOfAttendance;
+    private final int workingdays,presentdays,totaldays;
+    private Date startdate,enddate;
     ResultSet dataset;
     public ReportWindow(String employeeid,String dates,int totalWorkingDays,int presentDays,int totalDay,ResultSet result) throws SQLException {          
         reportGenerator = new GenerateReportMonthly();        
         emp_id = employeeid;
-        fromtodates = dates;
         workingdays = totalWorkingDays;
         presentdays = presentDays;
         totaldays = totalDay;
-        dataset = result;          
-        initComponents();  
-        resultSetToTableModel(result, attendanceTable);
+        dataset = result;     
+        dateOfAttendance = dates;
+        initComponents();          
+        resultSetToTableModel(result, attendanceTable);        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -158,7 +158,7 @@ public class ReportWindow extends javax.swing.JPanel {
         );
         GenerateButtonPanelLayout.setVerticalGroup(
             GenerateButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(GenerateButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            .addComponent(GenerateButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
         );
 
         BackButtonPanel.setBackground(utilities.colorutil.bodypanelcolor);
@@ -203,7 +203,9 @@ public class ReportWindow extends javax.swing.JPanel {
 
         date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         date.setForeground(utilities.colorutil.primarytextcolor);
-        date.setText("Date : "+fromtodates);
+        try{
+            date.setText("Date : "+dateOfAttendance);
+        }catch(Exception e){}
 
         totalDays.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         totalDays.setForeground(utilities.colorutil.primarytextcolor);
@@ -222,6 +224,7 @@ public class ReportWindow extends javax.swing.JPanel {
         OverallReportlbl.setForeground(utilities.colorutil.primarytextcolor);
         OverallReportlbl.setText("Report");
 
+        jScrollPane1.setBackground(utilities.colorutil.bodypanelcolor);
         jScrollPane1.setForeground(utilities.colorutil.primarytextcolor);
 
         attendanceTable.setBackground(utilities.colorutil.bodypanelcolor);
@@ -287,7 +290,7 @@ public class ReportWindow extends javax.swing.JPanel {
             .addComponent(date)
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(28, 28, 28)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(GenerateButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -301,15 +304,20 @@ public class ReportWindow extends javax.swing.JPanel {
         for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++){
             tableModel.addColumn(metaData.getColumnLabel(columnIndex));
         }
-
         Object[] row = new Object[columnCount];
-
-        while (rs.next()){
+        rs.first();
+        do{
             for (int i = 0; i < columnCount; i++){
-                row[i] = rs.getObject(i+1);
-            }
+                if(i==0){
+                    try{
+                        row[i] = new SimpleDateFormat("dd MMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(i+1)));
+                    }catch(Exception e){}
+                }else{
+                    row[i] = rs.getObject(i+1);
+                }
+            }            
             tableModel.addRow(row);
-        }
+        }while (rs.next());
 
         table.setModel(tableModel);
     }
@@ -334,10 +342,11 @@ public class ReportWindow extends javax.swing.JPanel {
         fileChooser.setFileFilter(new FileNameExtensionFilter("Pdf Files","*"));
         fileChooser.setApproveButtonText("Save");
         fileChooser.setDialogTitle("Save As (Do not specify extension)");
+        
         if (fileChooser.showSaveDialog(((JPanel)evt.getSource()).getParent()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            String filename = file.toString()+".pdf";                                   
-            reportGenerator.generateMonthReport(filename,emp_id,YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),workingdays,presentdays,totaldays,attendanceTable);            
+            String filename = file.toString()+".pdf";                        
+            reportGenerator.generateMonthReport(filename,emp_id,date.getText(),workingdays,presentdays,totaldays,attendanceTable);            
         }  
     }//GEN-LAST:event_exportReport
 

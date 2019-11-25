@@ -6,12 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Date;
 
 public class DBOperationUtilities {
-    public PreparedStatement insertadmin,getadmin,markattendance,addEmployee,deleteEmployee,modifyEmployee,getEmployee,isEmployeeExists,getAttendanceFromTo,getPresentDays;
+    public PreparedStatement insertadmin,getadmin,markattendance,addEmployee,deleteEmployee,modifyEmployee,getEmployee,isEmployeeExists,getAttendanceFromTo,getPresentDays,overallAttendance,getMinMaxDate;
     DBAccessUtilities dbutil;
-    CryptoUtilitiy crypto;
+    CryptoUtilitiy crypto;    
     public DBOperationUtilities(DBAccessUtilities dbtocken){
         dbutil = dbtocken;
         crypto = new CryptoUtilitiy();
@@ -26,6 +25,8 @@ public class DBOperationUtilities {
             isEmployeeExists = dbutil.con.prepareStatement("select count(*) from Employee where Employee_id = ? and Employee_Company_id = ?");
             getAttendanceFromTo = dbutil.con.prepareStatement("select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ? order by attendance_date");
             getPresentDays = dbutil.con.prepareStatement("select count(*) from Attendance where attendance_status = \"PRESENT\" and Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ?");
+            overallAttendance = dbutil.con.prepareStatement("select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date");
+            getMinMaxDate = dbutil.con.prepareStatement("select min(attendance_date),max(attendance_date) from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date");
         }catch(SQLException e){
             System.out.println(e.toString());
         }catch(NullPointerException e){}
@@ -158,6 +159,7 @@ public class DBOperationUtilities {
             getAttendanceFromTo.setString(2,employeeId);
             getAttendanceFromTo.setString(3, startDate);
             getAttendanceFromTo.setString(4, endDate);
+            System.out.println(getAttendanceFromTo);
             ResultSet result = getAttendanceFromTo.executeQuery();
             return result;
         }catch(Exception e){
@@ -167,17 +169,28 @@ public class DBOperationUtilities {
     public int getPresentDays(String employeeId,String startDate,String endDate){
         try{
             getPresentDays.setInt(1,SessionUtilities.companyidloggedin);
-            getPresentDays.setString(2,employeeId);
+            getPresentDays.setString(2,(employeeId));
             getPresentDays.setString(3, startDate);
             getPresentDays.setString(4, endDate);
             ResultSet result = getPresentDays.executeQuery();
             System.out.println(getPresentDays.toString());
             if(result.next()){
+                System.out.println();
                 return result.getInt(1);
             }
             return 0;
         }catch(Exception e){
             return 0;
+        }
+    }
+    public ResultSet getOverallAttendance(String employeeId){
+        try{
+            overallAttendance.setInt(1,SessionUtilities.companyidloggedin);
+            overallAttendance.setLong(2,Long.parseLong(employeeId));            
+            ResultSet result = overallAttendance.executeQuery();
+            return result;
+        }catch(Exception e){
+            return null;
         }
     }
 }

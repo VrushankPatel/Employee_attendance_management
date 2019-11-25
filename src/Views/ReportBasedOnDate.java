@@ -397,7 +397,8 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));                                                
                     int totalDays = (int) valid.getTotalDays(FromDate.getDate(),ToDate.getDate());
                     ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));
-                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),sdf.format(FromDate.getDate())+" to "+sdf.format(ToDate.getDate()),totalworkingdays,presentDays,totalDays,rs));              
+                    String datefromto = new SimpleDateFormat("dd MMM yyyy").format(FromDate.getDate()) + " to " +new SimpleDateFormat("dd MMM yyyy").format(ToDate.getDate());
+                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));              
                 }else{
                     if(result.equals("Database communication link failure")){
                         initConnection();

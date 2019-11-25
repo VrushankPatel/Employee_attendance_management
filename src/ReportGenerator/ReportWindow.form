@@ -90,7 +90,7 @@
               <Component id="date" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="171" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="GenerateButtonPanel" max="32767" attributes="0"/>
                   <Component id="BackButtonPanel" max="32767" attributes="0"/>
@@ -241,7 +241,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="GenerateButtenLabel" alignment="0" pref="34" max="32767" attributes="0"/>
+              <Component id="GenerateButtenLabel" alignment="0" pref="56" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -344,13 +344,16 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="try{">
           <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Date : &quot;+fromtodates" type="code"/>
+          <Connection code="&quot;Date : &quot;+dateOfAttendance" type="code"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="}catch(Exception e){}"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="totalDays">
       <Properties>
@@ -407,6 +410,9 @@
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="utilities.colorutil.bodypanelcolor" type="code"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>

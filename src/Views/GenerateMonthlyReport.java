@@ -303,7 +303,8 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
                     int totalDays = (int) valid.getTotalDays(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant()), new Date());
                     ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                                
-                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),totalworkingdays,presentDays,totalDays,rs));              
+                    String datefromto = new SimpleDateFormat("dd MMM yyyy").format(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant())) + " to " +new SimpleDateFormat("dd MMM yyyy").format(new Date());
+                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));                                  
                 }else{
                     if(result.equals("Database communication link failure")){
                         initConnection();
