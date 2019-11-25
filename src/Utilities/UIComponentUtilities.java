@@ -12,6 +12,7 @@ public class UIComponentUtilities {
         json = new JsonParsingUtilities("Properties.json");                                 
     }            
     public void actionClose(java.awt.event.MouseEvent evt){
+        SessionUtilities.invalidateSession();
         System.exit(0);
     }
     public void onHoverTitleBarButtons(java.awt.event.MouseEvent evt) {  

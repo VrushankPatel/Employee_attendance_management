@@ -6,7 +6,8 @@ public class SessionUtilities {
         companyidloggedin = 0;
         useridloggedin = "";
     }
-    public static void validateSession(int ID,String UserID){
-        
+    public static void validateSession(int id,String userid){
+        companyidloggedin = id;
+        useridloggedin = userid;
     }
 }

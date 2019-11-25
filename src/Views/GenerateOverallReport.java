@@ -1,10 +1,7 @@
 package Views;
 
 import Utilities.UIComponentUtilities;
-import java.awt.Color;
-import java.util.Date;
 import javax.swing.*;
-import java.awt.Component;
 
 public class GenerateOverallReport extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();

@@ -6,6 +6,7 @@ import Utilities.UIComponentUtilities;
 import Utilities.ValidationUtilities;
 import java.io.File;
 import ReportGenerator.GenerateReportMonthly;
+import ReportGenerator.ReportWindow;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,14 +18,12 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GenerateMonthlyReport extends javax.swing.JPanel {    
-    private final UIComponentUtilities utilities = new UIComponentUtilities();
-    private GenerateReportMonthly reportGenerator;
+    private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
     private DBOperationUtilities dboperation;
     private DBAccessUtilities dbaccesstocken;
-    SimpleDateFormat sdf;
-    public GenerateMonthlyReport() {
-        reportGenerator = new GenerateReportMonthly();
+    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    public GenerateMonthlyReport() {        
         initComponents();      
         initConnection();
     }
@@ -296,20 +295,14 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         try{
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
+                System.out.println("here we go");
                 if(result == "Success"){
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setFileFilter(new FileNameExtensionFilter("Pdf Files","*"));
-                    fileChooser.setApproveButtonText("Save");
-                    fileChooser.setDialogTitle("Save As (Do not specify extension)");
-                    if (fileChooser.showSaveDialog(((JPanel)evt.getSource()).getParent()) == JFileChooser.APPROVE_OPTION) {
-                        File file = fileChooser.getSelectedFile();
-                        String filename = file.toString()+".pdf";
-                        sdf = new SimpleDateFormat("YYYY-MM-dd");                    
-                        ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                        
-                        int totaldays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());
-                        int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
-                        reportGenerator.generateMonthReport(filename,EmployeeId.getText(),YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),totaldays,presentDays,rs);
-                    }                
+                    System.out.println("success");
+                    int totalworkingdays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());                    
+                    int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
+                    int totalDays = (int) valid.getTotalDays(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant()), new Date());
+                    ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                                
+                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),totalworkingdays,presentDays,totalDays,rs));              
                 }else{
                     if(result.equals("Database communication link failure")){
                         initConnection();

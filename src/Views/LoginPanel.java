@@ -312,7 +312,7 @@ public class LoginPanel extends javax.swing.JPanel {
         String result;
         try{
             result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
-            if("success".equals(result)){                
+            if("success".equals(result)){                     
                 JOptionPane.showMessageDialog(this.getParent(),"Login successful.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                                
                 utilities.switchFromTo(this, new AdminOptions());
             }else{

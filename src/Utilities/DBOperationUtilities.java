@@ -64,7 +64,7 @@ public class DBOperationUtilities {
     public String markAttendance(String employeeid,String date,String attendanceStatus){
         try {    
             markattendance.setInt(1,SessionUtilities.companyidloggedin);
-            markattendance.setInt(2,Integer.parseInt(employeeid));
+            markattendance.setLong(2,Long.parseLong(employeeid));
             markattendance.setString(3, date);
             markattendance.setString(4, attendanceStatus);                 
             return markattendance.executeUpdate()>0 ? "success" : "No Employee found with entered credentials";

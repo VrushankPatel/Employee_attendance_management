@@ -333,7 +333,7 @@ public class ManipulateEmployeeDetails extends javax.swing.JPanel {
     }//GEN-LAST:event_removeEmployee
 
     private void modifyEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyEmployee
-       
+        utilities.switchFromTo(this, new ModifyEmployee());
     }//GEN-LAST:event_modifyEmployee
     
     

@@ -348,22 +348,26 @@ public class MarkAttendance extends javax.swing.JPanel {
     private void markAttendance(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_markAttendance
         String result;
         sdf = new SimpleDateFormat("YYYY-MM-dd");        
-        try{
-            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
-            if("success".equals(result)){
-                JOptionPane.showMessageDialog(this.getParent(),"Attendance successfully recorded", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
-                EmployeeId.setText("Employee Id");
-            }else{
-                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
-                JOptionPane.showMessageDialog(this.getParent(),result, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
-            }
-            if(dbaccesstocken.con.isClosed()){                
+        if(EmployeeId.getText().length() == 10){
+                try{
+                result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
+                if("success".equals(result)){
+                    JOptionPane.showMessageDialog(this.getParent(),"Attendance successfully recorded", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
+                    EmployeeId.setText("Employee Id");
+                }else{
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    JOptionPane.showMessageDialog(this.getParent(),result, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                }
+                if(dbaccesstocken.con.isClosed()){                
+                    initConnection();
+                }
+            }catch(NullPointerException e){
+                JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 initConnection();
-            }
-        }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
-            initConnection();
-        }catch(Exception e){}                    
+            }catch(Exception e){}                    
+        }else{
+            JOptionPane.showMessageDialog(this.getParent(),"Invalid Employee Id. ( Employee Id should be a 10 digit number )", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+        }
     }//GEN-LAST:event_markAttendance
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

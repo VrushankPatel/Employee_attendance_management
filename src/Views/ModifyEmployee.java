@@ -428,7 +428,7 @@ public class ModifyEmployee extends javax.swing.JPanel {
     private void modifyEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyEmployee
         String result;
         try{
-            if(validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
+            if(employeeId.getText().length() == 10 && validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
                 result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
                 if("success".equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),"Employee modified successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
@@ -440,8 +440,12 @@ public class ModifyEmployee extends javax.swing.JPanel {
                 if(dbaccesstocken.con.isClosed()){                
                     initConnection();
                 }
-            }else{            
-                JOptionPane.showMessageDialog(this.getParent(),"Please enter valid credentials.\nId and phone number should be in the form of 10 digits", "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+            }else if(status.getText().equals("Status : Not Connected")){
+                    JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));                    
+                    initConnection();
+            }else {            
+                JOptionPane.showMessageDialog(this.getParent(),"Please enter valid credentials.\nEmployee Id and phone number should be in the form of 10 digits", "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+                
             }
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
@@ -453,7 +457,6 @@ public class ModifyEmployee extends javax.swing.JPanel {
     }//GEN-LAST:event_modifyEmployee
 
     private void getEmployeeDetails(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_getEmployeeDetails
-
         try{
             ResultSet rs = employeeId.getText().length()==10 ? dboperation.getEmployee(employeeId.getText()) : null;
             boolean result = rs.next();
@@ -464,6 +467,9 @@ public class ModifyEmployee extends javax.swing.JPanel {
             setactiveAndInactiveFields(employeeName,employeeName.getToolTipText(),false);
             setactiveAndInactiveFields(employeeAddress,employeeAddress.getToolTipText(),false);
             setactiveAndInactiveFields(employeePhone,employeePhone.getToolTipText(),false);
+        }
+        if(status.getText().equals("Status : Not Connected")){            
+            initConnection();
         }
     }//GEN-LAST:event_getEmployeeDetails
     public void setactiveAndInactiveFields(JTextField textfield,String text,boolean enabled){

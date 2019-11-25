@@ -1,15 +1,29 @@
 package Views;
 
+import ReportGenerator.ReportWindow;
+import Utilities.DBAccessUtilities;
+import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
+import Utilities.ValidationUtilities;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.Component;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
 
 public class ReportBasedOnDate extends javax.swing.JPanel {    
-    private final UIComponentUtilities utilities = new UIComponentUtilities();
+    private final UIComponentUtilities utilities = new UIComponentUtilities();    
+    private final ValidationUtilities valid = new ValidationUtilities();
+    private DBOperationUtilities dboperation;
+    private DBAccessUtilities dbaccesstocken;
+    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public ReportBasedOnDate() {          
-        initComponents();       
+        initComponents(); 
+        initConnection();
         FromDate.getComponent(0).setBackground(utilities.colorutil.bodypanelcolor);
     }
     @SuppressWarnings("unchecked")
@@ -31,6 +45,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         GenerateButtenLabel = new javax.swing.JLabel();
         BackButtonPanel = new javax.swing.JPanel();
         BackButtenLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
 
         setBackground(utilities.colorutil.bodypanelcolor);
         setForeground(utilities.colorutil.primarytextcolor);
@@ -192,6 +207,9 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         GenerateButtonPanel.setForeground(utilities.colorutil.primarytextcolor);
         GenerateButtonPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         GenerateButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                generateReport(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 GenerateButtonPanelcommonHoverButtons(evt);
             }
@@ -256,6 +274,10 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
             .addComponent(BackButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
+        status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        status.setForeground(utilities.colorutil.primarytextcolor);
+        status.setText("Status : Connecting ...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,6 +306,9 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(GenerateButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(status)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,14 +330,27 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                         .addComponent(ToDateLabel)
                         .addGap(0, 0, 0)
                         .addComponent(ToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GenerateButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void initConnection(){
+        new Thread(){
+            public void run(){
+                try{
+                    dbaccesstocken = new DBAccessUtilities();
+                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                }catch(Exception e){                 
+                    status.setText("Status : Not Connected");                        
+                }
+            }
+        }.start();
+    }
     private void mouseHoverminimmizeClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseHoverminimmizeClose
         utilities.onHoverTitleBarButtons(evt);
     }//GEN-LAST:event_mouseHoverminimmizeClose
@@ -345,6 +383,30 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         utilities.switchFromTo(this, new GenerateReport());
     }//GEN-LAST:event_BackButtonPanelMouseClicked
 
+    private void generateReport(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateReport
+        try{
+            if(valid.validateEmployeeId(EmployeeId.getText())){
+                String result = dboperation.isEmployeeExists(EmployeeId.getText());
+                System.out.println("here we go");
+                if(result == "Success"){
+                    System.out.println("success");
+                    int totalworkingdays = (int) valid.getWorkingDays(FromDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), ToDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());                    
+                    int presentDays = dboperation.getPresentDays(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));                                                
+                    int totalDays = (int) valid.getTotalDays(FromDate.getDate(),ToDate.getDate());
+                    ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));
+                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),sdf.format(FromDate.getDate())+" to "+sdf.format(ToDate.getDate()),totalworkingdays,presentDays,totalDays,rs));              
+                }else{
+                    if(result.equals("Database communication link failure")){
+                        initConnection();
+                    }
+                    JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_generateReport
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;
     private javax.swing.JPanel BackButtonPanel;
@@ -360,6 +422,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
     private javax.swing.JLabel close_lbl;
     private javax.swing.JLabel minimize_lbl;
     private javax.swing.JPanel panelHead;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
