@@ -1,7 +1,6 @@
 package Utilities;
 
 import java.awt.Component;
-import javafx.scene.paint.Color;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -16,7 +15,7 @@ public class UIComponentUtilities {
         System.exit(0);
     }
     public void actionMinimize(JFrame frame){
-        frame.setState(frame.ICONIFIED);
+        frame.setState(JFrame.ICONIFIED);
     }
     public void onHoverTitleBarButtons(java.awt.event.MouseEvent evt) {  
         ((JLabel)(evt.getSource())).setForeground(((JLabel)(evt.getSource())).getForeground().toString().equals(colorutil.primarytextcolor.toString()) ? colorutil.bodypanelcolor : colorutil.primarytextcolor);
