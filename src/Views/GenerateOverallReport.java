@@ -44,6 +44,9 @@ public class GenerateOverallReport extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimize_lblMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -247,6 +250,10 @@ public class GenerateOverallReport extends javax.swing.JPanel {
     private void getBack(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_getBack
         utilities.switchFromTo(this, new GenerateReport());
     }//GEN-LAST:event_getBack
+
+    private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minimize_lblMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

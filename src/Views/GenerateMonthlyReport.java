@@ -4,18 +4,16 @@ import Utilities.DBAccessUtilities;
 import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
 import Utilities.ValidationUtilities;
-import java.io.File;
-import ReportGenerator.GenerateReportMonthly;
 import ReportGenerator.ReportWindow;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GenerateMonthlyReport extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
@@ -64,6 +62,9 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimize_lblMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -296,7 +297,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
                 System.out.println("here we go");
-                if(result == "Success"){
+                if("Success".equals(result)){
                     System.out.println("success");
                     int totalworkingdays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());                    
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
@@ -310,11 +311,14 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }
-        }catch(Exception e){
+        }catch(HeadlessException | SQLException e){
             System.out.println(e.getMessage());
-        }
-
+        }catch(Exception e){}
     }//GEN-LAST:event_generateReport
+
+    private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minimize_lblMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

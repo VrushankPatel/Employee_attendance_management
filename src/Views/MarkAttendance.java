@@ -56,6 +56,9 @@ public class MarkAttendance extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimize_lblMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -369,6 +372,10 @@ public class MarkAttendance extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this.getParent(),"Invalid Employee Id. ( Employee Id should be a 10 digit number )", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
         }
     }//GEN-LAST:event_markAttendance
+
+    private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minimize_lblMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AteendanceMasterlbl;

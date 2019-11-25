@@ -58,6 +58,9 @@ public class ModifyEmployee extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minnimize(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -472,6 +475,10 @@ public class ModifyEmployee extends javax.swing.JPanel {
             initConnection();
         }
     }//GEN-LAST:event_getEmployeeDetails
+
+    private void minnimize(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minnimize
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minnimize
     public void setactiveAndInactiveFields(JTextField textfield,String text,boolean enabled){
         textfield.setEnabled(enabled);
         textfield.setText(text);

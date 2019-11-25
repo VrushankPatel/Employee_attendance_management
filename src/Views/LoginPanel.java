@@ -2,7 +2,6 @@ package Views;
 
 import Utilities.DBAccessUtilities;
 import Utilities.DBOperationUtilities;
-import Utilities.SessionUtilities;
 import Utilities.UIComponentUtilities;
 import javax.swing.*;
 
@@ -52,6 +51,9 @@ public class LoginPanel extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeWindow(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -328,6 +330,10 @@ public class LoginPanel extends javax.swing.JPanel {
         }catch(Exception e){
         }
     }//GEN-LAST:event_LoginButtonPanelMouseClicked
+
+    private void minimizeWindow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeWindow
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minimizeWindow
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LoginButtenLabel;

@@ -72,6 +72,9 @@ public class ReportWindow extends javax.swing.JPanel {
         minimize_lbl.setForeground(utilities.colorutil.primarytextcolor);
         minimize_lbl.setText("-");
         minimize_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimize_lblMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseHoverminimmizeClose(evt);
             }
@@ -337,6 +340,10 @@ public class ReportWindow extends javax.swing.JPanel {
             reportGenerator.generateMonthReport(filename,emp_id,YearMonth.now().atDay(1).toString()+" to "+sdf.format(new Date()),workingdays,presentdays,totaldays,attendanceTable);            
         }  
     }//GEN-LAST:event_exportReport
+
+    private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked
+        utilities.actionMinimize((JFrame) SwingUtilities.getWindowAncestor(this));
+    }//GEN-LAST:event_minimize_lblMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackButtenLabel;

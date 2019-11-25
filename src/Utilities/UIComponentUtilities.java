@@ -15,6 +15,9 @@ public class UIComponentUtilities {
         SessionUtilities.invalidateSession();
         System.exit(0);
     }
+    public void actionMinimize(JFrame frame){
+        frame.setState(frame.ICONIFIED);
+    }
     public void onHoverTitleBarButtons(java.awt.event.MouseEvent evt) {  
         ((JLabel)(evt.getSource())).setForeground(((JLabel)(evt.getSource())).getForeground().toString().equals(colorutil.primarytextcolor.toString()) ? colorutil.bodypanelcolor : colorutil.primarytextcolor);
     } 
