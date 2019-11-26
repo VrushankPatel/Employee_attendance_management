@@ -4,7 +4,6 @@ import Utilities.DBAccessUtilities;
 import Utilities.DBOperationUtilities;
 import Utilities.UIComponentUtilities;
 import Utilities.ValidationUtilities;
-import ReportGenerator.ReportWindow;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,7 +48,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
-        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
+        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
         panelHead.setForeground(utilities.colorutil.primarytextcolor);
 
         title.setBackground(utilities.colorutil.headpanelandhovercolor);
@@ -120,7 +119,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         EmployeeId.setForeground(utilities.colorutil.primarytextcolor);
         EmployeeId.setText("Employee Id");
         EmployeeId.setToolTipText("Employee Id");
-        EmployeeId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(192, 192, 192)));
+        EmployeeId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
         EmployeeId.setCaretColor(utilities.colorutil.initialColor);
         EmployeeId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

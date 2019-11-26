@@ -15,7 +15,7 @@ public class UIColorUtilities {
         initialBorder = getColorProperty("InititalBorder");         
     }
     
-    private Color getColorProperty(String propertyname){
+    public Color getColorProperty(String propertyname){
         int R = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("R").toString());
         int G = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("G").toString());
         int B = Integer.parseInt(((JSONObject)(json.getProperty(propertyname))).get("B").toString());        

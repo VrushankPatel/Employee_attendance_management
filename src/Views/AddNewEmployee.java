@@ -222,7 +222,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         employeeName.setText("Employee Name");
         employeeName.setToolTipText("Employee Name");
         employeeName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        employeeName.setCaretColor(utilities.colorutil.initialColor);
+        employeeName.setCaretColor(utilities.colorutil.primarytextcolor);
         employeeName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
@@ -243,7 +243,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         employeeId.setText("Employee Id");
         employeeId.setToolTipText("Employee Id");
         employeeId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        employeeId.setCaretColor(utilities.colorutil.initialColor);
+        employeeId.setCaretColor(utilities.colorutil.primarytextcolor);
         employeeId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
@@ -264,7 +264,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         employeeAddress.setText("Address");
         employeeAddress.setToolTipText("Address");
         employeeAddress.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        employeeAddress.setCaretColor(utilities.colorutil.initialColor);
+        employeeAddress.setCaretColor(utilities.colorutil.primarytextcolor);
         employeeAddress.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);
@@ -285,7 +285,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         employeePhone.setText("Phone no.");
         employeePhone.setToolTipText("Phone no.");
         employeePhone.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, utilities.colorutil.initialBorder));
-        employeePhone.setCaretColor(utilities.colorutil.initialColor);
+        employeePhone.setCaretColor(utilities.colorutil.primarytextcolor);
         employeePhone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 focusTextFields(evt);

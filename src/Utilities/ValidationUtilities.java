@@ -1,5 +1,4 @@
 package Utilities;
-
 import com.mysql.cj.util.StringUtils;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

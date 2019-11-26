@@ -1,5 +1,6 @@
-package ReportGenerator;
+package Views;
 
+import ReportGenerator.GenerateReportMonthly;
 import Views.*;
 import Utilities.UIComponentUtilities;
 import java.util.Date;
@@ -59,7 +60,7 @@ public final class ReportWindow extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(527, 500));
 
         panelHead.setBackground(utilities.colorutil.headpanelandhovercolor);
-        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(44, 62, 80)));
+        panelHead.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.bodypanelcolor));
         panelHead.setForeground(utilities.colorutil.primarytextcolor);
 
         title.setBackground(utilities.colorutil.headpanelandhovercolor);

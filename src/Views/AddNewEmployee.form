@@ -404,7 +404,7 @@
           </Border>
         </Property>
         <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="utilities.colorutil.initialColor" type="code"/>
+          <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -447,7 +447,7 @@
           </Border>
         </Property>
         <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="utilities.colorutil.initialColor" type="code"/>
+          <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -490,7 +490,7 @@
           </Border>
         </Property>
         <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="utilities.colorutil.initialColor" type="code"/>
+          <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -533,7 +533,7 @@
           </Border>
         </Property>
         <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="utilities.colorutil.initialColor" type="code"/>
+          <Connection code="utilities.colorutil.primarytextcolor" type="code"/>
         </Property>
       </Properties>
       <Events>
