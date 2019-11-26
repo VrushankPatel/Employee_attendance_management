@@ -358,7 +358,7 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_minimizeWindow
 
     private void openSettings(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openSettings
-        utilities.switchFromTo(this, new Settings());
+        utilities.switchFromTo(this, new SettingsWindow());
     }//GEN-LAST:event_openSettings
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
