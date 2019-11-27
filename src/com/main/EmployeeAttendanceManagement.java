@@ -4,7 +4,7 @@ import com.views.MainFrame;
 
 public class EmployeeAttendanceManagement {
     public static void main(String[] args) {
-        com.views.MainFrame mf = new MainFrame();
-        mf.setVisible(true);
+        com.views.MainFrame employeeAttendanceWindow = new MainFrame();
+        employeeAttendanceWindow.setVisible(true);
     }    
 }

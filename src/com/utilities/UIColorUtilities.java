@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-public class UIColorUtilities {
+public final class UIColorUtilities {
     private static JsonParsingUtilities json; 
     public Color primarytextcolor,headpanelandhovercolor,bodypanelcolor,initialColor,initialBorder;
     public UIColorUtilities() throws Exception {
