@@ -11,7 +11,7 @@ public class LoginPanel extends javax.swing.JPanel {
     private DBAccessUtilities dbaccesstocken;
     public LoginPanel() {                   
         initComponents();        
-        initConnection();                
+        initConnection();          
     }    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

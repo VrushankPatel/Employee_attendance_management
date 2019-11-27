@@ -123,6 +123,11 @@ public class SettingsWindow extends javax.swing.JPanel {
         redLabel.setText("RED");
 
         jButton2.setText("Apply");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         greenLabel.setBackground(utilities.colorutil.bodypanelcolor);
         greenLabel.setForeground(utilities.colorutil.primarytextcolor);
@@ -316,7 +321,10 @@ public class SettingsWindow extends javax.swing.JPanel {
     }//GEN-LAST:event_minimizeWindow
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try{
+            json.restoreDefaults();
+            JOptionPane.showMessageDialog(this.getParent(),"Restored defaulted successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+        }catch(Exception e){}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -365,6 +373,14 @@ public class SettingsWindow extends javax.swing.JPanel {
         blueLabel1.setText(String.valueOf(blueSlider.getValue()));
         outputColorPanel.setBackground(new Color(redSlider.getValue(),greenSlider.getValue(),blueSlider.getValue()));
     }//GEN-LAST:event_blueSliderredSliderStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            if(json.setValue(choicesFields.getSelectedItem().toString(), redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()) == 1){
+                JOptionPane.showMessageDialog(this.getParent(),"Changes applied successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+            }
+        }catch(Exception e){}
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blueLabel;

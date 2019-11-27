@@ -6,8 +6,11 @@ import javax.swing.border.LineBorder;
 
 public class UIComponentUtilities {
     private final JsonParsingUtilities json; 
-    public UIColorUtilities colorutil = new UIColorUtilities();
+    public UIColorUtilities colorutil;
     public UIComponentUtilities() {
+        try{
+            colorutil = new UIColorUtilities();
+        }catch(Exception e){}
         json = new JsonParsingUtilities("Properties.json");                                 
     }            
     public void actionClose(java.awt.event.MouseEvent evt){

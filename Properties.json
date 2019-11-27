@@ -1,7 +1,1 @@
-{
-	"PrimaryTextColor":{"R":255,"G":255,"B":255},
-	"HeadPanelandhovercolor":{"R":248,"G":148,"B":6},
-	"BodyPanelColor":{"R":44,"G":62,"B":80},
-	"InititalColor":{"R":255,"G":255,"B":255},
-	"InititalBorder":{"R":192,"G":192,"B":192},	
-}
+{"PrimaryTextColor":{"R":255,"G":255,"B":255},"HeadPanelandhovercolor":{"R":248,"G":148,"B":6},"BodyPanelColor":{"R":44,"G":62,"B":80},"InititalColor":{"R":255,"G":255,"B":255},"InititalBorder":{"R":192,"G":192,"B":192},}
