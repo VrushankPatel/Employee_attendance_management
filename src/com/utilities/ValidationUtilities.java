@@ -4,16 +4,13 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationUtilities {
     private final Pattern pattern;
-    private Matcher matcher;
     public ValidationUtilities() {
         pattern = Pattern.compile("^(?!.* )(?=.*[@$!%*#?&])(?=.*\\d)(?=.*[A-Z]).{8,15}$");
-    }
-    
+    }    
     public boolean validateUserNameAndPassword(String str[]){
         for(String s : str){
             if(!pattern.matcher(s).matches()){

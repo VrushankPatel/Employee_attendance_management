@@ -212,6 +212,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
             .addComponent(BackButtenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
         );
 
+        status.setBackground(utilities.colorutil.bodypanelcolor);
         status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         status.setForeground(utilities.colorutil.primarytextcolor);
         status.setText("Status : Connecting ...");

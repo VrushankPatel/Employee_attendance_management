@@ -283,6 +283,7 @@ public class SignupPanel extends javax.swing.JPanel {
         confirmPasswordlbl.setForeground(utilities.colorutil.primarytextcolor);
         confirmPasswordlbl.setText("Confirm Password");
 
+        status.setBackground(utilities.colorutil.bodypanelcolor);
         status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         status.setForeground(utilities.colorutil.primarytextcolor);
         status.setText("Status : Connecting ...");

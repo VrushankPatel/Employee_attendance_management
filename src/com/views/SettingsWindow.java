@@ -1,7 +1,5 @@
 package com.views;
 
-import com.utilities.DBAccessUtilities;
-import com.utilities.DBOperationUtilities;
 import com.utilities.JsonParsingUtilities;
 import com.utilities.UIComponentUtilities;
 import javax.swing.*;

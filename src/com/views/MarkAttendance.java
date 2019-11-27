@@ -253,6 +253,7 @@ public class MarkAttendance extends javax.swing.JPanel {
             }
         });
 
+        status.setBackground(utilities.colorutil.bodypanelcolor);
         status.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         status.setForeground(utilities.colorutil.primarytextcolor);
         status.setText("Status : Connecting ...");
