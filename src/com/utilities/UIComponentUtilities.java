@@ -1,6 +1,7 @@
 package com.utilities;
 
 import java.awt.Component;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -13,6 +14,13 @@ public class UIComponentUtilities {
         }catch(Exception e){}
         json = new JsonParsingUtilities("Properties.json");                                 
     }            
+    public void actionClose(java.awt.event.MouseEvent evt,DBAccessUtilities dbaccesstocken){
+        try{
+        dbaccesstocken.con.close();        
+        }catch(SQLException e){}
+        SessionUtilities.invalidateSession();
+        System.exit(0);
+    }
     public void actionClose(java.awt.event.MouseEvent evt){
         SessionUtilities.invalidateSession();
         System.exit(0);
