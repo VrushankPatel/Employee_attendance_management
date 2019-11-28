@@ -265,7 +265,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }

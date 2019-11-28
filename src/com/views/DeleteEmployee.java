@@ -19,7 +19,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }
@@ -284,15 +284,15 @@ public class DeleteEmployee extends javax.swing.JPanel {
     private void deleteEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEmployee
         String result;
         try{
-            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.deleteEmployee(EmployeeId.getText());
+            result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.deleteEmployee(EmployeeId.getText());
             if("success".equals(result)){
                 System.out.println(result);
                 JOptionPane.showMessageDialog(this.getParent(),"Employee successfully deleted.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
             }else{
-                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             }  
-            if(dbaccesstocken.con.isClosed()){                
+            if(DBAccessUtilities.con.isClosed()){                
                 initConnection();
             }
         }catch(NullPointerException e){

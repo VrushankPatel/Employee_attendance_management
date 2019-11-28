@@ -386,7 +386,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }
@@ -421,15 +421,15 @@ public class AddNewEmployee extends javax.swing.JPanel {
         String result;
         try{
             if(validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
-                result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
                 if("success".equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),"Successfully Added Employee.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
                     utilities.switchFromTo(this, new AddNewEmployee());
                 }else{
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                     JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }  
-                if(dbaccesstocken.con.isClosed()){                
+                if(DBAccessUtilities.con.isClosed()){                
                     initConnection();
                 }
             }else{            

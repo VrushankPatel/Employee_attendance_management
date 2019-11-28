@@ -397,11 +397,12 @@ public class ModifyEmployee extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private void initConnection(){
         new Thread(){
+            @Override
             public void run(){
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }
@@ -436,15 +437,15 @@ public class ModifyEmployee extends javax.swing.JPanel {
         String result;
         try{
             if(employeeId.getText().length() == 10 && validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
-                result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
                 if("success".equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),"Employee modified successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
                     utilities.switchFromTo(this, new ModifyEmployee());
                 }else{
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                     JOptionPane.showMessageDialog(this.getParent(),result, "Modification error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }  
-                if(dbaccesstocken.con.isClosed()){                
+                if(DBAccessUtilities.con.isClosed()){                
                     initConnection();
                 }
             }else if(status.getText().equals("Status : Not Connected")){
@@ -474,9 +475,10 @@ public class ModifyEmployee extends javax.swing.JPanel {
             setactiveAndInactiveFields(employeeName,employeeName.getToolTipText(),false);
             setactiveAndInactiveFields(employeeAddress,employeeAddress.getToolTipText(),false);
             setactiveAndInactiveFields(employeePhone,employeePhone.getToolTipText(),false);
-        }
-        if(status.getText().equals("Status : Not Connected")){            
-            initConnection();
+        }finally{
+            if(status.getText().equals("Status : Not Connected")){            
+                initConnection();
+            }
         }
     }//GEN-LAST:event_getEmployeeDetails
 

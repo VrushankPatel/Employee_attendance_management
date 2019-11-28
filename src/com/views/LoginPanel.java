@@ -306,7 +306,7 @@ public class LoginPanel extends javax.swing.JPanel {
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }
@@ -336,14 +336,14 @@ public class LoginPanel extends javax.swing.JPanel {
     private void LoginButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonPanelMouseClicked
         String result;
         try{
-            result = dbaccesstocken.con.isClosed() ? "Database communication link failure" : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
+            result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
             if("success".equals(result)){                     
                 utilities.switchFromTo(this, new AdminOptions());
             }else{
-                status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 JOptionPane.showMessageDialog(this.getParent(),result, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             }
-            if(dbaccesstocken.con.isClosed()){                
+            if(DBAccessUtilities.con.isClosed()){                
                 initConnection();
             }
         }catch(NullPointerException e){

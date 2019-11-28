@@ -347,7 +347,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                 try{
                     dbaccesstocken = new DBAccessUtilities();
                     dboperation = new DBOperationUtilities(dbaccesstocken);
-                    status.setText("Status : "+(dbaccesstocken.con.isClosed() ? "Not Connected" : "Connected"));
+                    status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
                 }
@@ -390,9 +390,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         try{
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
-                System.out.println("here we go");
                 if(result == "Success"){
-                    System.out.println("success");
                     int totalworkingdays = (int) valid.getWorkingDays(FromDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), ToDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());                    
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));                                                
                     int totalDays = (int) valid.getTotalDays(FromDate.getDate(),ToDate.getDate());
@@ -406,9 +404,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        }catch(Exception e){}
     }//GEN-LAST:event_generateReport
 
     private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked

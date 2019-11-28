@@ -16,7 +16,7 @@ public class UIComponentUtilities {
     }            
     public void actionClose(java.awt.event.MouseEvent evt,DBAccessUtilities dbaccesstocken){
         try{
-        dbaccesstocken.con.close();        
+            dbaccesstocken.con.close();        
         }catch(SQLException e){}
         SessionUtilities.invalidateSession();
         System.exit(0);

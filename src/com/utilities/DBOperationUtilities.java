@@ -8,34 +8,43 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 public class DBOperationUtilities {
-    public PreparedStatement insertadmin,getadmin,markattendance,addEmployee,deleteEmployee,modifyEmployee,getEmployee,isEmployeeExists,getAttendanceFromTo,getPresentDays,overallAttendance,getMinMaxDate;
-    DBAccessUtilities dbutil;
+    private static String insertadmin;
+    private static String getadmin;
+    private static String markattendance;
+    private static String addEmployee;
+    private static String deleteEmployee;
+    private static String modifyEmployee;
+    private static String getEmployee;
+    private static String isEmployeeExists;
+    private static String getAttendanceFromTo; 
+    private static String getPresentDays;
+    private static String overallAttendance;
+    private static String getMinMaxDate;
+    private DBAccessUtilities dbutil;
+    private PreparedStatement commonStatement;
     CryptoUtilitiy crypto;    
     public DBOperationUtilities(DBAccessUtilities dbtocken){
         dbutil = dbtocken;
-        crypto = new CryptoUtilitiy();
-        try{
-            insertadmin = dbutil.con.prepareStatement("insert into Administrator (Admin_username,Admin_Password) values (?,?)");
-            getadmin = dbutil.con.prepareStatement("select * from Administrator where Admin_username = ? and Admin_Password = ?");
-            markattendance = dbutil.con.prepareStatement("replace into Attendance values(?,?,?,?)");
-            addEmployee = dbutil.con.prepareStatement("insert into Employee values(?,?,?,?,?)");
-            getEmployee = dbutil.con.prepareStatement("select Emp_full_name,Emp_address,Emp_phone from Employee where Employee_Company_id = ? and Employee_id = ?");
-            modifyEmployee = dbutil.con.prepareStatement("update Employee set Emp_full_name = ?, Emp_address = ?, Emp_phone = ? where Employee_id = ? and Employee_Company_id = ?");
-            deleteEmployee = dbutil.con.prepareStatement("delete from Employee where Employee_Company_id = ? and Employee_id = ?");
-            isEmployeeExists = dbutil.con.prepareStatement("select count(*) from Employee where Employee_id = ? and Employee_Company_id = ?");
-            getAttendanceFromTo = dbutil.con.prepareStatement("select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ? order by attendance_date");
-            getPresentDays = dbutil.con.prepareStatement("select count(*) from Attendance where attendance_status = \"PRESENT\" and Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ?");
-            overallAttendance = dbutil.con.prepareStatement("select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date");
-            getMinMaxDate = dbutil.con.prepareStatement("select min(attendance_date),max(attendance_date) from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date");
-        }catch(SQLException e){
-            System.out.println(e.toString());
-        }catch(NullPointerException e){}
+        crypto = new CryptoUtilitiy();        
+        insertadmin = "insert into Administrator (Admin_username,Admin_Password) values (?,?)";
+        getadmin = "select * from Administrator where Admin_username = ? and Admin_Password = ?";
+        markattendance = "replace into Attendance values(?,?,?,?)";
+        addEmployee = "insert into Employee values(?,?,?,?,?)";
+        getEmployee = "select Emp_full_name,Emp_address,Emp_phone from Employee where Employee_Company_id = ? and Employee_id = ?";
+        modifyEmployee = "update Employee set Emp_full_name = ?, Emp_address = ?, Emp_phone = ? where Employee_id = ? and Employee_Company_id = ?";
+        deleteEmployee = "delete from Employee where Employee_Company_id = ? and Employee_id = ?";
+        isEmployeeExists = "select count(*) from Employee where Employee_id = ? and Employee_Company_id = ?";
+        getAttendanceFromTo = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ? order by attendance_date";
+        getPresentDays = "select count(*) from Attendance where attendance_status = \"PRESENT\" and Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ?";
+        overallAttendance = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date";
+        getMinMaxDate = "select min(attendance_date),max(attendance_date) from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date";        
     }
     public String insertEmployee(String username,String password){
         try{
-            insertadmin.setString(1,username);
-            insertadmin.setString(2,crypto.encrypt(password, username));
-            insertadmin.execute();                
+            commonStatement = dbutil.con.prepareStatement(insertadmin);
+            commonStatement.setString(1,username);
+            commonStatement.setString(2,crypto.encrypt(password, username));
+            commonStatement.execute();                
             return "success";                
         }catch(SQLIntegrityConstraintViolationException e){
             return "User Id already exists";
@@ -47,11 +56,11 @@ public class DBOperationUtilities {
     }
     public String getAdmin(String username,String password){
         try {            
-            getadmin.setString(1, username);
-            getadmin.setString(2,crypto.encrypt(password, username));
-            ResultSet result = getadmin.executeQuery();                       
+            commonStatement = dbutil.con.prepareStatement(getadmin);
+            commonStatement.setString(1, username);
+            commonStatement.setString(2,crypto.encrypt(password, username));
+            ResultSet result = commonStatement.executeQuery();                       
             while(result.next()){
-                System.out.println("Logged in as : "+result.getString(1));
                 SessionUtilities.validateSession(result.getInt(1), result.getString(2));                
                 return "success";
             }
@@ -64,28 +73,29 @@ public class DBOperationUtilities {
     }
     public String markAttendance(String employeeid,String date,String attendanceStatus){
         try {    
-            markattendance.setInt(1,SessionUtilities.companyidloggedin);
-            markattendance.setLong(2,Long.parseLong(employeeid));
-            markattendance.setString(3, date);
-            markattendance.setString(4, attendanceStatus);                 
-            return markattendance.executeUpdate()>0 ? "success" : "No Employee found with entered credentials";
+            commonStatement = DBAccessUtilities.con.prepareStatement(markattendance);
+            commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+            commonStatement.setLong(2,Long.parseLong(employeeid));
+            commonStatement.setString(3, date);
+            commonStatement.setString(4, attendanceStatus);                 
+            return commonStatement.executeUpdate()>0 ? "success" : "No Employee found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
            return "Database communication link failure";
         }catch(NumberFormatException e){
            return "Employee Id should be a number";
         }catch (Exception e) {
-            System.out.println(e.getClass());
             return "No Employee found with entered credentials";
         }                    
     }
     public String addEmployee(String name,String address,String id,String phone){
-        try {    
-            addEmployee.setInt(1,SessionUtilities.companyidloggedin);
-            addEmployee.setLong(2,Long.parseLong(id));
-            addEmployee.setString(3, name);
-            addEmployee.setString(4, address); 
-            addEmployee.setLong(5, Long.parseLong(phone)); 
-            addEmployee.executeUpdate();
+        try {
+            commonStatement = DBAccessUtilities.con.prepareStatement(addEmployee);
+            commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+            commonStatement.setLong(2,Long.parseLong(id));
+            commonStatement.setString(3, name);
+            commonStatement.setString(4, address); 
+            commonStatement.setLong(5, Long.parseLong(phone)); 
+            commonStatement.executeUpdate();
             return "success";
         }catch(SQLIntegrityConstraintViolationException e){
             return "Employee id already exists";
@@ -94,57 +104,52 @@ public class DBOperationUtilities {
         }catch(NumberFormatException e){
            return "Employee Id should be a number";
         }catch (Exception e) {
-            System.out.println(e.getClass());
             return "Unable to add employee";
         }
     }
     public String deleteEmployee(String employeeId){
         try {    
-            deleteEmployee.setInt(1,SessionUtilities.companyidloggedin);
-            deleteEmployee.setLong(2,Long.parseLong(employeeId));           
-            int result = deleteEmployee.executeUpdate();            
+            commonStatement = DBAccessUtilities.con.prepareStatement(deleteEmployee);
+            commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+            commonStatement.setLong(2,Long.parseLong(employeeId));           
+            int result = commonStatement.executeUpdate();            
             return result > 0 ? "success" : "No Employee found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
            return "Database communication link failure";
         }catch(NumberFormatException e){
            return "Employee Id should be a number";
         }catch (Exception e) {
-            System.out.println(e.getClass());
             return "No employee data found";
         }
     }
-    public ResultSet getEmployee(String employeeId){
-        try{
-            getEmployee.setInt(1,SessionUtilities.companyidloggedin);
-            getEmployee.setLong(2,Long.parseLong(employeeId));
-            return getEmployee.executeQuery();
-        }catch(Exception e){
-            return null;
-        }
+    public ResultSet getEmployee(String employeeId) throws SQLException{        
+        commonStatement = DBAccessUtilities.con.prepareStatement(getEmployee);
+        commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+        commonStatement.setLong(2,Long.parseLong(employeeId));
+        return commonStatement.executeQuery();        
     }
     public String modifyEmployee(String name,String address,String id,String phone){
-        try {                
-            modifyEmployee.setString(1, name);
-            modifyEmployee.setString(2, address); 
-            modifyEmployee.setLong(3, Long.parseLong(phone)); 
-            modifyEmployee.setInt(5,SessionUtilities.companyidloggedin);
-            modifyEmployee.setLong(4,Long.parseLong(id));            
-            int result = modifyEmployee.executeUpdate();
-            System.out.println(result);
+        try {             
+            commonStatement = DBAccessUtilities.con.prepareStatement(modifyEmployee);
+            commonStatement.setString(1, name);
+            commonStatement.setString(2, address); 
+            commonStatement.setLong(3, Long.parseLong(phone)); 
+            commonStatement.setInt(5,SessionUtilities.companyidloggedin);
+            commonStatement.setLong(4,Long.parseLong(id));            
+            int result = commonStatement.executeUpdate();
             return result > 0 ? "success" : "Unable to modify employee";
         }catch(CommunicationsException | NullPointerException e){
            return "Database communication link failure";
         }catch (Exception e) {
-            System.out.println(e.getClass());
             return "Unable to modify employee";
         }
     }
     public String isEmployeeExists(String Emp_Id){
         try{
-            isEmployeeExists.setLong(1,Long.parseLong(Emp_Id));
-            isEmployeeExists.setInt(2,SessionUtilities.companyidloggedin);
-            System.out.println(isEmployeeExists.toString());
-            ResultSet result = isEmployeeExists.executeQuery();
+            commonStatement = DBAccessUtilities.con.prepareStatement(isEmployeeExists);
+            commonStatement.setLong(1,Long.parseLong(Emp_Id));
+            commonStatement.setInt(2,SessionUtilities.companyidloggedin);
+            ResultSet result = commonStatement.executeQuery();
             result.next();            
             return result.getInt(1)==1 ? "Success" : "Employee Not Found";
         }catch(CommunicationsException | NullPointerException e){
@@ -153,44 +158,32 @@ public class DBOperationUtilities {
             return "Unable to generate report";
         }
     }
-    public ResultSet getReportFromToDate(String employeeId,String startDate,String endDate){        
-        try{
-            getAttendanceFromTo.setInt(1,SessionUtilities.companyidloggedin);
-            getAttendanceFromTo.setString(2,employeeId);
-            getAttendanceFromTo.setString(3, startDate);
-            getAttendanceFromTo.setString(4, endDate);
-            System.out.println(getAttendanceFromTo);
-            ResultSet result = getAttendanceFromTo.executeQuery();
-            return result;
-        }catch(Exception e){
-            return null;
-        }
+    public ResultSet getReportFromToDate(String employeeId,String startDate,String endDate) throws SQLException{                
+            commonStatement = DBAccessUtilities.con.prepareStatement(getAttendanceFromTo);
+            commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+            commonStatement.setString(2,employeeId);
+            commonStatement.setString(3, startDate);
+            commonStatement.setString(4, endDate);
+            ResultSet result = commonStatement.executeQuery();
+            return result;                            
     }
-    public int getPresentDays(String employeeId,String startDate,String endDate){
-        try{
-            getPresentDays.setInt(1,SessionUtilities.companyidloggedin);
-            getPresentDays.setString(2,(employeeId));
-            getPresentDays.setString(3, startDate);
-            getPresentDays.setString(4, endDate);
-            ResultSet result = getPresentDays.executeQuery();
-            System.out.println(getPresentDays.toString());
-            if(result.next()){
-                System.out.println();
-                return result.getInt(1);
-            }
-            return 0;
-        }catch(Exception e){
-            return 0;
+    public int getPresentDays(String employeeId,String startDate,String endDate) throws SQLException{        
+        commonStatement = DBAccessUtilities.con.prepareStatement(getPresentDays);
+        commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+        commonStatement.setString(2,(employeeId));
+        commonStatement.setString(3, startDate);
+        commonStatement.setString(4, endDate);
+        ResultSet result = commonStatement.executeQuery();            
+        if(result.next()){                
+            return result.getInt(1);
         }
+        return 0;
     }
-    public ResultSet getOverallAttendance(String employeeId){
-        try{
-            overallAttendance.setInt(1,SessionUtilities.companyidloggedin);
-            overallAttendance.setLong(2,Long.parseLong(employeeId));            
-            ResultSet result = overallAttendance.executeQuery();
-            return result;
-        }catch(Exception e){
-            return null;
-        }
+    public ResultSet getOverallAttendance(String employeeId) throws SQLException{        
+        commonStatement = DBAccessUtilities.con.prepareStatement(overallAttendance);
+        commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+        commonStatement.setLong(2,Long.parseLong(employeeId));            
+        ResultSet result = commonStatement.executeQuery();
+        return result;        
     }
 }
