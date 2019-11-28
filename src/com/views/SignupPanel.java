@@ -4,7 +4,6 @@ import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
-import java.sql.SQLException;
 import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    

@@ -326,6 +326,7 @@ public class SettingsWindow extends javax.swing.JPanel {
         try{
             json.restoreDefaults();
             JOptionPane.showMessageDialog(this.getParent(),"Restored defaulted successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+            utilities.switchFromTo(this, new SettingsWindow());
         }catch(Exception e){}
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -376,6 +377,7 @@ public class SettingsWindow extends javax.swing.JPanel {
         try{
             if(json.setValue(choicesFields.getSelectedItem().toString(), redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()) == 1){
                 JOptionPane.showMessageDialog(this.getParent(),"Changes applied successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+                utilities.switchFromTo(this, new SettingsWindow());
             }
         }catch(Exception e){}
     }//GEN-LAST:event_jButton2ActionPerformed
