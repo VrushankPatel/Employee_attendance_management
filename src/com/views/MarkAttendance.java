@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.MarkAttendancePojo;
 import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
@@ -13,8 +14,9 @@ import java.text.SimpleDateFormat;
 
 public class MarkAttendance extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    private DBOperationUtilities dboperation;
-    private SimpleDateFormat sdf;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    private DBOperationUtilities dboperation;    
+    private final MarkAttendancePojo pojo = new MarkAttendancePojo();
     public MarkAttendance() {          
         initComponents();       
         initConnection();
@@ -352,11 +354,13 @@ public class MarkAttendance extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel1backHover1
 
     private void markAttendance(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_markAttendance
-        String result;
-        sdf = new SimpleDateFormat("YYYY-MM-dd");        
-        if(EmployeeId.getText().length() == 10){
+        String result;            
+        pojo.setAttendanceStatus(((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
+        pojo.setDate(sdf.format(dateOfAttendance.getDate()));
+        pojo.setEmployeeID(EmployeeId.getText());
+        if(pojo.getEmployeeID().length() == 10){            
                 try{
-                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.markAttendance(pojo.getEmployeeID(),pojo.getDate(),pojo.getAttendanceStatus());
                 if(Constants.SUCCESS.equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),Constants.ADDSUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
                     EmployeeId.setText("Employee Id");

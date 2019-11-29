@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.SignupPojo;
 import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -8,6 +9,7 @@ import com.utilities.DBOperationUtilities;
 import javax.swing.*;
 
 public class SignupPanel extends javax.swing.JPanel {    
+    private final SignupPojo POJO = new SignupPojo();            
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;   
     private DBOperationUtilities dboperation;
@@ -388,9 +390,11 @@ public class SignupPanel extends javax.swing.JPanel {
 
     private void actionSignup(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionSignup
         String result;
+        POJO.setUsername(userName.getText());
+        POJO.setPassword((String.valueOf(passwordField.getPassword())));
         try{
-            if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
-                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));           
+            if(POJO.getPassword().equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{POJO.getUsername(),String.valueOf(POJO.getPassword())})){
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.insertEmployee(POJO.getUsername(),POJO.getPassword());           
                 if("success".equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
                     utilities.switchFromTo(this, new LoginPanel());
@@ -402,7 +406,7 @@ public class SignupPanel extends javax.swing.JPanel {
                     initConnection();
                 }
             }else{            
-                String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
+                String errormessage = validation.validateUserNameAndPassword(new String[]{POJO.getUsername(),POJO.getPassword()}) ? "Password doesn't match" : "> Invalid username or password."
                         + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
                         + "\nEx. : John@1234";
                 JOptionPane.showMessageDialog(this.getParent(),errormessage, Constants.INVALIDCREDENTIALS,JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));

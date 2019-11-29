@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.LoginPanelPojo;
 import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
@@ -8,6 +9,7 @@ import javax.swing.*;
 
 public class LoginPanel extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
+    private final LoginPanelPojo pojo = new LoginPanelPojo();
     private DBOperationUtilities dboperation;
     public LoginPanel() {                   
         initComponents();        
@@ -335,8 +337,10 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void LoginButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonPanelMouseClicked
         String result;
-        try{
-            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
+        pojo.setPassword(String.valueOf(passwordField.getPassword()));
+        pojo.setUsername(userName.getText());
+        try{            
+            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.getAdmin(pojo.getUsername(),pojo.getPassword());
             if(Constants.SUCCESS.equals(result)){                     
                 utilities.switchFromTo(this, new AdminOptions());
             }else{

@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.ReportBasedOnDatePojo;
 import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
@@ -17,6 +18,7 @@ import java.time.ZoneId;
 public class ReportBasedOnDate extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
+    private final ReportBasedOnDatePojo POJO = new ReportBasedOnDatePojo();
     private DBOperationUtilities dboperation;
     private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public ReportBasedOnDate() {          
@@ -387,15 +389,19 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
 
     private void generateReport(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateReport
         try{
+            POJO.setEmployeeId(EmployeeId.getText());
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
                 if(Constants.SUCCESS.equals(result)){
-                    int totalworkingdays = (int) valid.getWorkingDays(FromDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), ToDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());                    
-                    int presentDays = dboperation.getPresentDays(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));                                                
-                    int totalDays = (int) valid.getTotalDays(FromDate.getDate(),ToDate.getDate());
-                    ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));
-                    String datefromto = new SimpleDateFormat("dd MMM yyyy").format(FromDate.getDate()) + " to " +new SimpleDateFormat("dd MMM yyyy").format(ToDate.getDate());
-                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));              
+                    POJO.setFromDate(FromDate.getDate());
+                    POJO.setToDate(ToDate.getDate());
+                    POJO.setTotalWorkingDays((int) valid.getWorkingDays(POJO.getFromDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), POJO.getToDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));                    
+                    POJO.setPresentDays(dboperation.getPresentDays(EmployeeId.getText(),sdf.format(POJO.getFromDate()),sdf.format(POJO.getToDate())));                   
+                    POJO.setTotalDays((int) valid.getTotalDays(POJO.getFromDate(),POJO.getToDate()));                                                            
+                    
+                    ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),sdf.format(POJO.getFromDate()),sdf.format(POJO.getToDate()));
+                    String datefromto = new SimpleDateFormat("dd MMM yyyy").format(POJO.getFromDate()) + " to " +new SimpleDateFormat("dd MMM yyyy").format(POJO.getToDate());
+                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,POJO.getTotalWorkingDays(),POJO.getPresentDays(),POJO.getTotalDays(),rs));              
                 }else{
                     initConnection();                    
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
@@ -405,7 +411,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
             utilities.logger.warning(e.getMessage());
         }catch(Exception e){
             utilities.logger.severe(e.getMessage());
-        }
+        }        
     }//GEN-LAST:event_generateReport
 
     private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked

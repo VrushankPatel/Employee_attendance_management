@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.DeleteEmployeePojo;
 import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
@@ -9,6 +10,7 @@ import javax.swing.*;
 public class DeleteEmployee extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
     private DBOperationUtilities dboperation;
+    private final DeleteEmployeePojo pojo = new DeleteEmployeePojo();
     public DeleteEmployee() {          
         initComponents();               
         initConnection();
@@ -283,8 +285,9 @@ public class DeleteEmployee extends javax.swing.JPanel {
 
     private void deleteEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEmployee
         String result;
-        try{
-            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.deleteEmployee(EmployeeId.getText());
+        try{                        
+            pojo.setEmployeeID(EmployeeId.getText());
+            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.deleteEmployee(pojo);
             if(Constants.SUCCESS.equals(result)){
                 System.out.println(result);
                 JOptionPane.showMessageDialog(this.getParent(),Constants.DELETESUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    

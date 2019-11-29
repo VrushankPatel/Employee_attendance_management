@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.GenerateMonthlyReportPojo;
 import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
@@ -18,6 +19,7 @@ import javax.swing.*;
 public class GenerateMonthlyReport extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
+    private final GenerateMonthlyReportPojo pojo = new GenerateMonthlyReportPojo();
     private DBOperationUtilities dboperation;
     private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public GenerateMonthlyReport() {        
@@ -294,15 +296,16 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
 
     private void generateReport(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateReport
         try{
-            if(valid.validateEmployeeId(EmployeeId.getText())){
-                String result = dboperation.isEmployeeExists(EmployeeId.getText());
+            pojo.setEmployeeId(EmployeeId.getText());
+            if(valid.validateEmployeeId(pojo.getEmployeeId())){
+                String result = dboperation.isEmployeeExists(pojo.getEmployeeId());
                 if(Constants.SUCCESS.equals(result)){
                     int totalworkingdays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());                    
-                    int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
+                    int presentDays = dboperation.getPresentDays(pojo.getEmployeeId(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
                     int totalDays = (int) valid.getTotalDays(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant()), new Date());
-                    ResultSet rs = dboperation.getReportFromToDate(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                                
+                    ResultSet rs = dboperation.getReportFromToDate(pojo.getEmployeeId(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                                
                     String datefromto = new SimpleDateFormat("dd MMM yyyy").format(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant())) + " to " +new SimpleDateFormat("dd MMM yyyy").format(new Date());
-                    utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));                                  
+                    utilities.switchFromTo(this,new ReportWindow(pojo.getEmployeeId(),datefromto,totalworkingdays,presentDays,totalDays,rs));                                  
                 }else{
                     initConnection();                    
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));

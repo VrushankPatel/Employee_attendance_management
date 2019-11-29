@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.ModifyEmployeePojo;
 import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -11,6 +12,7 @@ import javax.swing.*;
 
 public class ModifyEmployee extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities;        
+    private final ModifyEmployeePojo POJO = new ModifyEmployeePojo();
     private final ValidationUtilities validation;
     private DBOperationUtilities dboperation;
     public ModifyEmployee() { 
@@ -436,6 +438,10 @@ public class ModifyEmployee extends javax.swing.JPanel {
 
     private void modifyEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyEmployee
         String result;
+        POJO.setEmployeeAddress(employeeAddress.getText());
+        POJO.setEmployeeId(employeeId.getText());
+        POJO.setEmployeeName(employeeName.getText());
+        POJO.setEmployeePhone(employeePhone.getText());
         try{
             if(employeeId.getText().length() == 10 && validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
                 result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
@@ -468,10 +474,11 @@ public class ModifyEmployee extends javax.swing.JPanel {
     @SuppressWarnings("null")
     private void getEmployeeDetails(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_getEmployeeDetails
         boolean result = false;
-        ResultSet rs = null;
+        POJO.setEmployeeId(employeeId.getText());
+        ResultSet rs = null;        
         try{            
-            if(employeeId.getText().length()==10){
-                rs = dboperation.getEmployee(employeeId.getText());
+            if(POJO.getEmployeeId().length()==10){
+                rs = dboperation.getEmployee(POJO.getEmployeeId());
                 result = rs.next();                
             }
         }catch(SQLException e){

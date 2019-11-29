@@ -2,6 +2,7 @@ package com.utilities;
 
 import com.encryptionengine.CryptoUtilitiy;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import com.pojo.DeleteEmployeePojo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,11 +109,11 @@ public class DBOperationUtilities {
             } catch (SQLException ex) {}
         }
     }
-    public String deleteEmployee(String employeeId){
+    public String deleteEmployee(DeleteEmployeePojo pojo){
         try {    
             commonStatement = DBAccessUtilities.con.prepareStatement(Constants.DELETEEMPLOYEE);
             commonStatement.setInt(1,SessionUtilities.companyidloggedin);
-            commonStatement.setLong(2,Long.parseLong(employeeId));           
+            commonStatement.setLong(2,Long.parseLong(pojo.getEmployeeID()));           
             int result = commonStatement.executeUpdate();            
             return result > 0 ? Constants.SUCCESS : Constants.NOEMPLOYEEFOUND;
         }catch(CommunicationsException | NullPointerException e){            
