@@ -5,15 +5,13 @@ import com.utilities.UIComponentUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 public class SettingsWindow extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final JsonParsingUtilities json; 
     public SettingsWindow() {    
-        json = new JsonParsingUtilities("Properties.json");
+        json = new JsonParsingUtilities();
         initComponents();        
     }    
     @SuppressWarnings("unchecked")
@@ -146,7 +144,7 @@ public class SettingsWindow extends javax.swing.JPanel {
         choicesFields.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         choicesFields.setForeground(utilities.colorutil.bodypanelcolor);
         try{
-            choicesFields.setModel(new javax.swing.DefaultComboBoxModel<>(json.getKeys("Properties.json")));
+            choicesFields.setModel(new javax.swing.DefaultComboBoxModel<>(json.getKeys("./Properties/Properties.json")));
             choicesFields.setBorder(javax.swing.BorderFactory.createLineBorder(utilities.colorutil.primarytextcolor));
         }catch(Exception e){}
         choicesFields.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
@@ -327,7 +325,9 @@ public class SettingsWindow extends javax.swing.JPanel {
             json.restoreDefaults();
             JOptionPane.showMessageDialog(this.getParent(),"Restored defaulted successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
             utilities.switchFromTo(this, new SettingsWindow());
-        }catch(Exception e){}
+        }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -343,10 +343,12 @@ public class SettingsWindow extends javax.swing.JPanel {
             greenSlider.setValue(color.getGreen());
             blueSlider.setValue(color.getBlue());
         } catch (IOException ex) {
-            Logger.getLogger(SettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
+            utilities.logger.info(ex.getMessage());
         } catch (ParseException ex) {
-            Logger.getLogger(SettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+            utilities.logger.warning(ex.getMessage());
+        } catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        }
         redLabel1.setText(String.valueOf(redSlider.getValue()));
         greenLabel1.setText(String.valueOf(greenSlider.getValue()));
         blueLabel1.setText(String.valueOf(blueSlider.getValue()));
@@ -378,7 +380,9 @@ public class SettingsWindow extends javax.swing.JPanel {
             if(json.setValue(choicesFields.getSelectedItem().toString(), redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()) == 1){
                 JOptionPane.showMessageDialog(this.getParent(),"Changes applied successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
             }
-        }catch(Exception e){}
+        }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

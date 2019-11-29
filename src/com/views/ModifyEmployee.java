@@ -1,10 +1,12 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class ModifyEmployee extends javax.swing.JPanel {    
@@ -401,7 +403,8 @@ public class ModifyEmployee extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -435,9 +438,9 @@ public class ModifyEmployee extends javax.swing.JPanel {
         String result;
         try{
             if(employeeId.getText().length() == 10 && validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
-                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
-                if("success".equals(result)){
-                    JOptionPane.showMessageDialog(this.getParent(),"Employee modified successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.modifyEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+                if(Constants.SUCCESS.equals(result)){
+                    JOptionPane.showMessageDialog(this.getParent(),"Employee modified successfully.", Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
                     utilities.switchFromTo(this, new ModifyEmployee());
                 }else{
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
@@ -447,33 +450,44 @@ public class ModifyEmployee extends javax.swing.JPanel {
                     initConnection();
                 }
             }else if(status.getText().equals("Status : Not Connected")){
-                    JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));                    
+                    JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));                    
                     initConnection();
             }else {            
                 JOptionPane.showMessageDialog(this.getParent(),"Please enter valid credentials.\nEmployee Id and phone number should be in the form of 10 digits", "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
                 
             }
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            utilities.logger.info(e.getMessage());
+            JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
-            System.out.println("unknown exception : ");
-            System.out.println(e.getClass());
+            utilities.logger.severe(e.getMessage());            
         }                
     }//GEN-LAST:event_modifyEmployee
 
+    @SuppressWarnings("null")
     private void getEmployeeDetails(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_getEmployeeDetails
-        try{
-            ResultSet rs = employeeId.getText().length()==10 ? dboperation.getEmployee(employeeId.getText()) : null;
-            boolean result = rs.next();
-            setactiveAndInactiveFields(employeeName,result ? rs.getString(1) : employeeName.getToolTipText(), result);
-            setactiveAndInactiveFields(employeeAddress,result ? rs.getString(2) : employeeAddress.getToolTipText(), result);
-            setactiveAndInactiveFields(employeePhone,result ? rs.getString(3) : employeePhone.getToolTipText(), result);
+        boolean result = false;
+        ResultSet rs = null;
+        try{            
+            if(employeeId.getText().length()==10){
+                rs = dboperation.getEmployee(employeeId.getText());
+                result = rs.next();                
+            }
+        }catch(SQLException e){
+            utilities.logger.info(e.getMessage());
         }catch(Exception e){
-            setactiveAndInactiveFields(employeeName,employeeName.getToolTipText(),false);
-            setactiveAndInactiveFields(employeeAddress,employeeAddress.getToolTipText(),false);
-            setactiveAndInactiveFields(employeePhone,employeePhone.getToolTipText(),false);
+            utilities.logger.severe(e.getMessage());
         }finally{
+            try{
+                setactiveAndInactiveFields(employeeName,result ? rs.getString(1) : employeeName.getToolTipText(), result);
+                setactiveAndInactiveFields(employeeAddress,result ? rs.getString(2) : employeeAddress.getToolTipText(), result);
+                setactiveAndInactiveFields(employeePhone,result ? rs.getString(3) : employeePhone.getToolTipText(), result);
+            }catch(SQLException e){
+                utilities.logger.info(e.getMessage());
+            }catch(Exception e){
+                utilities.logger.severe(e.getMessage());
+            }
             if(status.getText().equals("Status : Not Connected")){            
                 initConnection();
             }

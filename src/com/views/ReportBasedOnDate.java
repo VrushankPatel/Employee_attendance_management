@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -7,7 +8,9 @@ import com.utilities.ValidationUtilities;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 
@@ -343,7 +346,8 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){ 
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -385,7 +389,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         try{
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
-                if(result == "Success"){
+                if(Constants.SUCCESS.equals(result)){
                     int totalworkingdays = (int) valid.getWorkingDays(FromDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), ToDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());                    
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),sdf.format(FromDate.getDate()),sdf.format(ToDate.getDate()));                                                
                     int totalDays = (int) valid.getTotalDays(FromDate.getDate(),ToDate.getDate());
@@ -397,7 +401,11 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }
-        }catch(Exception e){}
+        }catch(HeadlessException | SQLException e){
+            utilities.logger.warning(e.getMessage());
+        }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        }
     }//GEN-LAST:event_generateReport
 
     private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked

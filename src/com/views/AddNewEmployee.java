@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
 import com.utilities.DBAccessUtilities;
@@ -385,7 +386,8 @@ public class AddNewEmployee extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){ 
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -419,9 +421,9 @@ public class AddNewEmployee extends javax.swing.JPanel {
         String result;
         try{
             if(validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
-                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
                 if("success".equals(result)){
-                    JOptionPane.showMessageDialog(this.getParent(),"Successfully Added Employee.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
+                    JOptionPane.showMessageDialog(this.getParent(),Constants.ADDSUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
                     utilities.switchFromTo(this, new AddNewEmployee());
                 }else{
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
@@ -434,9 +436,11 @@ public class AddNewEmployee extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this.getParent(),"Please enter valid credentials.\nId and phone number should be in the form of 10 digits", "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
             }
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            utilities.logger.info(e.getMessage());
+            JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
         }                
     }//GEN-LAST:event_addEmployee
 

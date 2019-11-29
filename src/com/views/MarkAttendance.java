@@ -1,11 +1,14 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.Component;
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 public class MarkAttendance extends javax.swing.JPanel {    
@@ -313,7 +316,8 @@ public class MarkAttendance extends javax.swing.JPanel {
                     try{
                         dboperation = new DBOperationUtilities();
                         status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                    }catch(Exception e){                 
+                    }catch(Exception e){   
+                        utilities.logger.severe(e.getMessage());
                         status.setText("Status : Not Connected");                        
                     }
                 }
@@ -352,9 +356,9 @@ public class MarkAttendance extends javax.swing.JPanel {
         sdf = new SimpleDateFormat("YYYY-MM-dd");        
         if(EmployeeId.getText().length() == 10){
                 try{
-                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
-                if("success".equals(result)){
-                    JOptionPane.showMessageDialog(this.getParent(),"Attendance successfully recorded", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.markAttendance(EmployeeId.getText(),sdf.format(dateOfAttendance.getDate()),((JLabel)(((JPanel)evt.getSource()).getComponent(0))).getText());
+                if(Constants.SUCCESS.equals(result)){
+                    JOptionPane.showMessageDialog(this.getParent(),Constants.ADDSUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                
                     EmployeeId.setText("Employee Id");
                 }else{
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
@@ -364,9 +368,14 @@ public class MarkAttendance extends javax.swing.JPanel {
                     initConnection();
                 }
             }catch(NullPointerException e){
-                JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                utilities.logger.severe(e.getMessage());
+                JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 initConnection();
-            }catch(Exception e){}                    
+            }catch(HeadlessException | SQLException e){
+                utilities.logger.info(e.getMessage());
+            }catch(Exception e){
+                utilities.logger.severe(e.getMessage());
+            }
         }else{
             JOptionPane.showMessageDialog(this.getParent(),"Invalid Employee Id. ( Employee Id should be a 10 digit number )", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
         }

@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
 import com.utilities.DBAccessUtilities;
@@ -354,7 +355,8 @@ public class SignupPanel extends javax.swing.JPanel {
                     try{
                         dboperation = new DBOperationUtilities();
                         status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                    }catch(Exception e){                 
+                    }catch(Exception e){     
+                        utilities.logger.severe(e.getMessage());
                         status.setText("Status : Not Connected");                        
                     }
                 }
@@ -388,9 +390,9 @@ public class SignupPanel extends javax.swing.JPanel {
         String result;
         try{
             if((String.valueOf(passwordField.getPassword())).equals((String.valueOf(confirmPasswordField.getPassword()))) && validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())})){
-                result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));           
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.insertEmployee(userName.getText(),String.valueOf(passwordField.getPassword()));           
                 if("success".equals(result)){
-                    JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
+                    JOptionPane.showMessageDialog(this.getParent(),"Successfully created account, please sign in to continue", Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
                     utilities.switchFromTo(this, new LoginPanel());
                 }else{
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
@@ -403,14 +405,14 @@ public class SignupPanel extends javax.swing.JPanel {
                 String errormessage = validation.validateUserNameAndPassword(new String[]{userName.getText(),String.valueOf(passwordField.getPassword())}) ? "Password doesn't match" : "> Invalid username or password."
                         + "\n> Username and password should be of minimum 8 characters and should be in \nthe form of one uppercase, one lowercase, one special character and one number."
                         + "\nEx. : John@1234";
-                JOptionPane.showMessageDialog(this.getParent(),errormessage, "Invalid Credentials",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
+                JOptionPane.showMessageDialog(this.getParent(),errormessage, Constants.INVALIDCREDENTIALS,JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8-s.h.i.e.l.d.png")));
             }
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            utilities.logger.info(e.getMessage());
+            JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
-            System.out.println("unknown exception : ");
-            System.out.println(e.getClass());
+            utilities.logger.severe(e.getMessage());
         }
     }//GEN-LAST:event_actionSignup
 

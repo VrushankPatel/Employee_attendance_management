@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -305,7 +306,8 @@ public class LoginPanel extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();                    
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){  
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -334,8 +336,8 @@ public class LoginPanel extends javax.swing.JPanel {
     private void LoginButtonPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonPanelMouseClicked
         String result;
         try{
-            result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
-            if("success".equals(result)){                     
+            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.getAdmin(userName.getText(),String.valueOf(passwordField.getPassword()));
+            if(Constants.SUCCESS.equals(result)){                     
                 utilities.switchFromTo(this, new AdminOptions());
             }else{
                 status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
@@ -345,9 +347,11 @@ public class LoginPanel extends javax.swing.JPanel {
                 initConnection();
             }
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            utilities.logger.info(e.getMessage());
+            JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
         }
     }//GEN-LAST:event_LoginButtonPanelMouseClicked
 

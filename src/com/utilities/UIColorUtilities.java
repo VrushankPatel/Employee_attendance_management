@@ -14,7 +14,7 @@ public final class UIColorUtilities {
     public final Color initialColor;
     public final Color initialBorder;
     public UIColorUtilities() throws Exception {   
-        json = new JsonParsingUtilities("Properties.json");
+        json = new JsonParsingUtilities();
         primarytextcolor = getColorProperty("PrimaryTextColor");
         headpanelandhovercolor = getColorProperty("HeadPanelandhovercolor");
         bodypanelcolor = getColorProperty("BodyPanelColor");  

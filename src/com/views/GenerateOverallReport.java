@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -261,7 +262,8 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){ 
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -295,7 +297,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
         try{
             if(valid.validateEmployeeId(EmployeeId.getText())){                
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
-                if("Success".equals(result)){
+                if(Constants.SUCCESS.equals(result)){
                     ResultSet rs = dboperation.getOverallAttendance(EmployeeId.getText());                     
                     try{
                         rs.first();
@@ -306,11 +308,13 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                         int presentDays = dboperation.getPresentDays(EmployeeId.getText(),startdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString(),enddate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString());
                         int totalDays = (int) valid.getTotalDays(startdate,enddate);                                                                      
                         utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),new SimpleDateFormat("dd MMM yyyy").format(startdate)+" to "+new SimpleDateFormat("dd MMM yyyy").format(enddate),totalworkingdays,presentDays,totalDays,rs));              
-                    }catch(Exception e){}                                                                                                    
+                    }catch(Exception e){
+                        utilities.logger.severe(e.getMessage());
+                    }                                                                                                    
                     
                 }else{                    
                     initConnection();                    
-                    JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+                    JOptionPane.showMessageDialog(this.getParent(),result,"Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }
         }catch(HeadlessException e){

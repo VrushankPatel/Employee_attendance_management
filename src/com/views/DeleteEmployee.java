@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -18,7 +19,8 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){ 
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -282,10 +284,10 @@ public class DeleteEmployee extends javax.swing.JPanel {
     private void deleteEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEmployee
         String result;
         try{
-            result = DBAccessUtilities.con.isClosed() ? "Database communication link failure" : dboperation.deleteEmployee(EmployeeId.getText());
-            if("success".equals(result)){
+            result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.deleteEmployee(EmployeeId.getText());
+            if(Constants.SUCCESS.equals(result)){
                 System.out.println(result);
-                JOptionPane.showMessageDialog(this.getParent(),"Employee successfully deleted.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
+                JOptionPane.showMessageDialog(this.getParent(),Constants.DELETESUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
             }else{
                 status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 JOptionPane.showMessageDialog(this.getParent(),result, "Insertion error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
@@ -294,9 +296,12 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 initConnection();
             }
         }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
+            utilities.logger.info(e.getMessage());
+            JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
-        }catch(Exception e){} 
+        }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        } 
     }//GEN-LAST:event_deleteEmployee
 
     private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked

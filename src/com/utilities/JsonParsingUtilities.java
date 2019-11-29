@@ -6,9 +6,10 @@ import org.json.simple.parser.*;
 
 public class JsonParsingUtilities {    
     JSONObject jsonObject;
-    public JsonParsingUtilities(String filename){
+    private String filePath = "./Properties/Properties.json";
+    public JsonParsingUtilities(){
         try{
-            FileReader file = new FileReader(filename);
+            FileReader file = new FileReader(filePath);
             jsonObject = (JSONObject) new JSONParser().parse(file);
             file.close();
         }catch(FileNotFoundException fe){}catch(IOException ioe){}catch(ParseException pe){}
@@ -30,13 +31,13 @@ public class JsonParsingUtilities {
         return keys;
     }
     public int setValue(String propertyname,final int R,final int G,final int B) throws Exception{              
-        JsonParsingUtilities json = new JsonParsingUtilities("Properties.json");
+        JsonParsingUtilities json = new JsonParsingUtilities();
         JSONObject temp = (JSONObject)(json.getProperty(propertyname));
         temp.put("R", R);
         temp.put("G", G);
         temp.put("B", B);
         jsonObject.put(propertyname,temp);
-        try (FileWriter file = new FileWriter("Properties.json")) {
+        try (FileWriter file = new FileWriter(filePath)) {
             file.write(jsonObject.toJSONString());
             file.flush();
             file.close();
@@ -44,8 +45,7 @@ public class JsonParsingUtilities {
         return 1;
     }
     public void restoreDefaults() throws FileNotFoundException, IOException, ParseException{
-        System.out.println("com.utilities.JsonParsingUtilities.restoreDefaults()");
-        try (FileWriter file = new FileWriter("Properties.json")) {
+        try (FileWriter file = new FileWriter(filePath)) {
             file.write("{\"PrimaryTextColor\":{\"R\":255,\"G\":255,\"B\":255},\"HeadPanelandhovercolor\":{\"R\":248,\"G\":148,\"B\":6},\"BodyPanelColor\":{\"R\":44,\"G\":62,\"B\":80},\"InititalColor\":{\"R\":255,\"G\":255,\"B\":255},\"InititalBorder\":{\"R\":192,\"G\":192,\"B\":192},}");       
             file.flush();
             file.close();

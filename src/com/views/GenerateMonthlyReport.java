@@ -1,5 +1,6 @@
 package com.views;
 
+import com.utilities.Constants;
 import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -264,7 +265,8 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                 try{
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
-                }catch(Exception e){                 
+                }catch(Exception e){    
+                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -294,9 +296,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         try{
             if(valid.validateEmployeeId(EmployeeId.getText())){
                 String result = dboperation.isEmployeeExists(EmployeeId.getText());
-                System.out.println("here we go");
-                if("Success".equals(result)){
-                    System.out.println("success");
+                if(Constants.SUCCESS.equals(result)){
                     int totalworkingdays = (int) valid.getWorkingDays(YearMonth.now().atDay(1), LocalDate.now());                    
                     int presentDays = dboperation.getPresentDays(EmployeeId.getText(),YearMonth.now().atDay(1).toString(),sdf.format(new Date()));                                                
                     int totalDays = (int) valid.getTotalDays(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant()), new Date());
@@ -309,8 +309,11 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                 }
             }
         }catch(HeadlessException | SQLException e){
+            utilities.logger.info(e.getMessage());
             System.out.println(e.getMessage());
-        }catch(Exception e){}
+        }catch(Exception e){
+            utilities.logger.severe(e.getMessage());
+        }
     }//GEN-LAST:event_generateReport
 
     private void minimize_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_lblMouseClicked
