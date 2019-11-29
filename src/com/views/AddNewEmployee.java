@@ -10,7 +10,6 @@ public class AddNewEmployee extends javax.swing.JPanel {
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;
     private DBOperationUtilities dboperation;
-    private DBAccessUtilities dbaccesstocken;
     public AddNewEmployee() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();        
@@ -384,8 +383,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
         new Thread(){
             public void run(){
                 try{
-                    dbaccesstocken = new DBAccessUtilities();
-                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
@@ -398,7 +396,7 @@ public class AddNewEmployee extends javax.swing.JPanel {
     }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
-        utilities.actionClose(evt,dbaccesstocken);
+        utilities.actionClose(evt);
     }//GEN-LAST:event_actionClose
 
     private void commonHoverButtons(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commonHoverButtons
@@ -439,8 +437,6 @@ public class AddNewEmployee extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this.getParent(),"Database communication link failure", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
-            System.out.println("unknown exception : ");
-            System.out.println(e.getClass());
         }                
     }//GEN-LAST:event_addEmployee
 

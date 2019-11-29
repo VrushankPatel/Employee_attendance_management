@@ -10,7 +10,6 @@ public class SignupPanel extends javax.swing.JPanel {
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;   
     private DBOperationUtilities dboperation;
-    private DBAccessUtilities dbaccesstocken;    
     public SignupPanel() { 
         utilities = new UIComponentUtilities();
         validation = new ValidationUtilities();                 
@@ -353,8 +352,7 @@ public class SignupPanel extends javax.swing.JPanel {
                 @Override
                 public void run(){
                     try{
-                        dbaccesstocken = new DBAccessUtilities();
-                        dboperation = new DBOperationUtilities(dbaccesstocken);
+                        dboperation = new DBOperationUtilities();
                         status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                     }catch(Exception e){                 
                         status.setText("Status : Not Connected");                        
@@ -367,7 +365,7 @@ public class SignupPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
-        utilities.actionClose(evt,dbaccesstocken);
+        utilities.actionClose(evt);
     }//GEN-LAST:event_actionClose
 
     private void FocusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusTextFields

@@ -7,13 +7,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 public final class UIColorUtilities {
-    private static final JsonParsingUtilities json = new JsonParsingUtilities("Properties.json");
+    private static JsonParsingUtilities json;
     public final Color primarytextcolor;
     public final Color headpanelandhovercolor;
     public final Color bodypanelcolor;
     public final Color initialColor;
     public final Color initialBorder;
-    public UIColorUtilities() throws Exception {        
+    public UIColorUtilities() throws Exception {   
+        json = new JsonParsingUtilities("Properties.json");
         primarytextcolor = getColorProperty("PrimaryTextColor");
         headpanelandhovercolor = getColorProperty("HeadPanelandhovercolor");
         bodypanelcolor = getColorProperty("BodyPanelColor");  

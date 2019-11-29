@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBOperationUtilities {
+    static final Logger logger = Logger.getLogger(DBOperationUtilities.class.getName());
     private static String insertadmin;
     private static String getadmin;
     private static String markattendance;
@@ -18,15 +21,13 @@ public class DBOperationUtilities {
     private static String isEmployeeExists;
     private static String getAttendanceFromTo; 
     private static String getPresentDays;
-    private static String overallAttendance;
-    private static String getMinMaxDate;
-    private DBAccessUtilities dbutil;
-    private PreparedStatement commonStatement;
+    private static String overallAttendance;    
+    private static PreparedStatement commonStatement;
     CryptoUtilitiy crypto;    
-    public DBOperationUtilities(DBAccessUtilities dbtocken){
-        dbutil = dbtocken;
+    
+    public DBOperationUtilities(){
         crypto = new CryptoUtilitiy();        
-        insertadmin = "insert into Administrator (Admin_username,Admin_Password) values (?,?)";
+        insertadmin = "insert into Administrator (Admin_username,Admin_Password) values (?,?)";        
         getadmin = "select * from Administrator where Admin_username = ? and Admin_Password = ?";
         markattendance = "replace into Attendance values(?,?,?,?)";
         addEmployee = "insert into Employee values(?,?,?,?,?)";
@@ -37,26 +38,33 @@ public class DBOperationUtilities {
         getAttendanceFromTo = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ? order by attendance_date";
         getPresentDays = "select count(*) from Attendance where attendance_status = \"PRESENT\" and Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ?";
         overallAttendance = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date";
-        getMinMaxDate = "select min(attendance_date),max(attendance_date) from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date";        
+        DBAccessUtilities.connectToDatabase();
     }
     public String insertEmployee(String username,String password){
         try{
-            commonStatement = dbutil.con.prepareStatement(insertadmin);
+            commonStatement = DBAccessUtilities.con.prepareStatement(insertadmin);
             commonStatement.setString(1,username);
             commonStatement.setString(2,crypto.encrypt(password, username));
-            commonStatement.execute();                
+            commonStatement.execute();               
             return "success";                
         }catch(SQLIntegrityConstraintViolationException e){
+            logger.log(Level.SEVERE,"SQL integrity violated",e);
             return "User Id already exists";
         }catch(CommunicationsException | NullPointerException e){
+           logger.log(Level.SEVERE,"Communication unsuccessful and may be num pointer detected.",e);
            return "Database communication link failure";
         }catch(Exception e){            
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "Unable to insert data";                
+        }finally{
+            try {
+                commonStatement.close();
+            } catch (SQLException ex) {}
         }
     }
     public String getAdmin(String username,String password){
         try {            
-            commonStatement = dbutil.con.prepareStatement(getadmin);
+            commonStatement = DBAccessUtilities.con.prepareStatement(getadmin);
             commonStatement.setString(1, username);
             commonStatement.setString(2,crypto.encrypt(password, username));
             ResultSet result = commonStatement.executeQuery();                       
@@ -66,9 +74,15 @@ public class DBOperationUtilities {
             }
             return "No Administrator found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
+            logger.log(Level.INFO,"Communication unsuccessful and may be numm pointer detected.",e);
            return "Database communication link failure";
         }catch (Exception e) {
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "No Administrator found with entered credentials";
+        }finally{
+            try {
+                commonStatement.close();
+            } catch (SQLException ex) {}
         }                    
     }
     public String markAttendance(String employeeid,String date,String attendanceStatus){
@@ -80,12 +94,19 @@ public class DBOperationUtilities {
             commonStatement.setString(4, attendanceStatus);                 
             return commonStatement.executeUpdate()>0 ? "success" : "No Employee found with entered credentials";
         }catch(CommunicationsException | NullPointerException e){
+           logger.log(Level.SEVERE,"Communication unsuccessfull and may be numm pointer detected.",e);
            return "Database communication link failure";
         }catch(NumberFormatException e){
+            logger.log(Level.SEVERE,"Number format exception.",e);
            return "Employee Id should be a number";
         }catch (Exception e) {
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "No Employee found with entered credentials";
-        }                    
+        }finally{
+            try {
+                commonStatement.close();
+            } catch (SQLException ex) {}
+        }
     }
     public String addEmployee(String name,String address,String id,String phone){
         try {
@@ -98,13 +119,21 @@ public class DBOperationUtilities {
             commonStatement.executeUpdate();
             return "success";
         }catch(SQLIntegrityConstraintViolationException e){
+            logger.log(Level.SEVERE,"SQL integrity violated",e);
             return "Employee id already exists";
         }catch(CommunicationsException | NullPointerException e){
+           logger.log(Level.SEVERE,"Communication unsuccessfull and may be numm pointer detected.",e);
            return "Database communication link failure";
         }catch(NumberFormatException e){
+            logger.log(Level.SEVERE,"Number format exception.",e);
            return "Employee Id should be a number";
         }catch (Exception e) {
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "Unable to add employee";
+        }finally{
+            try {
+                commonStatement.close();
+            } catch (SQLException ex) {}
         }
     }
     public String deleteEmployee(String employeeId){
@@ -114,11 +143,14 @@ public class DBOperationUtilities {
             commonStatement.setLong(2,Long.parseLong(employeeId));           
             int result = commonStatement.executeUpdate();            
             return result > 0 ? "success" : "No Employee found with entered credentials";
-        }catch(CommunicationsException | NullPointerException e){
+        }catch(CommunicationsException | NullPointerException e){            
+            logger.log(Level.SEVERE,"Communication unsuccessfull and may be numm pointer detected.",e);
            return "Database communication link failure";
         }catch(NumberFormatException e){
+            logger.log(Level.SEVERE,"Number format exception.",e);
            return "Employee Id should be a number";
         }catch (Exception e) {
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "No employee data found";
         }
     }
@@ -139,8 +171,10 @@ public class DBOperationUtilities {
             int result = commonStatement.executeUpdate();
             return result > 0 ? "success" : "Unable to modify employee";
         }catch(CommunicationsException | NullPointerException e){
-           return "Database communication link failure";
+            logger.log(Level.SEVERE,"Communication unsuccessfull and may be numm pointer detected.",e);
+            return "Database communication link failure";
         }catch (Exception e) {
+            logger.log(Level.SEVERE,"unknown exception",e);
             return "Unable to modify employee";
         }
     }
@@ -152,10 +186,9 @@ public class DBOperationUtilities {
             ResultSet result = commonStatement.executeQuery();
             result.next();            
             return result.getInt(1)==1 ? "Success" : "Employee Not Found";
-        }catch(CommunicationsException | NullPointerException e){
-           return "Database communication link failure";
         }catch (Exception e) {
-            return "Unable to generate report";
+            logger.log(Level.SEVERE,"unknown exception",e);
+            return "Database communication link failure";
         }
     }
     public ResultSet getReportFromToDate(String employeeId,String startDate,String endDate) throws SQLException{                

@@ -6,10 +6,7 @@ import com.utilities.UIComponentUtilities;
 import com.utilities.ValidationUtilities;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.*;
@@ -18,8 +15,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
     private DBOperationUtilities dboperation;
-    private DBAccessUtilities dbaccesstocken;
-    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+   private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public GenerateOverallReport() {          
         initComponents();     
         initConnection();
@@ -263,8 +259,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
         new Thread(){
             public void run(){
                 try{
-                    dbaccesstocken = new DBAccessUtilities();
-                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
@@ -277,7 +272,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
     }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
-        utilities.actionClose(evt,dbaccesstocken);
+        utilities.actionClose(evt);
     }//GEN-LAST:event_actionClose
 
     private void FocusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusTextFields
@@ -313,15 +308,12 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                         utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),new SimpleDateFormat("dd MMM yyyy").format(startdate)+" to "+new SimpleDateFormat("dd MMM yyyy").format(enddate),totalworkingdays,presentDays,totalDays,rs));              
                     }catch(Exception e){}                                                                                                    
                     
-                }else{
-                    if(result.equals("Database communication link failure")){
-                        initConnection();
-                    }
+                }else{                    
+                    initConnection();                    
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }
         }catch(HeadlessException e){
-            System.out.println(e.getMessage());
         }catch(Exception e){}
     }//GEN-LAST:event_generateReport
 

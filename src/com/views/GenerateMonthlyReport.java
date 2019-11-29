@@ -18,7 +18,6 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
     private DBOperationUtilities dboperation;
-    private DBAccessUtilities dbaccesstocken;
     private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public GenerateMonthlyReport() {        
         initComponents();      
@@ -263,8 +262,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
         new Thread(){
             public void run(){
                 try{
-                    dbaccesstocken = new DBAccessUtilities();
-                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
@@ -277,7 +275,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
     }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
-        utilities.actionClose(evt,dbaccesstocken);
+        utilities.actionClose(evt);
     }//GEN-LAST:event_actionClose
 
     private void FocusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusTextFields
@@ -306,9 +304,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                     String datefromto = new SimpleDateFormat("dd MMM yyyy").format(Date.from(YearMonth.now().atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant())) + " to " +new SimpleDateFormat("dd MMM yyyy").format(new Date());
                     utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));                                  
                 }else{
-                    if(result.equals("Database communication link failure")){
-                        initConnection();
-                    }
+                    initConnection();                    
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }

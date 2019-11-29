@@ -4,21 +4,17 @@ import com.utilities.DBAccessUtilities;
 import com.utilities.DBOperationUtilities;
 import com.utilities.UIComponentUtilities;
 import com.utilities.ValidationUtilities;
-import java.awt.Color;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.Component;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.ZoneId;
 
 public class ReportBasedOnDate extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();    
     private final ValidationUtilities valid = new ValidationUtilities();
     private DBOperationUtilities dboperation;
-    private DBAccessUtilities dbaccesstocken;
     private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     public ReportBasedOnDate() {          
         initComponents(); 
@@ -345,8 +341,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
         new Thread(){
             public void run(){
                 try{
-                    dbaccesstocken = new DBAccessUtilities();
-                    dboperation = new DBOperationUtilities(dbaccesstocken);
+                    dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){                 
                     status.setText("Status : Not Connected");                        
@@ -359,7 +354,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
     }//GEN-LAST:event_mouseHoverminimmizeClose
 
     private void actionClose(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionClose
-        utilities.actionClose(evt,dbaccesstocken);
+        utilities.actionClose(evt);
     }//GEN-LAST:event_actionClose
 
     private void FocusTextFields(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusTextFields
@@ -398,9 +393,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
                     String datefromto = new SimpleDateFormat("dd MMM yyyy").format(FromDate.getDate()) + " to " +new SimpleDateFormat("dd MMM yyyy").format(ToDate.getDate());
                     utilities.switchFromTo(this,new ReportWindow(EmployeeId.getText(),datefromto,totalworkingdays,presentDays,totalDays,rs));              
                 }else{
-                    if(result.equals("Database communication link failure")){
-                        initConnection();
-                    }
+                    initConnection();                    
                     JOptionPane.showMessageDialog(this.getParent(),result, "Error",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 }
             }

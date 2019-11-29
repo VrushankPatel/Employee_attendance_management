@@ -1,29 +1,45 @@
 package com.utilities;
 
 import java.awt.Component;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 public class UIComponentUtilities {
     private final JsonParsingUtilities json; 
+    public Logger logger;
+    public Handler handler;
     public UIColorUtilities colorutil;
     public UIComponentUtilities() {
+        logger = Logger.getLogger(DBOperationUtilities.class.getName());
+        logger.setLevel(Level.ALL);
+        handler=null;
+        try {
+            handler = new FileHandler("./ErrorLog/ApplicationError.log");
+        } catch (IOException ex) {
+            Logger.getLogger(DBOperationUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(DBOperationUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        handler.setFormatter(new SimpleFormatter());
+        logger.addHandler(handler);        
         try{
             colorutil = new UIColorUtilities();
         }catch(Exception e){}
         json = new JsonParsingUtilities("Properties.json");                                 
     }            
-    public void actionClose(java.awt.event.MouseEvent evt,DBAccessUtilities dbaccesstocken){
-        try{
-            dbaccesstocken.con.close();        
-        }catch(SQLException e){}
-        SessionUtilities.invalidateSession();
-        System.exit(0);
-    }
     public void actionClose(java.awt.event.MouseEvent evt){
-        SessionUtilities.invalidateSession();
-        System.exit(0);
+        try{
+            DBAccessUtilities.closeConnection();
+        }catch(Exception e){}finally{
+            SessionUtilities.invalidateSession();
+            System.exit(0);
+        }        
     }
     public void actionMinimize(JFrame frame){
         frame.setState(JFrame.ICONIFIED);
@@ -50,7 +66,18 @@ public class UIComponentUtilities {
         sourcePanel.setVisible(false);
         sourcePanel.getParent().add(destinationPanel);
         sourcePanel.getParent().revalidate();
-        sourcePanel.getParent().remove(sourcePanel);        
+        sourcePanel.getParent().remove(sourcePanel);                         
+    }
+    public void switchFromTo(JPanel sourcePanel,JPanel destinationPanel,DBAccessUtilities dbaccesstocken){
+        try{
+            DBAccessUtilities.con.close();        
+        }catch(Exception e){            
+        }finally{            
+            sourcePanel.setVisible(false);
+            sourcePanel.getParent().add(destinationPanel);
+            sourcePanel.getParent().revalidate();
+            sourcePanel.getParent().remove(sourcePanel);        
+        }           
     }
 }
 
