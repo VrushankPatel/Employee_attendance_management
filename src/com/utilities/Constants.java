@@ -25,4 +25,8 @@ public class Constants {
     public static final String NOEMPLOYEEFOUND = "No Employee found with entered credentials";
     public static final String EMPLOYEEIDNOTANUMBER = "Employee Id should be a number";
     public static final String INVALIDCREDENTIALS = "Invalid Credentials";
+    
+    //Database credenntials
+    public static final String DBUSERNAME = "vrushank.patel";
+    public static final String DBPASSWORD = "capsys@123";
 }

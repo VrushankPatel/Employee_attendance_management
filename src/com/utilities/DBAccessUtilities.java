@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DBAccessUtilities {
     static public Connection con;
-    private static final String ID = "vrushank.patel";
-    private static final String PASSWORD = "capsys@123";
+    private static final String ID = Constants.DBUSERNAME;
+    private static final String PASSWORD = Constants.DBPASSWORD;
     public static void connectToDatabase(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver"); 
