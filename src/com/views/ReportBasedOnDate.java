@@ -20,7 +20,7 @@ public class ReportBasedOnDate extends javax.swing.JPanel {
     private final ValidationUtilities valid = new ValidationUtilities();
     private final ReportBasedOnDatePojo POJO = new ReportBasedOnDatePojo();
     private DBOperationUtilities dboperation;
-    private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public ReportBasedOnDate() {          
         initComponents(); 
         initConnection();

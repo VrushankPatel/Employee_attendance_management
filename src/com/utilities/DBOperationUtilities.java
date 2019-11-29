@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBOperationUtilities {
@@ -39,11 +40,12 @@ public class DBOperationUtilities {
         }
     }
     public String getAdmin(String username,String password){
+        ResultSet result = null;
         try {            
             commonStatement = DBAccessUtilities.con.prepareStatement(Constants.GETADMIN);
             commonStatement.setString(1, username);
             commonStatement.setString(2,crypto.encrypt(password, username));
-            ResultSet result = commonStatement.executeQuery();                       
+            result = commonStatement.executeQuery();                       
             while(result.next()){
                 SessionUtilities.validateSession(result.getInt(1), result.getString(2));                
                 return Constants.SUCCESS;                
@@ -56,7 +58,8 @@ public class DBOperationUtilities {
             logger.severe(e.getMessage());            
             return Constants.NOADMINFOUND;
         }finally{
-            try {
+            try { 
+                result.close();
                 commonStatement.close();
             } catch (SQLException ex) {
                 logger.severe(ex.getMessage());            
@@ -147,35 +150,64 @@ public class DBOperationUtilities {
         }
     }
     public String isEmployeeExists(String Emp_Id){
+        ResultSet result = null;
         try{
             commonStatement = DBAccessUtilities.con.prepareStatement(Constants.ISEMPLOYEEEXISTS);
             commonStatement.setLong(1,Long.parseLong(Emp_Id));
             commonStatement.setInt(2,SessionUtilities.companyidloggedin);
-            ResultSet result = commonStatement.executeQuery();
+            result = commonStatement.executeQuery();
             result.next();            
             return result.getInt(1)==1 ? Constants.SUCCESS : Constants.NOEMPLOYEEFOUND;
         }catch (Exception e) {
             return Constants.DBLINKERROR;
+        }finally{   
+            try {
+                result.close();
+            } catch (SQLException ex) {}
         }
     }
-    public ResultSet getReportFromToDate(String employeeId,String startDate,String endDate) throws SQLException{                
+    public ResultSet getReportFromToDate(String employeeId,String startDate,String endDate) {                
+        ResultSet result = null;
+        try {
             commonStatement = DBAccessUtilities.con.prepareStatement(Constants.GETATTENDANCEFROMTO);
             commonStatement.setInt(1,SessionUtilities.companyidloggedin);
             commonStatement.setString(2,employeeId);
             commonStatement.setString(3, startDate);
             commonStatement.setString(4, endDate);
-            ResultSet result = commonStatement.executeQuery();
+            result = commonStatement.executeQuery();
             return result;                            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperationUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                logger.severe(ex.getMessage());
+            }
+        }
+        return result;
     }
-    public int getPresentDays(String employeeId,String startDate,String endDate) throws SQLException{        
-        commonStatement = DBAccessUtilities.con.prepareStatement(Constants.GETPRESENTDAYS);
-        commonStatement.setInt(1,SessionUtilities.companyidloggedin);
-        commonStatement.setString(2,(employeeId));
-        commonStatement.setString(3, startDate);
-        commonStatement.setString(4, endDate);
-        ResultSet result = commonStatement.executeQuery();            
-        if(result.next()){                
-            return result.getInt(1);
+    public int getPresentDays(String employeeId,String startDate,String endDate) {        
+        ResultSet result = null;
+        try {
+            commonStatement = DBAccessUtilities.con.prepareStatement(Constants.GETPRESENTDAYS);
+            commonStatement.setInt(1,SessionUtilities.companyidloggedin);
+            commonStatement.setString(2,(employeeId));
+            commonStatement.setString(3, startDate);
+            commonStatement.setString(4, endDate);
+            result = commonStatement.executeQuery();
+            if(result.next()){
+                return result.getInt(1);
+            }
+            return 0;
+        } catch (SQLException ex) {
+            logger.severe(ex.getMessage());
+        } finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                logger.severe(ex.getMessage());
+            }
         }
         return 0;
     }

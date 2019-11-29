@@ -1,5 +1,6 @@
 package com.views;
 
+import com.pojo.addNewEmployeePojo;
 import com.utilities.Constants;
 import com.utilities.ValidationUtilities;
 import com.utilities.UIComponentUtilities;
@@ -8,6 +9,7 @@ import com.utilities.DBOperationUtilities;
 import javax.swing.*;
 
 public class AddNewEmployee extends javax.swing.JPanel {    
+    private final addNewEmployeePojo POJO = new addNewEmployeePojo();
     private final UIComponentUtilities utilities;        
     private final ValidationUtilities validation;
     private DBOperationUtilities dboperation;
@@ -419,9 +421,13 @@ public class AddNewEmployee extends javax.swing.JPanel {
 
     private void addEmployee(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEmployee
         String result;
+        POJO.setEmployeeAddress(employeeAddress.getText());
+        POJO.setEmployeeId(employeeId.getText());
+        POJO.setEmployeeName(employeeName.getText());
+        POJO.setEmployeePhone(employeePhone.getText());
         try{
-            if(validation.validateEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText())){
-                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.addEmployee(employeeName.getText(),employeeAddress.getText(), employeeId.getText(),employeePhone.getText());
+            if(validation.validateEmployee(POJO.getEmployeeName(),POJO.getEmployeeAddress(), POJO.getEmployeeId(),POJO.getEmployeePhone())){
+                result = DBAccessUtilities.con.isClosed() ? Constants.DBLINKERROR : dboperation.addEmployee(POJO.getEmployeeName(),POJO.getEmployeeAddress(), POJO.getEmployeeId(),POJO.getEmployeePhone());
                 if("success".equals(result)){
                     JOptionPane.showMessageDialog(this.getParent(),Constants.ADDSUCCESS, Constants.SUCCESS,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));                    
                     utilities.switchFromTo(this, new AddNewEmployee());

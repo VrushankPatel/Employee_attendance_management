@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 
 public class MarkAttendance extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    private final SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private DBOperationUtilities dboperation;    
     private final MarkAttendancePojo pojo = new MarkAttendancePojo();
     public MarkAttendance() {          
