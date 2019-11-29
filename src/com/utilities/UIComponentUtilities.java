@@ -72,10 +72,10 @@ public class UIComponentUtilities {
     }
     private void getLogger(Logger logger){
         logger = Logger.getLogger(DBOperationUtilities.class.getName());
-        logger.setLevel(Level.ALL);
+        logger.setLevel(Level.SEVERE);
         handler=null;
         try {           
-            handler = new FileHandler("./ErrorLog/ApplicationError.log");
+            handler = new FileHandler("./ErrorLog/ApplicationError.log",true);
         } catch(Exception e){
         }
         handler.setFormatter(new SimpleFormatter());
