@@ -1,6 +1,5 @@
 package com.reportgenerator;
 
-import java.sql.ResultSet;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
@@ -10,7 +9,7 @@ import com.itextpdf.text.pdf.*;
 import java.io.FileOutputStream;
 import javax.swing.JTable;
 
-public class GenerateReportMonthly {
+public class ExportReport {
     public void generateMonthReport(String filename,String employeeId,String date,int totalWorkingDays,int presentDays,int totalDays,JTable dataset){
         Document report = new Document(PageSize.A3);
         report.addAuthor("Vrushank Patel");
@@ -38,9 +37,7 @@ public class GenerateReportMonthly {
             para.add(table);
             report.add(para);
           
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        }catch(Exception e){}
         report.close(); 
     }
 }

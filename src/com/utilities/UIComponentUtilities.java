@@ -11,7 +11,7 @@ import javax.swing.border.LineBorder;
 
 public class UIComponentUtilities {
     public Logger logger;
-    public Handler handler;
+    private Handler handler;
     public UIColorUtilities colorutil;
     public UIComponentUtilities() {
         getLogger(logger);

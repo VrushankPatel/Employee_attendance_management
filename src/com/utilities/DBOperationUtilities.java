@@ -25,10 +25,10 @@ public class DBOperationUtilities {
             commonStatement.execute();               
             return Constants.SUCCESS;                
         }catch(SQLIntegrityConstraintViolationException e){
-            logger.info(e.getMessage());
+            logger.severe(e.getMessage());
             return Constants.USERIDEXISTS;
         }catch(CommunicationsException | NullPointerException e){
-            logger.info(e.getMessage());
+            logger.severe(e.getMessage());
             return Constants.DBLINKERROR;
         }catch(Exception e){            
             logger.severe(e.getMessage());
@@ -49,7 +49,7 @@ public class DBOperationUtilities {
             }
             return Constants.NOADMINFOUND;
         }catch(CommunicationsException | NullPointerException e){
-            logger.info(e.getMessage());
+            logger.severe(e.getMessage());
            return Constants.DBLINKERROR;
         }catch (Exception e) {
             logger.severe(e.getMessage());            
@@ -80,7 +80,7 @@ public class DBOperationUtilities {
             try {
                 commonStatement.close();
             } catch (SQLException ex) {
-                logger.info(ex.getMessage());
+                logger.severe(ex.getMessage());
             }
         }
     }

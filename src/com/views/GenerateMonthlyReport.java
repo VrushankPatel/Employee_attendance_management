@@ -309,7 +309,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                 }
             }
         }catch(HeadlessException | SQLException e){
-            utilities.logger.info(e.getMessage());
+            utilities.logger.severe(e.getMessage());
             System.out.println(e.getMessage());
         }catch(Exception e){
             utilities.logger.severe(e.getMessage());

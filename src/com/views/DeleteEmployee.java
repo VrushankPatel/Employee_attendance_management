@@ -296,7 +296,7 @@ public class DeleteEmployee extends javax.swing.JPanel {
                 initConnection();
             }
         }catch(NullPointerException e){
-            utilities.logger.info(e.getMessage());
+            utilities.logger.severe(e.getMessage());
             JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){

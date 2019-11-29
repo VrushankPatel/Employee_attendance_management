@@ -1,6 +1,6 @@
 package com.views;
 
-import com.reportgenerator.GenerateReportMonthly;
+import com.reportgenerator.ExportReport;
 import com.utilities.UIComponentUtilities;
 import java.util.Date;
 import javax.swing.*;
@@ -14,14 +14,14 @@ import javax.swing.table.DefaultTableModel;
 
 public final class ReportWindow extends javax.swing.JPanel {    
     private final UIComponentUtilities utilities = new UIComponentUtilities();
-    private final GenerateReportMonthly reportGenerator;
+    private final ExportReport reportGenerator;
     private final SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
     private final String emp_id,dateOfAttendance;
     private final int workingdays,presentdays,totaldays;
     private Date startdate,enddate;
     ResultSet dataset;
     public ReportWindow(String employeeid,String dates,int totalWorkingDays,int presentDays,int totalDay,ResultSet result) throws SQLException {          
-        reportGenerator = new GenerateReportMonthly();        
+        reportGenerator = new ExportReport();        
         emp_id = employeeid;
         workingdays = totalWorkingDays;
         presentdays = presentDays;
