@@ -1,31 +1,23 @@
 package com.utilities;
 
 import java.awt.Component;
-import java.util.logging.FileHandler;
 import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-public class UIComponentUtilities {
-    public Logger logger;
+public class UIComponentUtilities {    
     private Handler handler;
     public UIColorUtilities colorutil;
     public UIComponentUtilities() {
-        getLogger(logger);
         try{
             colorutil = new UIColorUtilities();
         }catch(Exception e){
-            logger.severe(e.getMessage());
         }
     }     
     public void actionClose(java.awt.event.MouseEvent evt){
         try{
             DBAccessUtilities.closeConnection();
         }catch(Exception e){
-            logger.severe(e.getMessage());
         }finally{
             SessionUtilities.invalidateSession();
             System.exit(0);
@@ -61,25 +53,12 @@ public class UIComponentUtilities {
     public void switchFromTo(JPanel sourcePanel,JPanel destinationPanel,DBAccessUtilities dbaccesstocken){
         try{
             DBAccessUtilities.con.close();        
-        }catch(Exception e){ 
-            logger.severe(e.getMessage());
-        }finally{            
+        }catch(Exception e){}finally{            
             sourcePanel.setVisible(false);
             sourcePanel.getParent().add(destinationPanel);
             sourcePanel.getParent().revalidate();
             sourcePanel.getParent().remove(sourcePanel);        
         }           
-    }
-    private void getLogger(Logger logger){
-        logger = Logger.getLogger(DBOperationUtilities.class.getName());
-        logger.setLevel(Level.SEVERE);
-        handler=null;
-        try {           
-            handler = new FileHandler("./ErrorLog/ApplicationError.log",true);
-        } catch(Exception e){
-        }
-        handler.setFormatter(new SimpleFormatter());
-        logger.addHandler(handler);        
-    }
+    }   
 }
 

@@ -268,7 +268,7 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){    
-                    utilities.logger.severe(e.getMessage());
+                    
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -312,10 +312,10 @@ public class GenerateMonthlyReport extends javax.swing.JPanel {
                 }
             }
         }catch(HeadlessException | SQLException e){
-            utilities.logger.severe(e.getMessage());
+            
             System.out.println(e.getMessage());
         }catch(Exception e){
-            utilities.logger.severe(e.getMessage());
+            
         }
     }//GEN-LAST:event_generateReport
 

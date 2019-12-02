@@ -312,7 +312,6 @@ public final class ReportWindow extends javax.swing.JPanel {
                     try{
                         row[i] = new SimpleDateFormat("dd MMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString(i+1)));
                     }catch(Exception e){
-                        utilities.logger.severe(e.getMessage());
                     }
                 }else{
                     row[i] = rs.getObject(i+1);

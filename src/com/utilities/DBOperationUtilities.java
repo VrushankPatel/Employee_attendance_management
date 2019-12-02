@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBOperationUtilities {
-    static final Logger logger = Logger.getLogger(DBOperationUtilities.class.getName());    
     public static PreparedStatement commonStatement;
     CryptoUtilitiy crypto;    
     
@@ -27,17 +26,12 @@ public class DBOperationUtilities {
             commonStatement.execute();               
             return Constants.SUCCESS;                
         }catch(SQLIntegrityConstraintViolationException e){
-            logger.severe(e.getMessage());
             return Constants.USERIDEXISTS;
         }catch(CommunicationsException | NullPointerException e){
-            logger.severe(e.getMessage());
             return Constants.DBLINKERROR;
         }catch(Exception e){            
-            logger.severe(e.getMessage());
             return Constants.INSERTIONERROR;
-        }finally{
-            
-        }
+        }finally{}
     }
     public String getAdmin(String username,String password){
         ResultSet result = null;
@@ -52,17 +46,14 @@ public class DBOperationUtilities {
             }
             return Constants.NOADMINFOUND;
         }catch(CommunicationsException | NullPointerException e){
-            logger.severe(e.getMessage());
            return Constants.DBLINKERROR;
         }catch (Exception e) {
-            logger.severe(e.getMessage());            
             return Constants.NOADMINFOUND;
         }finally{
             try { 
                 result.close();
                 commonStatement.close();
             } catch (SQLException ex) {
-                logger.severe(ex.getMessage());            
             }
         }                    
     }
@@ -84,7 +75,6 @@ public class DBOperationUtilities {
             try {
                 commonStatement.close();
             } catch (SQLException ex) {
-                logger.severe(ex.getMessage());
             }
         }
     }
@@ -177,15 +167,8 @@ public class DBOperationUtilities {
             result = commonStatement.executeQuery();
             return result;                            
         } catch (SQLException ex) {
-            Logger.getLogger(DBOperationUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            try {
-                result.close();
-            } catch (SQLException ex) {
-                logger.severe(ex.getMessage());
-            }
-        }
-        return result;
+            return result;
+        } finally{}        
     }
     public int getPresentDays(String employeeId,String startDate,String endDate) {        
         ResultSet result = null;
@@ -201,12 +184,10 @@ public class DBOperationUtilities {
             }
             return 0;
         } catch (SQLException ex) {
-            logger.severe(ex.getMessage());
         } finally{
             try {
                 result.close();
             } catch (SQLException ex) {
-                logger.severe(ex.getMessage());
             }
         }
         return 0;

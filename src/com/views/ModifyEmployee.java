@@ -406,7 +406,6 @@ public class ModifyEmployee extends javax.swing.JPanel {
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){
-                    utilities.logger.severe(e.getMessage());
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -463,11 +462,9 @@ public class ModifyEmployee extends javax.swing.JPanel {
                 
             }
         }catch(NullPointerException e){
-            utilities.logger.info(e.getMessage());
             JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
-        }catch(Exception e){
-            utilities.logger.severe(e.getMessage());            
+        }catch(Exception e){            
         }                
     }//GEN-LAST:event_modifyEmployee
 
@@ -482,18 +479,14 @@ public class ModifyEmployee extends javax.swing.JPanel {
                 result = rs.next();                
             }
         }catch(SQLException e){
-            utilities.logger.info(e.getMessage());
         }catch(Exception e){
-            utilities.logger.severe(e.getMessage());
         }finally{
             try{
                 setactiveAndInactiveFields(employeeName,result ? rs.getString(1) : employeeName.getToolTipText(), result);
                 setactiveAndInactiveFields(employeeAddress,result ? rs.getString(2) : employeeAddress.getToolTipText(), result);
                 setactiveAndInactiveFields(employeePhone,result ? rs.getString(3) : employeePhone.getToolTipText(), result);
             }catch(SQLException e){
-                utilities.logger.info(e.getMessage());
             }catch(Exception e){
-                utilities.logger.severe(e.getMessage());
             }
             if(status.getText().equals("Status : Not Connected")){            
                 initConnection();

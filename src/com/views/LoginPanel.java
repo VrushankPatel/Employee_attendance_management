@@ -309,7 +309,7 @@ public class LoginPanel extends javax.swing.JPanel {
                     dboperation = new DBOperationUtilities();                    
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){  
-                    utilities.logger.severe(e.getMessage());
+                    
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -351,11 +351,10 @@ public class LoginPanel extends javax.swing.JPanel {
                 initConnection();
             }
         }catch(NullPointerException e){
-            utilities.logger.info(e.getMessage());
             JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
             initConnection();
         }catch(Exception e){
-            utilities.logger.severe(e.getMessage());
+            
         }
     }//GEN-LAST:event_LoginButtonPanelMouseClicked
 

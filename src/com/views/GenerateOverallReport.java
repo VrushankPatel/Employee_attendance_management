@@ -264,7 +264,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                     dboperation = new DBOperationUtilities();
                     status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                 }catch(Exception e){ 
-                    utilities.logger.severe(e.getMessage());
+                    
                     status.setText("Status : Not Connected");                        
                 }
             }
@@ -311,7 +311,7 @@ public class GenerateOverallReport extends javax.swing.JPanel {
                         int totalDays = (int) valid.getTotalDays(startdate,enddate);                                                                      
                         utilities.switchFromTo(this,new ReportWindow(pojo.getEmployeeId(),new SimpleDateFormat("dd MMM yyyy").format(startdate)+" to "+new SimpleDateFormat("dd MMM yyyy").format(enddate),totalworkingdays,presentDays,totalDays,rs));              
                     }catch(Exception e){
-                        utilities.logger.severe(e.getMessage());
+                        
                     }                                                                                                    
                     
                 }else{                    

@@ -326,7 +326,6 @@ public class SettingsWindow extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this.getParent(),"Restored defaulted successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
             utilities.switchFromTo(this, new SettingsWindow());
         }catch(Exception e){
-            utilities.logger.severe(e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -343,11 +342,8 @@ public class SettingsWindow extends javax.swing.JPanel {
             greenSlider.setValue(color.getGreen());
             blueSlider.setValue(color.getBlue());
         } catch (IOException ex) {
-            utilities.logger.info(ex.getMessage());
         } catch (ParseException ex) {
-            utilities.logger.warning(ex.getMessage());
         } catch(Exception e){
-            utilities.logger.severe(e.getMessage());
         }
         redLabel1.setText(String.valueOf(redSlider.getValue()));
         greenLabel1.setText(String.valueOf(greenSlider.getValue()));
@@ -381,7 +377,6 @@ public class SettingsWindow extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this.getParent(),"Changes applied successfully.", "Success",JOptionPane.INFORMATION_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_In_Progress_48px.png")));
             }
         }catch(Exception e){
-            utilities.logger.severe(e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

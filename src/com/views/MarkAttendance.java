@@ -319,7 +319,6 @@ public class MarkAttendance extends javax.swing.JPanel {
                         dboperation = new DBOperationUtilities();
                         status.setText("Status : "+(DBAccessUtilities.con.isClosed() ? "Not Connected" : "Connected"));
                     }catch(Exception e){   
-                        utilities.logger.severe(e.getMessage());
                         status.setText("Status : Not Connected");                        
                     }
                 }
@@ -372,13 +371,10 @@ public class MarkAttendance extends javax.swing.JPanel {
                     initConnection();
                 }
             }catch(NullPointerException e){
-                utilities.logger.severe(e.getMessage());
                 JOptionPane.showMessageDialog(this.getParent(),Constants.DBLINKERROR, "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));
                 initConnection();
-            }catch(HeadlessException | SQLException e){
-                utilities.logger.info(e.getMessage());
-            }catch(Exception e){
-                utilities.logger.severe(e.getMessage());
+            }catch(HeadlessException | SQLException e){                
+            }catch(Exception e){               
             }
         }else{
             JOptionPane.showMessageDialog(this.getParent(),"Invalid Employee Id. ( Employee Id should be a 10 digit number )", "Oops...... Error occurred",JOptionPane.ERROR_MESSAGE,new ImageIcon(getClass().getResource("/Icons/icons8_ID_not_Verified_48px.png")));

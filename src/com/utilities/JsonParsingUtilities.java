@@ -8,8 +8,7 @@ public class JsonParsingUtilities {
     JSONObject jsonObject;
     private String filePath = "./Properties/Properties.json";
     public JsonParsingUtilities(){
-        try{
-            FileReader file = new FileReader(filePath);
+        try(FileReader file = new FileReader(filePath)){            
             jsonObject = (JSONObject) new JSONParser().parse(file);
             file.close();
         }catch(FileNotFoundException fe){}catch(IOException ioe){}catch(ParseException pe){}
