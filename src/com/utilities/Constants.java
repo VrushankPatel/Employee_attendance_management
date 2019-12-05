@@ -12,7 +12,7 @@ public class Constants {
     public static final String GETATTENDANCEFROMTO = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ? order by attendance_date"; 
     public static final String GETPRESENTDAYS = "select count(*) from Attendance where attendance_status = \"PRESENT\" and Attendance_Employee_Company_Id = ? and Attendance_Employee_Id = ? and attendance_date between ? and ?";
     public static final String OVERALLATTENDANCE = "select attendance_date,attendance_status from Attendance where Attendance_Employee_Company_id = ? and Attendance_Employee_id = ? order by attendance_date";    
-    
+    public static final String EMPLOYEESLIST = "select Employee_id,Emp_full_name,Emp_address from Employee where Employee_Company_id = ?";
     //Messages
     public static final String DBLINKERROR = "Database communication link failure";
     public static final String USERIDEXISTS = "User Id already exists";

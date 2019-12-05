@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DBOperationUtilities {
     public static PreparedStatement commonStatement;
@@ -198,5 +196,17 @@ public class DBOperationUtilities {
         commonStatement.setLong(2,Long.parseLong(employeeId));            
         ResultSet result = commonStatement.executeQuery();
         return result;        
+    }
+    
+    public ResultSet getEmployeesList(){
+        try {
+            System.out.println("com.utilities.DBOperationUtilities.getEmployeesList()");
+            commonStatement = DBAccessUtilities.con.prepareStatement(Constants.EMPLOYEESLIST);              
+            commonStatement.setInt(1,2);
+            System.out.println(commonStatement.toString());
+            return commonStatement.executeQuery();
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
