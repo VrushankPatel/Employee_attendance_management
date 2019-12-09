@@ -28,5 +28,5 @@ public class Constants {
     
     //Database credenntials
     public static final String DBUSERNAME = "vrushank.patel";
-    public static final String DBPASSWORD = "capsys@123";
+    public static final String DBPASSWORD = "Vrushank@123";
 }
