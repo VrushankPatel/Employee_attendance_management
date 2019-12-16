@@ -17,7 +17,7 @@ Here are some screenshots.<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/10.png)<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/11.png)<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/12.png)<br><br>
-![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/13.png)<br><br>
+![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/13.PNG)<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/14.png)<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/15.png)<br><br>
 ![Image not found](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/Screenshots/16.png)<br><br>
