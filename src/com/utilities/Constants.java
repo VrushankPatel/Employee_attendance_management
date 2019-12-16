@@ -27,6 +27,6 @@ public class Constants {
     public static final String INVALIDCREDENTIALS = "Invalid Credentials";
     
     //Database credenntials
-    public static final String DBUSERNAME = "vrushank.patel";
-    public static final String DBPASSWORD = "Vrushank@123";
+    public static final String DBUSERNAME = "51I7Tu9aQd";
+    public static final String DBPASSWORD = "4rGK6ktdZM";
 }
