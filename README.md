@@ -1,6 +1,6 @@
 # Employee_attendance_management
 EAMS is the simple attendance management system project with simplified CRUD operations to manage Employees data. 
-In this project, the report generator is also created which allows administrator to generate different reports like monthly report, customized dated report and overall report,
+In this project, the report generator is the feature which allows administrator to generate different reports like monthly report, customized dated report and overall report,
 It also allows administrator to export these reports as a pdf.
 I also created the theme settings to change different colors of the window.
 Here are some screenshots.<br><br>
