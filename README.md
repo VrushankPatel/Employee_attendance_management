@@ -17,5 +17,8 @@ I also created the theme settings to change different colors of the window.<br><
     * KControls
     * jCalender
 
-[You can download all the Jar files Dependencies from here](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/jar_files.zip)
- 
+[You can download all the Jar files Dependencies from here](https://github.com/VrushankPatel/Employee_attendance_management/blob/master/jar_files.zip)<br><br>
+## Setup the project<br>
+  * You can directly clone the project and open it in your favourite IDE.
+  * Or you can clone project via VCS of your IDE and start working with it.
+  * After setting up the project, you have to setup the database configuration in Constants.java because initially, it will use SQLite.
