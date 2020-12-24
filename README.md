@@ -3,7 +3,7 @@ EAMS is the simple attendance management system project with simplified CRUD ope
 In this project, the report generator is the feature which allows administrator to generate different reports like monthly report, customized dated report and overall report,
 It also allows administrator to export these reports as a pdf.
 I also created the theme settings to change different colors of the window.<br><br>
-<img src="https://github.com/VrushankPatel/Employee_attendance_management/blob/master/EAMS.png"><br><br>
+<img src="https://raw.githubusercontent.com/VrushankPatel/Employee_attendance_management/master/EAMS.png"><br><br>
 
 ## Dependencies<br>
   * Jar Files
