@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="ZIPS">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Documentation/ZIPS/Class diagram.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Documentation/ZIPS/Database Diagram.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Documentation/ZIPS/Use-case diagram.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Documentation/ZIPS/Activity diagram.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Documentation/ZIPS/Sequence Diagram.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
